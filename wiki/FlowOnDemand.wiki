@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+  #summary One-sentence summary of this page.
 
 = Flow on Demand =
 Phát triển dựa trên [http://www.cuteflow.org CuteFlow]. [http://www.cuteflow.org/features.html CuteFlow's features] đã thỏa gần hết các yêu cầu của một webbased workflow cơ bản
@@ -18,3 +18,4 @@ Việc phát triển thêm chức năng cho CuteFlow sẽ gồm những công vi
      * Sender: được quá nhiều quyền, kể cả skip station của một circulation đang chạy mà không thuộc quyền của mình. Chức năng này nên được bổ sung như sau: cho biết người skip station này là ai và khi skip bắt buộc phải comment lý do. Chức năng skip phù hợp khi người chịu trách nhiệm ở slot đi vắng hoặc nghỉ đẻ chẳng hạn.
 = Các chức năng có độ ưu tiên thấp =
   # Layout slot field bằng cách kéo thả
+  # Việt hóa
