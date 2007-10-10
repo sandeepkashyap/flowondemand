@@ -1,13 +1,15 @@
 #summary One-sentence summary of this page.
 
-= Introduction =
+= Flow on Demand =
+Phát triển dựa trên [http://www.cuteflow.org CuteFlow]. CuteFlow đã thỏa gần hết các yêu cầu của một webbased workflow cơ bản
+  * Lập qui trình (document template)
+  * Tùy biến field cho mỗi template
+  * Lập danh sách maillist 
 
-Flow on Demand
+Việc phát triển thêm chức năng cho CuteFlow sẽ gồm những công việc sau đây
 
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+= Các chức năng cần customize =
+  # Có thể sử dụng db MS SQL Server 2000/2005
+  # Thêm các field phù hợp với yêu cầu của dự án, ví dụ: field lookup từ một table cho trước
+  # Gắn DateChooser javascript cho Date field.
+  # 
