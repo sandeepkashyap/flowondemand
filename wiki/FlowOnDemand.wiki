@@ -1,7 +1,7 @@
 #summary One-sentence summary of this page.
 
 = Flow on Demand =
-Phát triển dựa trên [http://www.cuteflow.org CuteFlow]. CuteFlow đã thỏa gần hết các yêu cầu của một webbased workflow cơ bản
+Phát triển dựa trên [http://www.cuteflow.org CuteFlow]. [http://www.cuteflow.org/features.html CuteFlow's features] đã thỏa gần hết các yêu cầu của một webbased workflow cơ bản
   * Lập qui trình (document template)
   * Tùy biến field cho mỗi template
   * Lập danh sách maillist 
@@ -12,4 +12,4 @@ Việc phát triển thêm chức năng cho CuteFlow sẽ gồm những công vi
   # Có thể sử dụng db MS SQL Server 2000/2005
   # Thêm các field phù hợp với yêu cầu của dự án, ví dụ: field lookup từ một table cho trước
   # Gắn DateChooser javascript cho Date field.
-  # 
+  # Bổ sung thêm cơ chế phân quyền: hiện tại chỉ có 4 quyền => không đủ chi tiết. Số quyền chưa tương xứng với số đối tượng: Documemnt template, Mailling List, User, System setting.
