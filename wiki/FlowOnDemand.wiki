@@ -18,7 +18,11 @@ Việc phát triển thêm chức năng cho CuteFlow sẽ gồm những công vi
      * Role Read only: được xem Circulations, Circulation Archives, Todo nhưng không được edit gì.
      * Role Reciver: được edit field trong slot của mình với một document đang chạy.
      * Role Sender: được quá nhiều quyền, kể cả skip station của một circulation đang chạy mà không thuộc quyền của mình. Chức năng này nên được bổ sung như sau: cho biết người skip station này là ai và khi skip bắt buộc phải comment lý do. Chức năng skip phù hợp khi người chịu trách nhiệm ở slot đi vắng hoặc nghỉ đẻ chẳng hạn.
-  # Cần bổ sung thêm Role: Quản lý Document template; Quản lý Mailling list; Hầu như ai cũng có quyền tạo Request - Circulation nên không cần phải chia ra sender, reciver và readonly.
+  # Cần bổ sung thêm Role: 
+     * Quản lý Document template.
+     * Quản lý Mailling list. 
+     * Skip group 
+     * Hầu như ai cũng có quyền tạo Request - Circulation nên không cần phải chia ra sender, reciver và readonly.
   # Viết thêm plugin để trình bày Budget info/status.
   # Cần thêm chức năng duplicate Document template, Mailling list, Field để tiện cho người dùng
 
