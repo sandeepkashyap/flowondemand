@@ -1,0 +1,19 @@
+#summary One-sentence summary of this page.
+
+= Lập Mailling list theo Role =
+
+Giải quyết vấn đề orgchart. 
+
+
+= Details =
+
+# Lập orgchart được tổ chức như sau:
+  * User có nManagerId cho biết cấp trên của người này trong orgchart.
+  * User thuộc nRoleId cho biết user thuộc nhóm người nào: Trưởng phòng, Phó Giám Đốc, Giám đốc...
+# Thiết lập mailling list theo role
+  * Việc xác định người chịu trách nhiệm xem xét/xử lý item trên workflow có hai cách tùy vào thuộc tính của Node/Slot như sau:
+     * Nếu tại Node qui định cụ thể người chịu trách nhiệm thì item sẽ được gửi trực tiếp đến người này. 
+     * Nếu tại Node chỉ qui định Role xử lý thì system sẽ dựa vào nManagerId của người xử lý ở bước trước để định ra người sẽ xử lý ở bước này.
+
+Tại đây khi người này nghỉ lại có 2 trường hợp
+        # Nếu ng
