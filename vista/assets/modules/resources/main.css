@@ -1,0 +1,107 @@
+/*jEditable css*/
+
+.editableFile {
+	cursor: pointer;
+	width: 105px;
+}
+
+.editableInput .textInput {
+	font-size: 8px !important;
+}
+
+.edit_placeholder {
+	color: #dddddd;
+}
+
+.blockOverlay {
+	background-color: yellow;
+	opacity:         0.3;
+}
+
+#images .common_table tr td.thumbnail {
+	width: 105px;
+}
+
+#images .common_table tr td.name {
+	width: 110px;
+}
+
+#images .common_table tr td.hardbreak {
+	width: 330px;
+	white-space: pre-wrap; /* css-3 */
+	white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+	white-space: -pre-wrap; /* Opera 4-6 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+
+
+#images .common_table tr td.action {
+	text-align: center;
+}
+
+#images .common_table tr th.action {
+	text-align: center;
+}
+
+/* Image Thumbnails
+------------------------------ */
+.imagethumb a {
+	display: block;
+	padding: 9px;
+	margin: 0px 9px 9px 0px;
+	line-height: 0px;
+    border: 1px solid #e6e6e6;
+    background-color: #f6f6f6;
+}
+
+.imagethumb a:hover {
+	display: block;
+	padding: 9px;
+	margin: 0px 9px 9px 0px;
+	line-height: 0px;
+    border: 1px solid #e6e6e6;
+    background-color: #f6f6ee;
+}
+
+.imagethumb a:visited {
+    background-color: #fcfcfc;
+    border: 1px solid #f8f8f8;
+}
+.imagethumb a:hover {
+	background-color: #f3f3f3;
+	border: 1px solid #cccccc;
+}
+.imagethumb {
+	float: left;
+}
+
+.imagethumb a img {
+	width: 100px;
+}
+
+ul.tiled-images {
+	list-style: none;
+}
+
+/* link to switch view mode */
+a.switch_thumb {
+	width: 122px;
+	height: 26px;
+	line-height: 26px;
+	padding: 0;
+	margin: 10px 0;
+	display: block;
+	background: url(assets/images/switch.gif) no-repeat;
+	outline: none;
+	text-indent: -9999px;
+}
+a:hover.switch_thumb {
+	/*filter:alpha(opacity=15);
+	opacity:.15;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=15)";*/	
+}
+
+a.swap { background-position: left bottom; }
+
+a.swap { background-position: left bottom; }
