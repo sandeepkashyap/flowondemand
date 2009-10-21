@@ -19,7 +19,8 @@ jQuery.fn.pagination = function(maxentries, opts){
 		ellipse_text:"...",
 		prev_show_always:true,
 		next_show_always:true,
-		callback:function(){return false;}
+		callback:function(){return false;},
+		pagesize:function(){return false}
 	},opts||{});
 	
 	return this.each(function() {
@@ -51,7 +52,7 @@ jQuery.fn.pagination = function(maxentries, opts){
 		function pageSelected(page_id, evt){
 			current_page = page_id;
 			drawLinks();
-			var continuePropagation = opts.callback(page_id, panel);
+			var continuePropagation = opts.callback(page_id, panel, opts.items_per_page);
 			if (!continuePropagation) {
 				if (evt.stopPropagation) {
 					evt.stopPropagation();
@@ -92,6 +93,24 @@ jQuery.fn.pagination = function(maxentries, opts){
 				if(appendopts.classes){lnk.addClass(appendopts.classes);}
 				panel.append(lnk);
 			}
+			
+			var appendPageSize = function(appendopts){
+				appendopts = jQuery.extend({name:'page_size', id:"page_size"}, appendopts||{});
+				
+				var lnk = $("<input type='text' name='"+ appendopts.name + "'/>")
+						.css({'width': '30px', 'float': 'left'})
+						.blur(function() {
+							if ($(this).val() > 0) {
+								opts.items_per_page = $(this).val()  
+							}
+						})
+				panel.append(lnk);
+				
+				var button = $("<a>Refresh</a>").addClass('prev').click(function() {
+					pageSelected(current_page, null)
+				});
+				panel.append(button);
+			}
 			// Generate "Previous"-Link
 			if(opts.prev_text && (current_page > 0 || opts.prev_show_always)){
 				appendItem(current_page-1,{text:opts.prev_text, classes:"prev"});
@@ -129,6 +148,8 @@ jQuery.fn.pagination = function(maxentries, opts){
 			if(opts.next_text && (current_page < np-1 || opts.next_show_always)){
 				appendItem(current_page+1,{text:opts.next_text, classes:"next"});
 			}
+			
+			appendPageSize({name:"page_size"});
 		}
 		
 		// Extract current_page from options

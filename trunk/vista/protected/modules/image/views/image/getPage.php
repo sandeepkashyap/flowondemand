@@ -39,5 +39,5 @@
   	</tr>
 
 	<script>
-		App.image.ManageImages.init_pagination('images', <?=$pages->getItemCount()?>, <?=$pages->getCurrentPage()?>);
+		App.image.ManageImages.init_pagination('images', <?=$pages->getItemCount()?>, <?=$pages->getCurrentPage()?>, <?=$pages->getPageSize()?>);
 	</script>
