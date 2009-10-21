@@ -1,0 +1,11 @@
+.dashboard_wide_sidebar_inner {
+  background: none !important;
+}
+
+.dashboard_wide_sidebar_inner .dashboard_wide_sidebar_inner {
+  background: none !important;
+}
+
+.dashboard_wide_sidebar_inner .dashboard_wide_sidebar_inner_2 {
+  background: none !important;
+}
