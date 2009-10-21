@@ -497,9 +497,10 @@ App.image.ManageImages = function() {
 				if (pages.length > 0) {
 					page = pages.eq(0).text();
 				}
+				var items_per_page = $(':input[name=page_size]').val()
 				$.ajax({
 					url: url,
-					data: {skip_layout: 1, page: page},
+					data: {skip_layout: 1, page: page, items_per_page: items_per_page},
 					success: function(responseText) {
 						$('#images_wrapper table.common_table').hide();
 						$('#images_wrapper').append(responseText);
@@ -525,9 +526,10 @@ App.image.ManageImages = function() {
 				if (pages.length > 0) {
 					page = pages.eq(0).text();
 				}
+				var items_per_page = $(':input[name=page_size]').val()
 				$.ajax({
 					url: url,
-					data: {skip_layout: 1, page: page},
+					data: {skip_layout: 1, page: page, items_per_page: items_per_page},
 					success: function(responseText) {
 						$('#images_wrapper ul.tiled-images').remove();
 						$('#body_list_logs').html(responseText);
