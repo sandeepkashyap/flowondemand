@@ -213,7 +213,7 @@ class ImageController extends Controller {
 		$criteria->order = " id_image DESC";
 
 		$pages = new CPagination(Image :: model()->count($criteria));
-		$pages->pageSize = self :: PAGE_SIZE;
+		$pages->pageSize = isset($_GET['items_per_page']) && $_GET['items_per_page'] ? $_GET['items_per_page'] : self :: PAGE_SIZE;
 		$pages->applyLimit($criteria);
 
 		$models = Image :: model()->findAll($criteria);
@@ -239,7 +239,7 @@ class ImageController extends Controller {
 		
 
 		$pages = new CPagination(Image :: model()->count($criteria));
-		$pages->pageSize = self :: PAGE_SIZE;
+		$pages->pageSize = isset($_GET['items_per_page']) && $_GET['items_per_page'] ? $_GET['items_per_page'] : self :: PAGE_SIZE;
 		$pages->applyLimit($criteria);
 
 		$sort = new CSort('Image');
@@ -460,7 +460,7 @@ class ImageController extends Controller {
 		$criteria->order = " id DESC";
 
 		$pages = new CPagination(IndexLog::model()->count($criteria));
-		$pages->pageSize = self :: PAGE_SIZE;
+		$pages->pageSize = isset($_GET['items_per_page']) && $_GET['items_per_page'] ? $_GET['items_per_page'] : self :: PAGE_SIZE;
 		$pages->applyLimit($criteria);
 
 		$models = IndexLog::model()->findAll($criteria);
@@ -504,7 +504,7 @@ class ImageController extends Controller {
 		$criteria->order = " id_image DESC";
 
 		$pages = new CPagination(Image :: model()->count($criteria));
-		$pages->pageSize = self :: PAGE_SIZE;
+		$pages->pageSize = isset($_GET['items_per_page']) && $_GET['items_per_page'] ? $_GET['items_per_page'] : self :: PAGE_SIZE;
 		$pages->applyLimit($criteria);
 
 		$sort = new CSort('Image');
@@ -749,7 +749,7 @@ class ImageController extends Controller {
 		$criteria->order = " id_image DESC";
 
 		$pages = new CPagination(Image :: model()->count($criteria));
-		$pages->pageSize = self :: PAGE_SIZE;
+		$pages->pageSize = isset($_GET['items_per_page']) && $_GET['items_per_page'] ? $_GET['items_per_page'] : self :: PAGE_SIZE;
 		$pages->applyLimit($criteria);
 
 		$sort = new CSort('Image');

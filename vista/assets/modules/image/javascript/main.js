@@ -15,7 +15,7 @@ App.image.controllers.image = {
     	$(document).ready(function() {
 			App.image.ManageImages.init('images');
 			App.image.ManageImages.init_image_form('quick_image_form');
-			App.image.ManageImages.init_pagination('images', App.data.image_total, 0);
+			App.image.ManageImages.init_pagination('images', App.data.image_total, 0, 10);
 			App.image.ManageImages.init_tabs('image_categories');
 			App.image.ManageImages.init_switch_button();
 			App.image.ManageImages.init_print_button();
@@ -351,14 +351,14 @@ App.image.ManageImages = function() {
 			});
 		},
 
-		init_pagination: function(wrapper_id, image_total, current_page) {
+		init_pagination: function(wrapper_id, image_total, current_page, items_per_page) {
 			var wrapper = $('#' + wrapper_id);
 			wrapper.find('.pagination').pagination(image_total, {
-				items_per_page: 10,
+				items_per_page: items_per_page,
 				num_display_entries: 10,
 				num_edge_entries: 3,
 				current_page: current_page,
-				callback: function(page_id, panel) {
+				callback: function(page_id, panel, items_per_page) {
 					var is_swap = $('#switch_thumb').hasClass('swap');
 					var url = App.extendUrl(is_swap ? App.data.image_tiled_url : App.data.image_ajax_page, {page: page_id + 1});
 					wrapper.find('table.common_table').block({
@@ -370,7 +370,7 @@ App.image.ManageImages = function() {
 					});
 					$.ajax({
 						url: url,
-						data: {skip_layout: 1},
+						data: {skip_layout: 1, items_per_page: items_per_page},
 						success: function(responseText) {
 							if (is_swap) {
 								$('#images_wrapper ul.tiled-images').remove();
@@ -494,9 +494,9 @@ App.image.ManageImages = function() {
 				var url = App.data.image_tiled_url
 				var pages = $('.pagination .current')
 				var page = 1
-//				if (pages.length > 0) {
-//					page = pages.eq(0).text();
-//				}
+				if (pages.length > 0) {
+					page = pages.eq(0).text();
+				}
 				$.ajax({
 					url: url,
 					data: {skip_layout: 1, page: page},
@@ -522,9 +522,9 @@ App.image.ManageImages = function() {
 				var url = App.data.image_admin_url
 				var pages = $('.pagination .current')
 				var page = 1
-//				if (pages.length > 0) {
-//					page = pages.eq(0).text();
-//				}
+				if (pages.length > 0) {
+					page = pages.eq(0).text();
+				}
 				$.ajax({
 					url: url,
 					data: {skip_layout: 1, page: page},
