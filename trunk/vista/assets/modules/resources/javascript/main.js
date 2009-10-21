@@ -1,0 +1,4 @@
+App.resources = {
+	controllers : {},
+	models      : {}
+};
