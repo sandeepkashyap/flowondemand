@@ -1,0 +1,54 @@
+<?php
+Yii :: import('base.models.*');
+
+class Controller extends CController {
+
+	public $wireframe;
+
+	public $page_tabs;
+	public $page_tab = 'Images';
+	public $application_id = 0;
+
+	public function init() {
+		parent::init();
+		Yii::app()->wireframe->print_button = false;
+
+		$this->application_id = Yii :: app()->getRequest()->getQuery('application', 0);
+		$this->page_tabs = new NamedList;
+		if ($this->application_id > 0) {
+			$app = application::model()->findByPk($this->application_id);
+			if ($app != null && !$app->canAccess(Yii::app()->user)) {
+				throw new CHttpException(403, 'Invalid request. You do not have permission to access this application.');
+			}			
+			$this->page_tabs->add('Application',
+				array('text' => $app ? $app->vc_name : '',
+					'url' => Yii::app()->createUrl('apps/application/show', array('id' => $this->application_id))));
+			$this->page_tabs->add('Images',
+				array('text' => 'Images',
+					'url' => Yii::app()->createUrl('image/image/admin', array('application' => $this->application_id))));
+			$this->page_tabs->add('Test',
+				array('text' => 'Test',
+					'url' => Yii::app()->createUrl('image/image/test', array('application' => $this->application_id))));
+			$this->page_tabs->add('Log',
+				array('text' => 'Log',
+					'url' => Yii::app()->createUrl('image/image/log', array('application' => $this->application_id))));
+		}
+	}
+
+//	public function filterAccessControl($filterChain) {
+//		$filter=new AccessControlFilter;
+//		$filter->setRules($this->accessRules());
+//		$filter->filter($filterChain);
+//	}
+
+	public function render($view,$data=null,$return=false) {
+		if (isset($_GET['skip_layout']) && $_GET['skip_layout'] == 1) {
+			$this->layout = false;
+		}
+		if($return) {
+			return parent::render($view, $data, $return);
+		} else {
+			parent::render($view, $data, $return);
+		}
+	}
+}
