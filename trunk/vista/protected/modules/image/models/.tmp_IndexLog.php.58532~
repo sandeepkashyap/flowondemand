@@ -1,0 +1,53 @@
+<?php
+
+class IndexLog extends CActiveRecord
+{
+	/**
+	 * The followings are the available columns in table 'index':
+	 * @var integer $id
+	 * @var integer $id_image
+	 * @var string $vc_result
+	 * @var integer $int_keypoint
+	 * @var string $dt_created	 
+	 */
+
+	/**
+	 * Returns the static model of the specified AR class.
+	 * @return CActiveRecord the static model class
+	 */
+	public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
+
+	/**
+	 * @return string the associated database table name
+	 */
+	public function tableName()
+	{
+		return 'index_log';
+	}
+
+
+	/**
+	 * @return array customized attribute labels (name=>label)
+	 */
+	public function attributeLabels()
+	{
+		return array(
+			'id' => 'Id',
+			'id_image' => 'Image',
+			'vc_result' => 'Result',
+			'int_keypoint' => 'Key Point',
+			'dt_created' => 'Date',			
+		);
+	}
+
+	protected function beforeValidate($on=null)
+	{
+		if($this->isNewRecord)
+			$this->dt_created = time();
+		return true;
+	}
+	
+}

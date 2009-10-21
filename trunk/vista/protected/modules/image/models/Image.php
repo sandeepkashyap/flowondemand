@@ -1,0 +1,129 @@
+<?php
+
+class Image extends CActiveRecord
+{
+	/**
+	 * The followings are the available columns in table 'index':
+	 * @var integer $id_image
+	 * @var string $vc_image
+	 * @var integer $id_application
+	 * @var string $vc_name
+	 * @var string $vc_url
+	 * @var string $dt_received
+	 * @var string $dt_indexed
+	 */
+
+	/**
+	 * Returns the static model of the specified AR class.
+	 * @return CActiveRecord the static model class
+	 */
+	public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
+
+	/**
+	 * @return string the associated database table name
+	 */
+	public function tableName()
+	{
+		return 'index';
+	}
+
+	/**
+	 * @return array validation rules for model attributes.
+	 */
+	public function rules()
+	{
+		// NOTE: you should only define rules for those attributes that
+		// will receive user inputs.
+		return array(
+			array('id_application, vc_image, vc_url', 'required'),
+			array('id_application', 'numerical', 'integerOnly'=>true),
+			array('vc_image, vc_name, vc_url', 'length', 'max'=>128),
+		);
+	}
+
+	/**
+	 * @return array relational rules.
+	 */
+	public function relations()
+	{
+		// NOTE: you may need to adjust the relation name and the related
+		// class name for the relations automatically generated below.
+		return array(
+			'application'=>array(self::BELONGS_TO, 'application', 'id_application', 'joinType'=>'INNER JOIN'),
+    	);
+	}
+
+	/**
+	 * @return array customized attribute labels (name=>label)
+	 */
+	public function attributeLabels()
+	{
+		return array(
+			'id_image' => 'Id',
+			'vc_image' => 'Image',
+			'id_application' => 'Application',
+			'vc_name' => 'Name',
+			'vc_url' => 'Url',
+			'dt_received' => 'Received',
+			'dt_indexed' => 'Indexed',
+		);
+	}
+
+	protected function beforeValidate()
+	{
+		if($this->isNewRecord) {			
+			$this->dt_received = date('Y:m:d H:i:s');
+		}
+		return true;
+	}
+
+	public function moveTrash() {
+		$images_folder = Yii :: app()->getModule('image')->images_folder;
+		$thumbnail_folder = Yii::app()->getModule('image')->thumbnails_folder;
+
+		$criteria = new CDbCriteria;
+		$criteria->condition = "is_trash = 1 && id_image <> " . $this->id_image;
+		$models = Image :: model()->findAll($criteria);
+		foreach($models as $model) {
+			$file_name = $model->vc_image;
+			if (file_exists($images_folder . $file_name)) {
+				unlink($images_folder . $file_name);
+			}
+			if (file_exists($thumbnail_folder . $file_name . '.jpg')) {
+				unlink($thumbnail_folder . $file_name . '.jpg');
+			}
+			$model->delete();
+		}
+
+		$this->is_trash = 1;
+		return $this->save();
+	}
+
+	public function undoTrash() {
+		$this->is_trash = 0;
+		return $this->save();
+	}
+	
+	public function getUnIndexed() {
+		$criteria = new CDbCriteria;
+		$criteria->condition = "is_trash = 0 && dt_indexed IS NULL ";
+		$models = Image :: model()->findAll($criteria);		
+		return $models;
+	}
+	
+	public function getIndicator() {
+		if ($this->int_keypoint < 1) {
+			return array("error", "Something wrongs when index");
+		}
+		if ($this->int_keypoint < 100) {
+			return array("warning", "Diem nho qua hok co gia tri loi dung");
+		}
+		if ($this->int_keypoint < 500) {
+			return array("warning", "The image seems to be too small or in low quality. Please check it or provide another");
+		}
+		return array('ok', $this->int_keypoint);
+	}
+}
