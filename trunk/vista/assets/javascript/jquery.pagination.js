@@ -98,12 +98,12 @@ jQuery.fn.pagination = function(maxentries, opts){
 				appendopts = jQuery.extend({name:'page_size', id:"page_size"}, appendopts||{});
 				
 				var lnk = $("<input type='text' name='"+ appendopts.name + "'/>")
-						.css({'width': '30px', 'float': 'left'})
+						.css({'width': '30px', 'float': 'left', 'margin-right': '5px', 'height': '12px'})
 						.blur(function() {
 							if ($(this).val() > 0) {
 								opts.items_per_page = $(this).val()  
 							}
-						})
+						}).val(opts.items_per_page)
 				panel.append(lnk);
 				
 				var button = $("<a>Refresh</a>").addClass('prev').click(function() {
