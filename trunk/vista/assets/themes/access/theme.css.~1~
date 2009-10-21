@@ -1,0 +1,2129 @@
+/*********************************************************************************************/
+/*   Theme name:    Access for activeCollab                                                  */
+/*   Theme URI:     http://www.creativeworld.com.au/resources/activecollab-themes/access/    */
+/*   Description:   activeCollab theme designed by Leon Poole from Creative World            */
+/*   Author:        Leon Poole - Creative World Pty. Ltd.                                    */
+/*   Author URI:    http://www.creativeworld.com.au                                          */
+/*   Version:       1.0 Beta 2                                                               */
+/*   Released:      26 June, 2009                                                            */
+/*                                                                                           */
+/*   This theme was designed and built by Leon Poole at Creative World Pty. Ltd.             */
+/*	                                                                                         */
+/*	 By downloading and using this theme, your agree to the following:                       */
+/*	 - You may NOT resell this theme                                                         */
+/*	 - A link back or identifying mark to Creative World must be retained in the             */
+/*	   footer (either modified or unmodified)                                                */
+/*   - You may use this theme for personal or commercial projects                            */
+/*	 - You may modify, translate or distribute.                                              */
+/*	 - This message must be retained.                                                        */
+/*                                                                                           */
+/*********************************************************************************************/
+
+
+/******************************************************************************/
+/*                     EDIT YOUR LOGO FOR THE HEADER HERE                     */
+
+/*    You can either edit, delete or comment out the following styles to      */
+/*    have your default logo display in the header and login page             */
+
+#login_company_logo img,
+.site_logo img {
+	display: none;  /*this hides your default logo on the login page and in the header once logged in. Remove this line to show your default logo */
+	}
+
+
+.site_logo {
+	background: transparent url(images/logo.gif) no-repeat 0 0; /*this shows the Access theme logo. Remove this line to show your default logo */
+	height: 50px;
+	margin-top: 10px;
+	width: 190px;
+	margin:0;
+	}
+
+#login_company_logo {
+	background: #ffffff url(images/logo.gif) no-repeat center center; /*this shows the Access theme logo on the login page. Remove this line to show your default logo */
+	height: 100px;
+	margin-left: 0;
+	margin-top: 10px;
+	width: 100%;
+	margin:0;
+	}
+
+/*                    That's it! NO MORE EDITING AFTER THIS                    */
+/*******************************************************************************/
+
+/*******************************************************************************
+  Classes
+*******************************************************************************/
+
+.details {
+  color: #999;
+  overflow:hidden;
+}
+
+#recent_activities .details { margin-left:90px !important; }
+
+td.info .details {margin-left:0; height:auto; font-weight:normal;}
+
+.discussions td.name a+a,
+.details a { color:#999999 !important; font-weight:normal !important; }
+
+
+/*******************************************************************************
+  Buttons
+*******************************************************************************/
+
+button {
+  margin: 0px;
+  padding: 0px !important;
+  border: 0px;
+  background: transparent url(images/bg_button_a.gif) no-repeat scroll top right;
+  color: #222;
+  display: block;
+  float: left;
+  height: 24px;
+  margin-right: 6px;
+  padding-right: 12px !important;
+  text-decoration: none;
+  overflow: hidden;
+  font-size: 10px;
+  outline: none !important;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button, x:-moz-any-link {
+  padding-right: 8px !important;
+}
+
+button.default {
+  font-weight: bold !important;
+}
+
+button span {
+  background: transparent url(images/bg_button_span.gif) no-repeat;
+  display: block;
+  line-height: 14px;
+  padding: 5px 8px 5px 20px;
+  outline: none !important;
+}
+
+/* FIREFOX FIX */
+button span, x:-moz-any-link {
+  position: relative;
+  top: -1px;
+}
+
+button:hover { background-position: right center; }
+button:hover span { background-position: left center; }
+
+button:active { background-position: right bottom; }
+button:active span { background-position: left bottom; }
+
+button.simple {
+  float: none !important;
+  margin: 0px !important;
+  padding: 0px !important;
+  width: 82px;
+  background: #FFF url(images/bg_button_simple.gif) no-repeat;
+  display: inline !important;
+}
+
+* html button.simple {
+  margin-left: 4px !important;
+  position: relative;
+  top: 1px;
+}
+
+button.simple:hover {
+  background-position: center center;
+}
+
+.button_disabled {
+  opacity: 0.5;
+}
+
+.button_disabled:hover {
+  background-position: left top !important;
+}
+
+a.button {
+  border: 0px;
+  background: transparent  url(images/admin/bg-button-r.png) no-repeat scroll top right;
+  color: #FFF;
+  display: block;
+  float: left;
+  height: 24px;
+  margin-right: 6px;
+  padding-right: 12px; /* sliding doors padding */
+  text-decoration: none;
+  overflow: hidden;
+  font-size: 12px;
+  outline: none; /* hide dotted outline in Firefox */
+  font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;
+}
+
+a.button.default {
+  font-weight: bold !important;
+}
+
+a.button span {
+    background: transparent url(images/admin/bg-button-l.png) no-repeat;
+    display: block;
+    line-height: 14px;
+    padding: 5px 0 5px 12px;
+}
+
+* html a.button span {padding: 5px 0 6px 12px;}
+
+a.button:hover {background-position: right -24px; color:#FFFFFF;}
+a.button:hover span {background-position: left -24px;}
+
+a.button:active {background-position: right -48px;}
+a.button:active span {background-position: left -48px;}
+
+
+a.button span img {margin-left: 2px;}
+
+
+/*******************************************************************************
+  Construction
+*******************************************************************************/
+
+body { background-color: #DFE3E6; font-family:Arial, Helvetica, sans-serif;}
+
+#top { background-color: #ffffff;}
+
+#logged_user {
+ 	color: #FFF;
+	margin-right:35px;
+	font-size:11px;
+}
+
+#logged_user .inner { font-weight:normal;}
+
+#logged_user .inner a+a {color:#FF9951;}
+
+#logged_user a {
+	color: #FFF;
+	text-decoration: underline;
+	font-weight:bold;
+}
+
+#logged_user a:hover {
+	text-decoration: none;
+}
+
+#header {
+	background: transparent;
+	border: 0;
+	position:relative;
+}
+
+#menu a { color:#CCCCCC;}
+#menu a:hover { color:#FFFFFF;}
+
+#menu {float:right;margin-right:35px;position:absolute;right:0;}
+
+#menu ul.group li a {
+	background:url(images/navigation_background.gif) repeat-x top left;
+}
+
+#menu ul.group li.first a {
+	background:url(images/navigation_background_first.gif) no-repeat top left;
+}
+
+#menu ul.group li.last a {
+	background:url(images/navigation_background_last.gif) no-repeat top right;
+}
+
+#menu ul.group li.last a span.inner {
+	border: none !important;
+}
+
+#menu ul.group li a:hover {
+	background-position: bottom left;
+	text-decoration: none;
+}
+
+#menu ul.group li.last a:hover {
+	background-position: bottom right;
+}
+
+#menu ul.group li a span.inner {
+	border-right: 1px solid #434C58;
+	background:none !important;
+	font-size:11px;
+}
+
+#menu ul.group li a:hover span.inner {
+	border-right: 1px solid #434C58;
+}
+
+#menu .additional a span {
+  border-right:1px solid #434C58;
+}
+
+#menu ul.group li.single a {
+  background:url(images/navigation_background_first.gif) no-repeat top left;
+}
+
+#menu ul.group li.single a span.outer {
+	background: url(images/navigation_background_last.gif) no-repeat right top !important;
+}
+
+#menu ul.group li.single a span.inner {
+  border:none !important;
+}
+
+#menu ul.group li.single a:hover {
+	background-position: bottom left !important;
+}
+
+#menu ul.group li.single a:hover span.outer {
+	background-position: bottom right !important;
+}
+
+#menu ul.group #searchForm {
+	background:url(images/navigation_background_first.gif) no-repeat top left;
+}
+
+#menu ul.group #searchForm .inner {
+	background: url(images/navigation_background_last.gif) no-repeat right top;
+}
+
+#menu ul.group #searchForm input.text {
+	border: 1px solid #bfbd82;
+}
+
+#menu ul.group #searchForm button {
+	border: none;
+	color: #950000;
+}
+
+#menu ul.group #searchForm button span {
+  background: none !important;
+  padding: 0px !important;
+}
+
+#menu_item_people span.outer {background: transparent url(images/icons/people.png) no-repeat center 10px;}
+#menu_item_projects span.outer {background: transparent url(images/icons/projects.png) no-repeat center 10px;}
+#menu_item_calendar span.outer {background: transparent url(images/icons/calendar.png) no-repeat center 10px;}
+#menu_item_time span.outer {background: transparent url(images/icons/time.png) no-repeat center 10px;}
+#menu_item_status span.outer {background: transparent url(images/icons/speaker.png) no-repeat center 10px;}
+#menu_item_invoicing span.outer {background: transparent url(images/icons/invoices.png) no-repeat center 10px;}
+#menu_item_documents span.outer {background: transparent url(images/icons/docs.png) no-repeat center 10px;}
+
+#menu_item_assignments span.outer {background: transparent url(images/icons/assignments.png) no-repeat center 10px;}
+#menu_item_search span.outer {background: transparent url(images/icons/search.png) no-repeat center 10px;}
+#menu_item_starred_folder span.outer {background: transparent url(images/icons/star.png) no-repeat center 10px;}
+#menu_item_trash span.outer {background: transparent url(images/icons/trash.png) no-repeat center 10px;}
+#menu_item_quick_add span.outer {background: transparent url(images/icons/add.png) no-repeat center 10px;}
+
+#menu_item_incoming_mail span.outer {background: transparent url(images/icons/icon_menu.png) no-repeat center 10px;}
+
+#menu_item_apps span.outer {background: transparent url(images/icons/applications.png) no-repeat center 10px;}
+#menu_item_images span.outer {background: transparent url(images/icons/images.png) no-repeat center 10px;}
+
+#page_content {position:relative;}
+
+
+/*******************************************************************************
+  TABS
+*******************************************************************************/
+#tabs {
+	background: #ffffff url(images/bg-header.png) repeat-x left bottom;
+}
+
+#tabs .container {
+	background: transparent ;
+	border: 0;
+	width:1118px;
+}
+
+#tabs ul li a {
+	background: transparent;
+	color: #575132;
+	border: 0;
+	color:#AAAAAA;
+	height:30px;
+	margin-right:-6px;
+}
+#tabs ul li a:hover {
+	background: transparent;
+	color: #EEEEEE;
+}
+
+#tabs ul li a span {
+	background: transparent;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:13px;
+}
+
+#tabs ul li a.current {background:transparent url(images/bg-main-tab-l.png) 0 0 no-repeat;}
+
+#tabs ul li a.current span {
+	background: transparent url(images/bg-main-tab-r.png) 100% 0 no-repeat;
+	padding:10px 14px;
+	color:#FFFFFF;
+	font-weight:bold;
+}
+#tabs ul li a.current:hover {text-decoration:none;}
+
+#tabs ul li.first a,
+#tabs ul li.first a.current span {color: #FFA400;}
+#tabs ul li.first a span {font-weight:bold;}
+
+/*******************************************************************************
+  PAGE
+*******************************************************************************/
+
+#page { background:#DFE3E6 url(images/bg-page.gif) top left repeat-x;}
+
+#page .container {
+	background:transparent;
+	border: 0px;
+	width: 1120px;
+}
+
+#page .container_inner {
+	background: transparent;
+	padding: 0px 1px 20px 1px;
+}
+
+#page_header_container {
+  background: #353A41 url(images/bg-page-header.png) repeat-x 0 0;
+  border-top:1px solid #434C58;
+  border-bottom:1px solid #434C58;
+}
+
+#page_header {
+	background: transparent;
+	color:#FFF;
+	border:0;
+}
+
+#page_header h1#page_title {
+font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
+font-size:1.5em;
+font-weight:normal;
+}
+#page_header #page_details {
+	color: #CCCCCC;
+}
+#page_header #page_details a, #page_header #page_details span  {color: #999999;text-decoration: none;}
+#page_header #page_details a:hover {color: #CCCCCC;text-decoration: underline;}
+
+#page_actions .with_subitems ul {
+  background: #fcfcfc url(images/dropdown_background.gif) repeat-x top left;
+}
+
+#page_actions .with_subitems ul a {
+  color: #555;
+}
+
+#page_actions .with_subitems a.button {
+  border-bottom: 1px solid #353A41;
+}
+
+#breadcrumbs {
+  background: transparent url(images/bg-breadcrumbs.png) no-repeat left top;
+  color:#999999;
+  height:30px;
+  margin:0 36px;
+  padding:3px 5px;
+  width:1046px;
+  font-size:11px;
+}
+
+#breadcrumbs li { color: #BBB;}
+#breadcrumbs li.first { margin-left:15px;}
+
+#breadcrumbs a {color: #333;}
+
+#breadcrumbs a:hover {
+	text-decoration: underline;
+}
+
+/*******************************************************************************
+  Object Options (tabs on side)
+*******************************************************************************/
+
+.object_options li { margin-bottom:0;}
+
+.object_options a {	background: none !important;color: #333;border-left:1px solid #D6D6D6;}
+
+.object_options a span {
+	background: none !important;
+	padding:5px 10px;
+	text-align:left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:11px;
+}
+
+#object_quick_option_edit a span,
+#object_quick_option_edit_logo a span,
+#object_quick_option_edit_profile a span {font-weight:normal; font-style:italic;}
+
+.object_options a:hover {background-position:-17px top !important;}
+
+.object_options a:hover span {background-position:-17px bottom !important;}
+
+.main_object .object_options a {
+	color: #950000;
+}
+
+.object_options {
+-moz-border-radius-bottomleft:0;
+-moz-border-radius-bottomright:7px;
+-moz-border-radius-topleft:0;
+-moz-border-radius-topright:7px;
+background-color:#FFFFFF;
+border-color:#D6D6D6;
+border-style:solid;
+border-width:1px 1px 1px 0;
+float:right;
+list-style-image:none;
+list-style-position:outside;
+list-style-type:none;
+margin:0pt;
+padding:17px 17px 17px 0;
+position:absolute;
+right:40px;
+width:110px;}
+
+/*******************************************************************************
+  Flash
+*******************************************************************************/
+
+p#error  {
+  display: block;
+  background: url(images/information_bar_right_error.gif) no-repeat right top;
+  height: 30px;
+  overflow: hidden;
+  margin: 5px 40px 12px !important;
+  padding: 0px !important;
+  font-size: 11px;
+  font-weight: bold;
+  cursor: pointer;
+  border: 0px;
+}
+
+.flash .flash_inner {
+  display: block;
+  height: 30px;
+  padding: 9px 10px 0px 45px;
+}
+
+
+p#success {
+  background: url(images/information_bar_right_success.gif) no-repeat 100% 0;
+  display: block;
+  height: 30px;
+  overflow: hidden;
+  margin: 5px 40px 12px !important;
+  padding: 0px !important;
+  font-size: 11px;
+  font-weight: bold;
+  cursor: pointer;
+  border: 0px;
+}
+p#success:hover, p#error:hover {
+background-position:100% -30px;
+}
+
+#success .flash_inner {
+  color: #FFFFFF;
+  border: 0;
+  background: url(images/flash_success.gif) no-repeat left top;
+}
+#error .flash_inner {
+  color: #FFFFFF;
+  background: url(images/flash_error.gif) no-repeat left top;
+  border: 0px;
+}
+
+
+
+.object_list td a { color: #666;}
+
+.object_list td h3 a { color: #333;}
+
+#projects .object_list td h3 a {color:#3088CF;}
+#projects .object_list td h3 a:hover {color:#FF6D06;}
+
+/*******************************************************************************
+  Category List
+*******************************************************************************/
+
+.category_list a {
+-moz-border-radius-bottomleft:0;
+-moz-border-radius-bottomright:7px;
+-moz-border-radius-topleft:0;
+-moz-border-radius-topright:7px;
+background:#EEEEEE none repeat scroll 0% 0%;
+border-color:#CCCCCC;
+border-style:solid solid solid none;
+border-width:1px 1px 1px 0pt;
+color:#666666;
+margin-left:0;
+width:auto;
+font-weight:normal;
+font-size:12px;
+}
+
+.category_list a span {
+  background: transparent none repeat scroll 0% 0%;
+  padding:5px 10px;
+}
+
+.category_list .selected a {
+-moz-border-radius-bottomleft:0;
+-moz-border-radius-bottomright:7px;
+-moz-border-radius-topleft:0;
+-moz-border-radius-topright:7px;
+background:#FFFFFF none repeat scroll 0% 0%;
+border-color:#D6D6D6;
+border-style:solid;
+border-width:1px 1px 1px 0;
+color:#FF6D06;
+font-weight: bold;
+}
+
+.category_list .selected a span {
+  background: transparent none repeat scroll 0% 0%;
+  padding:7px 10px;
+}
+
+.category_list #manage_categories a,
+#manage_document_categories a,
+#manage_project_groups a {
+background:transparent none repeat scroll 0% 0%;
+border-color:#CCCCCC;
+border-width:0;
+color:#999999;
+font-weight:normal;
+font-style:italic;
+}
+
+.category_list #manage_categories a:hover,
+#manage_document_categories a:hover,
+#manage_project_groups a:hover {
+color:#666666;
+}
+
+.category_list #manage_categories a span:after,
+#manage_document_categories a span:after,
+#manage_project_groups a span:after,
+#object_quick_option_edit a span:after,
+#object_quick_option_edit_logo a span:after,
+#object_quick_option_edit_profile a span:after {
+content:"?";}
+
+
+/*******************************************************************************
+  Overlay Dialog
+*******************************************************************************/
+
+div.dialog a.close {
+  background: url(images/dialog_close.gif) no-repeat left top;
+}
+
+div.dialog a.close span {
+  display: none;
+}
+
+div.dialog div.body {
+  background: #FFF url(images/popup_background.gif) repeat-x left top;
+}
+
+/*******************************************************************************
+  Sections
+*******************************************************************************/
+
+h2.section_name {
+  border: 0px;
+  border-bottom:2px solid #D5D5D5;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+h2.section_name span.section_name_span {
+background:transparent none repeat scroll 0% 0%;
+line-height:24px;
+padding:0;
+
+}
+
+/*******************************************************************************
+    PAGINATION
+*******************************************************************************/
+
+.pagination {
+  border: 0px;
+}
+
+.pagination .inner_pagination {
+-moz-border-radius:7px;
+-webkit-border-radius: 7px;
+background-color:#F0F0F0;
+border-bottom:1px solid #AAAAAA;
+border-left:1px solid #DCDCDC;
+border-right:1px solid #DCDCDC;
+color:#AAAAAA;
+font-weight:normal;
+padding:5px 10px;
+}
+.pagination .inner_pagination span.current {background:transparent; border:0;}
+.pagination .inner_pagination span.current strong { font-weight:normal !important;}
+
+.pagination .inner_pagination a {
+/*background-color:#FFFFFF;
+border:1px solid #AAAAAA;*/
+font-weight:bold;
+text-decoration:none;
+padding:1px 2px;}
+
+.pagination .inner_pagination a:hover {
+/*border:1px solid #129CEC;*/ }
+
+#projects .pagination {margin-top:0;}
+
+/*******************************************************************************
+  Adiministration
+*******************************************************************************/
+
+#admin_sections .section {
+  border: 0px;
+  display: block;
+  width: 372px;
+  background: #FFF url(images/admin/admin_section_button_top.gif) no-repeat left top;
+}
+
+#admin_sections .section .section_inner {
+  display: block;
+  background: url(images/admin/admin_section_button_bottom.gif) no-repeat left bottom;
+  padding: 25px 20px 25px;
+  min-height: 75px;
+}
+
+#admin_sections .section.hover {
+  text-decoration: none !important;
+  background-image: url(images/admin/admin_section_button_top_hover.gif);
+}
+
+#admin_sections .section.hover .section_inner {
+  background-image: url(images/admin/admin_section_button_bottom_hover.gif);
+}
+
+/*******************************************************************************
+  Project overview
+*******************************************************************************/
+
+#project_details .button {
+  background-image: url(images/bg_button_a_pdetails.gif);
+  color:#333333;
+}
+
+#project_details .button span {
+  background-image: url(images/bg_button_span_pdetails.gif);
+}
+
+#project_details h2 {
+border-bottom:1px solid #DDDDDD;
+font-family:Arial,Helvetica,sans-serif;
+font-size:12px;
+font-weight:bold;
+margin:0pt 0pt 8px;
+padding:0pt 0pt 8px;
+}
+
+/*******************************************************************************
+  Dashboard
+*******************************************************************************/
+#dashboard #new_late_starred {
+  height: 51px;
+}
+
+#dashboard #new_objects_button .new_late_starred_inner_button,
+#dashboard #late_today_objects_button .new_late_starred_inner_button,
+#dashboard #starred_objects_button .new_late_starred_inner_button {
+background:none;
+}
+
+#dashboard #new_late_starred div.new_late_starred_button {
+  float: left;
+  margin-right: 11px;
+  background: #FBFBFB;
+  border: 0px;
+}
+
+#dashboard #new_late_starred div.new_late_starred_inner_button {
+  padding: 9px !important;
+  height: auto !important;
+  width: 310px;
+  border: 0px;
+  position:relative;
+}
+
+#dashboard #new_late_starred div p {
+text-indent:-9999px;
+float:left;
+height:0;
+width:0;
+}
+
+#dashboard #new_late_starred div p span {
+-moz-border-radius:4px;
+-webkit-border-radius: 4px;
+background: #AD3D3D no-repeat scroll 0 0 ; /* url(images/red-arrow-up.png)  Arrow to add in future version*/
+left:0;
+margin-left:10px;
+padding:2px 5px;
+position:absolute;
+text-indent:0;
+top:29px;
+color:#FFFFFF;
+}
+#dashboard #new_late_starred div.new_late_starred_button.selected p span,
+#dashboard #new_late_starred div:hover p span {
+background-color: #950000;
+}
+
+#dashboard #new_late_starred div h2 { display:inline; font-size:1.1em !important;margin-left:0pt;
+padding-left:0pt; left:0;}
+
+#dashboard #new_late_starred div.new_late_starred_button.hover {
+  border: 0px;
+}
+
+#dashboard #new_late_starred div.new_late_starred_button {
+  background-color:#ECECEC;
+  border:2px solid #E4E4E4;
+  -moz-border-radius:7px;
+  -webkit-border-radius: 7px;
+  width:330px;
+}
+
+#dashboard #new_late_starred div.new_late_starred_button.hover {
+  background-color:#E4E4E4;
+  -moz-border-radius:7px;
+  -webkit-border-radius:7px;
+  border:2px solid #D5D5D5;
+}
+
+#dashboard #new_late_starred div.new_late_starred_button.selected {
+  background-color: #FFF;
+  -moz-border-radius-topleft:7px;
+  -moz-border-radius-topright:7px;
+  -moz-border-radius-bottomleft:0px;
+  -moz-border-radius-bottomright:0px;
+  -webkit-border-top-left-radius:7px;
+  -webkit-border-top-right-radius:7px;
+  -webkit-border-bottom-left-radius:0px;
+  -webkit-border-bottom-right-radius:0px;
+  border-bottom:2px solid #FFF;
+  border-top:2px solid #D5D5D5;
+  border-left:2px solid #D5D5D5;
+  border-right:2px solid #D5D5D5;
+  height:50px;
+}
+
+#dashboard #new_objects_button_section {-moz-border-radius-topleft:0 !important;-webkit-border-top-left-radius: 0 !important ;}
+
+#dashboard #new_objects_button_section,
+#dashboard #late_today_objects_button_section,
+#dashboard #starred_objects_button_section {
+-moz-border-radius:7px;
+-webkit-border-radius:7px;
+border:2px solid #D5D5D5;
+padding:17px;
+padding-bottom:10px;
+margin-top:1px;
+background-color:#FFFFFF;
+}
+#dashboard #late_today_objects_button_section .odd > td,
+#dashboard #starred_objects_button_section .odd > td,
+#dashboard #new_objects_button_section .odd > td,
+#late_today .odd > td {}
+
+#dashboard #late_today {border:0; padding:0;}
+
+#dashboard #late_today_objects_button_section .even td, #dashboard #starred_objects_button_section .even td, #dashboard #new_objects_button_section .even td {background-color: #F4F4F5;}
+
+#late_today .details,
+#send_reminder_users_form .details {margin-left:0;font-weight:normal;}
+#send_reminder_users_form .details {clear:both;}
+
+#late_today .details a{ color:#888 !important; font-weight:normal; }
+#late_today .details a:hover{ color:#666 !important; background:transparent;text-decoration:underline;}
+
+#dashboard div.section_inner_block {
+  background: transparent ;
+  min-height: 100px;
+}
+
+#dashboard div.section_inner_block .even td,
+#dashboard div.section_inner_block .odd td {
+  font-weight:bold;
+}
+
+#dashboard #active_reminders table td.name span.project a {font-weight:normal;}
+
+#dashboard #active_reminders table td.name span.reminder_comment {
+background-color:#FEF6A8;
+border:1px dashed #E3D283;
+margin:10px 0 5px;
+padding:10px;
+}
+#dashboard #active_reminders table td.created_by a {color:#333333;}
+
+.ui-widget-content #active_reminders { padding:0; margin:0; border:0;}
+
+/** Project progress **/
+
+div.project_progress .progress_wrapper .progress {
+  background: #61A401 url(images/progress-bar-green.png) repeat scroll 100% 0% !important; /* new green progress bar */
+  /*background: #950000 url(images/progressbar.gif) !important; original red stripe progress bar */
+}
+
+/** Stripped background **/
+
+#assignments_filter table.filter,
+#time_report table.report,
+table.stripped_background {
+  background: url(images/system_message.gif);
+}
+
+/** Assignments **/
+
+#assignments #assignments_filter_details {
+  background-color: #f5f4dd;
+  border-color: #E7E3BC;
+}
+
+#assignments_list table td.project {font-weight:normal; width:200px;}
+#assignments_list table td {font-weight:bold;}
+
+/** Time Reports **/
+
+#global_time #time_report_details {
+  background-color: #f5f4dd;
+  border-color: #E7E3BC;
+}
+
+/*******************************************************************************
+  Calendar
+*******************************************************************************/
+
+#calendar table.calendar td.not_empty_day div.day_num {
+  background: #CCCCCC url(images/icons/gray-dot.gif) no-repeat right center;
+}
+
+#calendar table.calendar td.not_empty_day.weekend div.day_num {
+  background: #FFBC5E url(images/icons/weekend-gray-dot.gif) no-repeat right center;
+}
+
+#calendar table.calendar td.weekend {
+  background: #FFEABF;
+}
+
+#calendar table.calendar tbody td.weekend div.day_num {
+  background: #FFD284;
+}
+
+#calendar table.calendar tbody td.weekend div.day_num a{
+  background: #DFC08B;
+}
+
+#calendar table.calendar td.weekday {
+  background: #EEEEEE;
+}
+
+#calendar table.calendar tbody td div.day_num {
+  background: #DDDDDD;
+}
+
+
+#calendar table.calendar tbody td.today .day_num {
+  padding: 3px 5px;
+  border: 2px solid #950000;
+}
+
+table.jCalendar td.weekday.today,
+table.jCalendar td.weekday.today:hover {background-color:#950000; color:#FFFFFF;}
+
+#calendar table.calendar tbody td div.day_num a {
+  background: #B3B3B3;
+  color: #fff;
+}
+
+#calendar table.calendar tbody td.weekend div.day_num a{
+  background:#FF9D33;
+}
+
+.calendar_navigation_item {
+  background: url(images/pagination_left.gif) no-repeat left top;
+  border: 0px;
+}
+
+.calendar_navigation_item .calendar_navigation_item_inner {
+  background: url(images/pagination_right.gif) no-repeat right top;
+}
+
+#new_record {
+  background: url(images/system_message.gif);
+  width: 1001px;
+  /*width:100%; This was taking the edge of the table off the page (hidden) due to padding on td elements */
+}
+
+#search table.search_form {
+  background: url(images/system_message.gif);
+  margin: 0  0 10px;
+  width:1001px;
+}
+
+/* page settings */
+.container { width:1120px;}
+
+/* link styles */
+a,
+#pages .object_list td a,
+.object_list .discussions td a,
+.object_list .documents_table td a {color: #3088CF;}
+
+a:hover,
+#pinned_projects a.project_link:hover,
+.object_list .discussions td a:hover,
+.object_list .documents_table td a:hover { color:#FF6D06;}
+
+.project a, .user a {color:#333333;}
+
+a:active { outline: none; }
+
+
+/** DASHBOARD CHANGES **/
+
+#dashboard #active_projects {} /* Don't need to see long list of projects, delete if required */
+#dashboard #active_projects td dl {display:none;}
+#dashboard #active_projects td {padding:3px 3px 0;}
+
+#dashboard #active_projects td.icon { width:25px;}
+#dashboard #active_projects td.icon img {padding:2px;}
+
+#dashboard #active_projects td.name {width:490px;vertical-align:middle;}
+#dashboard #active_projects td.progress {width:206px /*545px*/; padding:0 !important;vertical-align:middle;}
+#dashboard #active_projects td.client {width:340px; padding:0 !important;vertical-align:middle;}
+#dashboard #active_projects td.client a { font-weight:normal; color:#999999; font-size:10px;vertical-align:middle;}
+
+#recent_activities td.project {text-align:left;}
+
+#dashboard div.project_progress .progress_wrapper {float:left;width:190px; margin-bottom:0;}
+#dashboard div.project_progress p {display:inline; float:left; font-size:90%; margin:0; padding: 4px 0 0 9px; text-align:left;}
+
+/* recent activities styles */
+
+#recent_activities td, #recent_activities td.name.completed {color:#FFFFFF;} /* makes ':' white to hide it */
+
+.checklist_activity td.name strong { background-color:#b75700; color:#FFFFFF; padding:0 4px 1px;-moz-border-radius:4px;-webkit-border-radius:4px;}
+
+/*completed activities */
+del.completed {color:#B3B3B3 !important;}
+del.completed a { font-weight:normal; color:#B3B3B3 !important;}
+del.completed a:hover { text-decoration:underline !important; background:none !important;}
+.name a {font-weight:bold;}
+.ticket_activity td.name strong { background-color:#bd314b; color:#FFFFFF;margin-right:-2px; padding:0 4px 1px;-moz-border-radius:4px;}
+.category_activity td.name strong { background-color:#1f86ce; color:#FFFFFF;margin-right:-2px; padding:0 4px 1px;-moz-border-radius:4px; border:1px solid #1A77AF;}
+.timerecord_activity td.name strong { background-color:#aed143; color:#FFFFFF;margin-right:-2px; padding:0 4px 1px;-moz-border-radius:4px; border:1px solid #7EBF3D;}
+.discussion_activity td.name strong { background-color:#1f86ce; color:#FFFFFF;margin-right:-2px; padding:0 4px 1px;-moz-border-radius:4px;}
+
+/* overrights */
+
+td.name strong {float:left; width:75px;}
+
+.milestone_activity td.name strong { background-color:#700000; color:#FFFFFF; padding:0 4px 1px;margin-right:-2px;-moz-border-radius:4px;}
+.comment_activity td.name strong { background-color:#D8AB17; color:#FFFFFF; padding:0 4px 1px;margin-right:-2px;-moz-border-radius:4px; border:1px solid #BF9414;}
+.file_activity td.name strong { background-color:#757F00; color:#FFFFFF; padding:0 4px 1px;margin-right:-2px; -moz-border-radius:4px; border:1px solid #535F00;}
+.page_activity td.name strong { background-color: #B79E76; color:#FFFFFF; padding:0 4px 1px;margin-right:-2px;-moz-border-radius:4px;}
+.task_activity td.name strong { background-color: #EB9000; color:#FFFFFF; padding:0 4px 1px;margin-right:-2px;-moz-border-radius:4px;}
+
+
+.ticket_activity td.completed strong,
+.milestone_activity td.completed strong {background-color:#DCDCDC; color:#FFFFFF;margin-right:-2px; padding:0 4px 1px;-moz-border-radius:4px;}
+
+#milestones td a {color:#3088CF;}
+#milestones td a:hover {color:#FF6D06;}
+
+#late_today_upcoming {width:590px;}
+
+.main_object {width:875px;
+background-color:#FFFFFF;
+-moz-border-radius-bottomleft:7px;
+-moz-border-radius-bottomright:7px;
+-moz-border-radius-topleft:7px;
+-moz-border-radius-topright:0;
+-webkit-border-radius:7px;
+border:1px solid #D6D6D6;
+padding:17px;
+}
+
+.attach_another_file .blockLabels,
+.quick_comment_form .blockLabels,
+#trash .blockLabels,
+#new_task .blockLabels,
+#add_time .blockLabels,
+#tickets .blockLabels,
+#new_file_version .blockLabels,
+.object_list .blockLabels,
+#new_comment .blockLabels,
+#page_content #roles .col_wide,
+.object_time_add .blockLabels,
+#search .blockLabels,
+#quick_search_form .blockLabels,
+#starred_objects_button_section_inner #starred,
+#starred .blockLabels,
+.add_task_form .blockLabels,
+.object_tasks .blockLabels,
+#reorder_container .blockLabels,
+.ui-dialog #edit_icon .blockLabels,
+#send_welcome_message .blockLabels,
+#dashboard_wide_sidebar_inner #recent_activities .blockLabels,
+#public_submit_admin .blockLabels,
+#timerecords .blockLabels,
+#send_reminder_users_form .blockLabels
+ { border:0; padding:0; background:transparent;}
+
+#page_content .add_task_form .due_date_and_priority .col_wide,
+#page_content .add_task_form .due_date_and_priority .col_wide2 {
+border:0;
+float:left;
+padding:0pt;
+width:auto;
+background:transparent;}
+
+.add_task_form {margin-bottom:17px;}
+
+div.resource .body {padding:0;}
+
+#starred_objects_button_section_inner #starred {background:transparent;}
+
+p.object_note {}
+
+.section_container {padding:0;}
+
+#quick_add .quick_add_section_body .section_container {
+padding:0 25px 0 17px !important;
+}
+
+.main_object .properties dt {
+color:#333333;
+font-weight:bold;
+padding-left:10px;
+width:130px;
+line-height:20px;
+}
+
+.main_object .properties dd {padding-left:125px;background:none;
+line-height:20px;
+margin:0 80px 0 0;
+padding-left:140px;
+border-bottom:0;}
+
+.main_object .details { margin-left:0; height:auto;}
+.subobjects_container { padding:0;width:100%; }
+
+#page_messages div.page_message {
+-moz-border-radius:7px;
+-webkit-border-radius:7px;
+background-color:#FEF6A8;
+border:1px solid #CDB566;
+}
+
+.content pre {background-color:#FFFFFF;}
+
+#quick_search_project_objects_result table td.name span.details,
+#assignments_list table td.name span.details,
+#projectVisibility .details
+{margin-left:0;}
+
+#quick_search_project_objects_result table td.name span.details a,
+#assignments_list table td.name span.details a { font-weight:normal;}
+
+.object_list {
+background-color:#FFFFFF;
+-moz-border-radius:7px;
+-webkit-border-radius:7px;
+border:1px solid #D6D6D6;
+padding:17px;
+width:850px;
+}
+
+.object_list table {border-top:1px dotted #DDDDDD;}
+#tickets .object_list table,
+#tickets .section_container {margin-bottom:17px;}
+
+tr.project_row td dl dt, tr.project_row td dl dd {line-height:16px;}
+
+.category_list {margin-top:14px;}
+
+#project_groups .details, #role .details {margin-left:0; overflow:visible; margin-bottom:15px;}
+
+#project_groups {
+background-color:#FFFFFF;
+-moz-border-radius:7px;
+-webkit-border-radius:7px;
+border:1px solid #D6D6D6;
+padding:5px 17px;
+width:475px;
+padding-bottom:10px;
+}
+#add_project_group {
+background-color:#FFFFFF;
+-moz-border-radius:7px;
+-webkit-border-radius:7px;
+border:1px solid #E47400;
+padding:5px 17px;
+width:470px;
+padding-bottom:10px;
+}
+
+.project_details_inner {padding:0;}
+
+#project_progress {
+padding:10px;
+}
+
+#active_projects, #people, #company_profile, #global_time, #calendar, #roles_administration, #role, #email_templates_settings, #modules_admin, #new_task, #timerecords, #late_today_upcoming, #assignments, #email_template_details, #category_definitions, #trash, #status_updates_archive, #manage_attachments, #api_settings, #new_file_version, #new_comment, #scheduled_tasks, #search, #starred, #tags, #view_tag, #upload_table_result,
+.admin_sections_container, .blockLabels, #module, #js_disabled, #taxrates, #currencies, #predefined_invoice_notes, #documents_module, #install_module, #status_module, #recent_activities, #public_submit_admin, #checklists, #incoming_mails,  #ical_subscribe, #project_home .project_home_left, #invoice_item_templates_list, #late_today, .repository_listing, #active_reminders {
+background-color:#FFFFFF;
+-moz-border-radius:7px;
+-webkit-border-radius:7px;
+border:1px solid #D6D6D6;
+padding:17px;
+}
+#global_time {padding-top:17px;}
+
+#checklists td a,
+#files td.details dl dd.filename a {color:#129CEC !important;} /*Access link blue*/
+#checklists td a:hover,
+#files td.details dl dd.filename a:hover {color:#FF6D06 !important;} /*Access link orange */
+
+#assignments table.filter {width:100%;}
+
+#page_content .col_wide {
+background-color:#FFFFFF;
+-moz-border-radius:7px;
+-webkit-border-radius:7px;
+border:1px solid #D6D6D6;
+padding:17px;
+width:490px;
+}
+#page_content .col_wide2 {
+background-color:#FFFFFF;
+-moz-border-radius:7px;
+-webkit-border-radius:7px;
+border:1px solid #E47400;
+padding:17px;
+width:450px;
+}
+
+#page_content .blockLabels .col_wide {border:0; padding:0;}
+
+#page_content #roles_administration .col_wide2 { border:0; padding:0; width:490px;}
+#page_content .col_wide2 .blockLabels, #module .blockLabels, #category_definitions .blockLabels {padding:0; border:0;}
+
+#people .company {margin-bottom:17px;}
+#people table td {padding:6px 5px;}
+
+p.details, td.name .details, #select_visiblity_1 .details, #fileVisibility .details {margin-left:0; font-weight:normal;}
+
+p.details.boxless {clear:both;}
+
+.multiupload_table td.description input {width:400px;}
+.multiupload_table {border-top:0 !important;}
+
+#global_time table.report {width:100%;}
+
+div.dialog, .empty_slate {-moz-border-radius:7px;-webkit-border-radius:7px;}
+div.dialog div.body {-moz-border-radius:7px;-webkit-border-radius:7px;}
+div.dialog h2 {background:transparent;}
+
+#update_status_form .blockLabels {-moz-border-radius:0;-webkit-border-radius:0;background-color:#FFFFD9;border:0; padding: 5px 10px 15px;}
+#update_status_form input {width:310px;}
+
+.uniForm .error input, .uniForm .error textarea, .uniForm .error select {
+border-color:#E48080;
+background-color:#F2C0C0;
+background-image: none;
+}
+
+table.jCalendar td.weekday {background-color:#EEE;}
+table.jCalendar td.weekday:hover {background-color:#DDD;}
+table.jCalendar td.weekend {background-color:#FFEABF;}
+table.jCalendar td.weekend:hover {background-color:#FFD284;}
+
+#show_me ul li {margin:10px 0;}
+
+h2.section_name, h3.section_name,
+.ui-dialog .ui-dialog-titlebar {
+background:#F5F5F5 url(images/bg-h2-h3-headers.png) repeat-x bottom;
+border-bottom:1px solid #D0D0D0;
+color:#333333;
+font-size:1.1em;
+font-weight:bold;
+height:24px;
+line-height:24px;
+margin:0;
+padding:4px 10px !important;
+}
+
+h2.section_name span.section_name_span_span, h3.section_name span.section_name_span_span {float:left;line-height:24px;}
+
+.project_details_buttons {padding:0;}
+
+#dashboard #active_projects #pinned_active_projects td a {color:#AF1B0A;}
+
+#modules_admin table.modules_list .version {text-align:right;}
+
+#quick_add .blockLabels,
+#records .blockLabels {padding:0; border:0;}
+
+#quick_add .object_list {
+padding:0 0 15px;
+width:658px;
+}
+#quick_add h4.section_name {
+-moz-border-radius-topleft:7px;
+-moz-border-radius-topright:7px;
+-webkit-border-top-left-radius:7px;
+-webkit-border-top-right-radius:7px;
+}
+#quick_add_checklist p.quick_add_checklist_task input {width:596px;}
+#quick_add textarea {width:596px;}
+#tabs ul li a span {padding:10px 14px; font-weight:normal;}
+#tabs ul {margin-left:45px;}
+#site_log {margin-left:41px;}
+.page_info_container {margin-left:14px; width:600px;}
+
+#powered_by img {display:none;}
+#powered_by {background:transparent url(images/powered.png) no-repeat scroll right top; height:50px; margin:0pt auto; padding:0pt 0pt 10px; width:1017px;}
+
+/*******************************************************************************
+  Login Form
+*******************************************************************************/
+
+#auth_dialog_container {
+  background: #ffffff url(images/bg_auth_access_bottom.png) repeat-x bottom center;
+  height:600px;
+}
+
+#auth_dialog_container_inner {}
+
+#auth_dialog button,
+.grey_button {
+  background-image: url(images/login_bg_button_a.gif);
+}
+
+#auth_dialog button span,
+.grey_button span {
+  background-image: url(images/login_bg_button_span.gif);
+}
+
+
+
+.search_form_button .grey_button { background-image: url(images/bg_button_a.gif); }
+
+.search_form_button .grey_button span { background-image: url(images/bg_button_span.gif); }
+
+
+
+#auth_dialog {
+  width: 500px;
+  background: #EDECEC url(images/login_form_top.gif) no-repeat left top;
+  border: 0px;
+}
+
+#auth_dialog div.ctrlHolder {padding:0;margin-left:20px;}
+
+#auth_dialog form {
+	background-color:#ffffff;
+}
+
+#auth_dialog .blockLabels {
+-moz-border-radius:7px;
+-webkit-border-radius:7px;
+background:#9DB311 url(images/bg_auth_access.png) repeat-x top center;
+padding:15px;
+border:1px solid #4d5764;}
+
+#auth_dialog .blockLabels .auth_elements {
+border:0; background:transparent;
+margin:0pt;
+padding:0pt !important;
+}
+
+#auth_dialog .blockLabels label+label+label {margin-left:110px;}
+#auth_dialog .blockLabels div div+div+div label {margin-left: 120px; width:250px; font-size:12px;}
+#auth_dialog .blockLabels div div+div+div input {margin:0;}
+
+#auth_dialog .blockLabels label {
+color:#FFFFFF;
+display:block;
+float:left;
+font-family:'Lucida Grande',Verdana,Verdana,Arial,Helvetica,sans-serif;
+font-size:14px;
+line-height:22px;
+width:120px;
+font-weight:normal;
+}
+#auth_dialog .blockLabels input {font-size:14px;
+padding:4px;
+width:250px;
+}
+
+.forgot_password_link {color:#CCCCCC;}
+
+#auth_dialog .error p.errorField {
+-moz-border-radius:4px;
+-webkit-border-radius:4px;
+background:#ED3B3B none repeat scroll 0% 0% !important;
+color:#FFFFFF;
+font-size:11px;
+margin-bottom:16px;
+padding:4px 0;
+text-align:center;
+width:auto;
+}
+
+#auth_dialog div.auth_elements div.ctrlHolder p.errorField { /*used when one field is missing on login/auth pages */
+-moz-border-radius:4px;
+-webkit-border-radius:4px;
+background:#ED3B3B none repeat scroll 0% 0% !important;
+color:#FFFFFF;
+font-size:11px;
+margin-bottom:5px !important;
+margin-left:120px;
+margin-right:18px;
+text-align:center;
+width:auto;
+padding:0 !important;
+}
+
+#auth_dialog #system_form_2 .auth_elements p { /* experimental - currently no 'success' class exists on aC 1.1.3 auth area */
+-moz-border-radius:4px;
+-webkit-border-radius:4px;
+background:#82AB2D none repeat scroll 0% 0%;
+color:#FFFFFF;
+font-size:11px;
+margin-bottom:16px;
+padding:4px 0;
+text-align:center;
+width:auto;
+}
+
+
+#auth_dialog .buttonHolder {border-top:1px solid #3F4650;}
+
+.buttonHolder {border:0; margin-top:0;}
+
+.auth_elements {padding-left: 16px !important;}
+
+#login_company_logo {background-color:#ffffff;}
+
+#tabs .container {height:30px;}
+
+p.empty_page a {color:#129CEC;}
+p.empty_page a:hover {color:#FF6D06;}
+
+.subobject_author .subobject_author_info {clear:both;
+float:left;
+margin:0;
+padding-top:0;
+color:#666666;
+font-size:11px;}
+
+.subobject_author .subobject_author_info a {
+clear:both;
+float:left;
+font-weight:bold;
+width:100%;
+font-size:12px;
+}
+
+.subobject_author .subobject_author_info br { display:none;}
+
+
+.even > td {background-color:#F4F4F5;}
+
+#pinned_active_projects tr:hover td, #other_active_projects tr:hover td {background-color:#FEF6A8;}
+
+#menu .additional a span {background:transparent url(images/menu_dropdown.gif) no-repeat scroll center center;}
+
+#quick_add .col_wide input, #quick_add .col_wide2 input {width:285px;}
+
+#subscribe_more_people .buttonHolder {
+border-top:1px solid #CCCCCC;
+float:left;
+margin-top:10px;
+padding-top:14px;
+width:100%;}
+
+.card .head h2.name {font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;}
+
+#timerecords button.grey_button {background-image:url(images/bg_button_a.gif);}
+#timerecords button.grey_button span {background-image:url(images/bg_button_span.gif);}
+
+ul.section_options {font-family:"Lucida Grande",Verdana,Verdana,Arial,Helvetica,sans-serif;}
+
+
+div.object_attachments div.body.brief table {width:100%; margin:0;}
+
+dl.details_list dd.light a {font-weight:normal;}
+
+.subobject {padding:8px 0;}
+
+div.dialog div.body { padding:18px;}
+
+#comments .object_comments .content {
+-moz-border-radius:5px;
+border:1px solid #CCCCCC;
+font-size:12px;
+line-height:150%;
+margin-bottom:0pt;
+margin-left:140px;
+margin-top:20px;
+min-height:65px;
+padding:15px !important;
+clear:none;
+background-color:#FFFFFF;}
+
+.object_comments div.object_attachments {
+-moz-border-radius-bottomleft:5px;
+-moz-border-radius-bottomright:5px;
+-moz-border-radius-topleft:0;
+-moz-border-radius-topright:0;
+background-color:#F5F5F5 !important;
+border-color:#CCCCCC;
+border-style:solid;
+border-width:0 1px 1px;
+margin-left:140px;
+margin-top:-5px;
+padding:7px 15px 15px;
+}
+
+.object_comments div.odd,
+.object_comments div.even {background-color:transparent;border-bottom:0; position:relative;}
+
+.object_comments .comment_options {float:right;
+margin-top:0pt !important;
+padding:0pt;
+position:absolute;
+right:0pt;
+top:10px;}
+
+
+.object_attachments .main_object h2.section_name {font-size:14px;height:16px;line-height:14px;padding:0pt;}
+.object_attachments h2.section_name span.section_name_span {padding:0;}
+
+div.object_attachments div.brief_files_view ul {margin-left:0;}
+
+.attach_another_file { background-color:#FFFFFF;}
+
+.object_subscriptions .body {padding:8px 10px !important;}
+
+.main_object .content {clear:both;padding-left:10px;padding-right:10px;margin-top:0;}
+
+.subobjects_container .quick_comment_form {padding:15px 20px 10px 0;background-color:#FFFFD9;
+padding:15px; margin-top:15px;}
+
+#ticket_changes {margin-top:17px !important;}
+#ticket_changes .ticket_change { margin:10px 10px 0;}
+
+.project_home_right #late_today table.common_table,
+.project_home_right #upcoming table.common_table { border-top:0; margin:0 0 17px;}
+
+#late_today td, #upcoming td {font-size:12px;font-weight:bold;}
+#late_today td.due span, #upcoming td.due span {font-size:10px;}
+
+.project_home_right .dashboard_sidebar #late_today h2,
+.project_home_right .dashboard_sidebar #upcoming h2 { margin:0;}
+
+div.file_revisions div.body {}
+
+#file_versions td.num {
+color:#888888;
+font-size:11px;
+width:50px;
+padding:0;
+text-align:center;
+}
+
+#file_versions td.thumbnail {text-align:left;width:90px;}
+
+.object_comments .subobject_author {
+background:transparent url(images/comment-speach-pull.png) no-repeat scroll right 16px;
+border:0;
+float:left;
+margin-top:20px;
+width:141px;}
+
+
+#page_content #add_invoice_form .col_wide {border:0; padding:0; width:478px;}
+#invoice_settings {margin-right:34px;}
+
+table.select_system_permissions {width:500px;} /* wider for new module permissions */
+
+.common_table.timerecords td {font-weight:normal;}
+#files .common_table td {font-weight:normal;}
+
+#install_module_button {margin-top:16px;min-height:26px;}
+
+#dashboard_sections {float:left;width:735px;}
+
+#project_home .project_home_left {
+float:left;
+width:698px;
+padding-top:10px;
+}
+
+#recent_activities del {color:#999999;}
+
+.ui-sortable li:hover { background-color:#FFFFD9;}
+.ui-sortable li:hover.empty_row {background-color:#FFFFFF; cursor:auto;}
+.ui-sortable li.ui-sortable-helper { background-color: #FF9; opacity:0.5; filter:alpha(opacity=50);}
+
+/* .common_table_list li .main_data {margin:0 30px 0 80px;} */
+
+p.dashboard_sections_loading img,
+p.quick_add_loading img {display:none;}
+p.dashboard_sections_loading,
+p.quick_add_loading {background: url(images/ajax-loader.gif) center center no-repeat;}
+
+
+#page_content #system_roles .col_wide { border:0; padding:0;}
+
+.ui-widget-overlay {background:#000000 none repeat scroll 0% 0% !important;
+       -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)" !important;
+       filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50) !important;
+       opacity:0.5; }
+
+div.resource {margin-bottom:0; padding-right:0;}
+
+.add_task_form .blockLabels { background-color:#FFFFD9;}
+
+.current_avatar { background:transparent; border-width:0 0 2px; border-color:#CCCCCC;}
+
+/*people profile pages */
+dl.details_list dt {text-align:left;}
+.main_object img.properties_icon {margin:0; border-bottom:1px solid #CCCCCC; border-right:0; border-left:0; border-top:0;}
+#company_details .properties {padding:0;}
+#user_details div.user_details_body_block {padding-left:99px;}
+#send_welcome_message .details {height:auto; overflow:auto;}
+
+.dashboard_wide_sidebar #recent_activities,
+.dashboard_wide_sidebar #active_projects {border:0; padding:0;}
+
+#recent_activities div.activity {padding:8px 5px 4px;}
+
+.dashboard_sidebar_list .name a {display:block;}
+
+.dashboard_sidebar_list li:hover {background-color:#FFFFD9;}
+
+.dashboard_sidebar ul.dashboard_sidebar_list li {
+border-top:1px solid #DDDDDD;
+line-height:22px;
+padding:0 5px;}
+.dashboard_sidebar ul li.with_icon img {margin-top:3px;}
+
+#pinned_projects h2 {margin:0; border-bottom:0;}
+
+.dashboard_sidebar {
+background:#FFFFFF url(images/bg-soft-grey.jpg) repeat-x 0 0;
+border:1px solid #CCCCCC;
+-moz-border-radius: 7px;
+-webkit-border-radius:7px;
+font-size:11px;
+margin:0 0 17px;
+overflow:hidden;
+}
+
+.dashboard_sidebar.alt {background:#FFFFFF url(images/bg-soft-grey.jpg) repeat-x 0 0; border-color:#CCCCCC;}
+
+#dashboard_sidebars {padding-top:33px;}
+
+#additional_steps div:hover.additional_step div.head {background-color:#FFFFCC; cursor:pointer;}
+#additional_steps .additional_step div.head { float:left;}
+#additional_steps .additional_step div.body { float:left; clear:left;}
+
+.project_progress .progress_wrapper .progress span {color:#EFEFEF;
+display:block;
+font-size:11px;
+font-weight:bold;
+line-height:14px;
+padding-left:2px;
+text-align:left;}
+
+.top_tabs li {position:relative; margin-right:7px;
+border-left:1px solid #CCCCCC;
+border-right:1px solid #CCCCCC;
+border-top:1px solid #CCCCCC;
+cursor:pointer;
+display:block;
+float:left;
+height:27px;
+line-height:27px;
+background-color:#EEEEEE;
+-moz-border-radius-topleft:5px;
+-moz-border-radius-topright:5px;
+-webkit-border-top-left-radius:5px;
+-webkit-border-top-right-radius:5px;
+z-index:0;}
+.top_tabs li a {color:#999999;font-size:12px;}
+.top_tabs li.selected a,
+.top_tabs li a:hover {color:#666666;}
+.top_tabs li a span.slip {
+-moz-border-radius:5px;
+-webkit-border-radius:5px;
+background:#950000 none repeat scroll 0% 0%;
+border:1px solid #BF0000;
+color:#FFFFFF;
+font-size:9px;
+height:11px;
+line-height:12px;
+padding:0 3px;
+position:absolute;
+top:-5px;
+right:-5px;
+z-index:999;
+font-weight:normal;
+}
+.top_tabs { padding:4px 0 0 0;}
+/* testing new style for ac 2.0, but not ready yet
+.taskcompletedactivitylog_activity .log_icon,
+.taskcompletedactivitylog_activity .log_time,
+.taskcompletedactivitylog_activity .log_info {opacity:0.5; color:#333333;}
+ */
+.taskcompletedactivitylog_activity a {color:#666666;}
+.taskcompletedactivitylog_activity a:hover {color:#333333;}
+
+
+.top_tabs li.selected,
+.dashboard_wide_sidebar {background-color:#FFFFFF;}
+
+#late_today table td.due,
+#late_today td.due,
+#upcoming td.due {min-width:80px;}
+
+.section_options a {
+-moz-border-radius:4px;
+-webkit-border-radius:4px;
+background: #EEEEEE none repeat scroll 0% 0%;
+color: #666666;
+display:block;
+font-family:Arial,Helvetica,sans-serif;
+font-size:11px;
+font-weight:bold;
+line-height:12px;
+padding:3px 8px;
+}
+.section_options a:hover {
+color:#333333;
+background-color:#CCCCCC;
+}
+
+.dashboard_sidebar #late_today { border:0; padding:0; background:transparent none repeat scroll 0% 0%; }
+
+
+
+#page_header_container #page_actions li a:hover {background-position: right -24px; color:#FFFFFF;}
+#page_header_container #page_actions li a:hover span {background-position: left -24px;}
+
+#page_header_container #page_actions li a:active {background-position: right -48px;}
+#page_header_container #page_actions li a:active span {background-position: left -48px;}
+
+#page_header_container #page_actions li a {
+background:transparent url(images/admin/bg-button-r.png) no-repeat scroll right top;
+border:0pt none;
+color:#FFFFFF;
+font-family:trebuchet MS;
+font-weight:bold;
+height:24px;
+}
+#page_header_container #page_actions a { font-size:12px !important;}
+
+#page_header_container #page_actions a span {
+    background: transparent url(images/admin/bg-button-l.png) no-repeat;
+    display: block;
+    line-height: 14px;
+    padding: 5px 12px;
+	height:14px;
+}
+#page_header_container #page_actions li.single a,
+#page_header_container #page_actions li.last a {border-right:0;}
+
+#page_header_container #page_actions li.last a:hover {background-position:right -24px;}
+#page_header_container #page_actions li.last a:active {background-position:right -48px;}
+
+#page_header_container #page_actions li {
+display:inline;
+float:left;
+margin:0 0 0 5px;}
+
+#page_header_container #page_actions li.single a {margin-left:0;}
+
+* html a.button span {padding: 5px 0 6px 12px;}
+
+.big_form .form_left_col input.long, .big_form .form_left_col input.title, .big_form .form_left_col textarea.long {
+min-width:686px;width:98%;}
+
+#page_actions .with_subitems ul {top:24px;}
+#page_header_container #page_actions .with_subitems ul li { margin:0;}
+#page_header_container #page_actions .with_subitems ul li a { color:#666666;}
+
+#page_actions .with_subitems ul a:hover {background:#FFEABF none repeat scroll 0% 0% !important;color:#333333 !important;}
+
+.dashboard_sidebar h2 {
+border-bottom:1px solid #DDDDDD;
+font-family:Arial,Helvetica,sans-serif;
+font-size:12px;
+font-weight:bold;
+margin:0pt 0pt 8px;
+padding:0pt 0pt 8px;
+}
+
+#recent_activities p.pagination.top {margin:0 0 10px;}
+
+#recent_activities h3 {
+-moz-border-radius:5px;
+-webkit-border-radius:5px;
+border-color:#DDDDDD rgb(204, 204, 204) rgb(187, 187, 187);
+border-style:solid;
+border-width:1px;
+color:#666666;
+margin:15px 0;}
+
+#show_me {
+border-left:1px dotted #CCCCCC;
+margin-top:34px;
+padding:0pt 0pt 0pt 10px;
+}
+
+
+h3.day_section {padding:4px 0px 4px 10px !important;}
+
+.top_tabs li.selected { background-color:#FFFFFF; border-bottom-width:0;}
+
+.dashboard_sidebar ul.dashboard_sidebar_list {border-bottom:1px solid #DDDDDD;}
+
+#who_is_online .title h2 { float:none;}
+
+h2.section_name ul.section_options li {
+float:right;
+margin-left:8px;
+}
+#pinned_projects.dashboard_sidebar .drop_here {
+border-color:#E4E2BD !important;
+border-style:dotted !important;
+border-width:1px 1px 0px;
+color:#CECCAB;
+display:none;
+font-weight:bold;
+padding:16px 0px;
+text-align:center;
+}
+#pinned_projects ul.droppable_active { background-color:#FFEABF !important;}
+
+.completed_tasks_table li.list_all_completed {padding:0pt 10px 10px !important; text-align:left;}
+
+#menu ul .item .badge {
+-moz-border-radius-bottomleft:5px;
+-moz-border-radius-bottomright:5px;
+-moz-border-radius-topleft:5px;
+-moz-border-radius-topright:5px;
+background:#950000 none repeat scroll 0% 0%;
+border:1px solid #BF0000;
+color:#FFFFFF;
+font-size:9px !important;
+font-weight:normal;
+height:11px;
+line-height:10px;
+padding:0pt 3px;
+position:absolute;
+right:8px;
+top:31px;
+z-index:999;}
+
+.height_limited_popup.quick_add_col_container {max-height:380px !important;}
+
+#quick_add .list_chooser label {padding:4px 5px;}
+#quick_add .list_chooser label.hover { background-color:#FFFFD9;}
+
+.quick_add_col_container .quick_add_col_left,
+.quick_add_col_container .quick_add_col_right {width:250px;}
+
+#quick_add .list_chooser label.selected { background-color:#FFFFB9;}
+
+.quick_add_col_container .quick_add_col_right .list_chooser {margin-right:5px !important;margin-left:0 !important;}
+
+#email_templates_settings h2 { text-transform:capitalize;}
+#email_templates_settings .section_container ul { list-style:none; margin:0 0 15px; padding:0;}
+#email_templates_settings .section_container li { padding:2px 0; margin:0;}
+#email_templates_settings h2.section_name span.section_name_span {padding:0 15px 0 0;}
+
+.admin_section .installation_details dl dd {width:440px;}
+
+.common_table_list {width:auto;}
+
+.add_task_form .buttonHolder {
+border-top:1px dotted #E0E0BF !important;
+margin:0pt 15px !important;
+padding:10px 0px !important;
+background:transparent none repeat scroll 0% 0%;}
+
+.add_task_form .form_right_col {
+border-left:1px dotted #E0E0BF !important;
+margin-bottom:10px;
+margin-top:10px;
+padding-left:10px;
+padding-top:0pt;
+}
+
+.add_task_form .form_right_col .ctrlHolder {margin-top:0;padding-top:0;}
+.add_task_form .form_left_col { border-right:0;}
+
+#jump_to_project {max-height:400px;}
+
+.dashboard_wide_sidebar .dashboard_wide_sidebar_inner_2 {
+overflow:hidden;
+padding:0;}
+
+#dashboard_sections .dashboard_wide_sidebar {
+-moz-border-radius-bottomleft:7px;
+-moz-border-radius-bottomright:7px;
+-moz-border-radius-topleft:0pt;
+-moz-border-radius-topright:7px;
+background-color:#FFFFFF;
+border:1px solid #CCCCCC;
+margin:0pt;
+overflow:hidden;
+padding:17px;}
+
+#project_home .dashboard_wide_sidebar {
+background:#FFF;
+border-style: none;
+border-width:0;
+margin:0;
+overflow:hidden;}
+
+#recent_activities div.activity div.log_time strong {font-weight:normal;}
+
+.project_details_left {}
+
+#project_meta {margin-bottom:17px;margin-left:0;min-height:110px;}
+#project_meta .project_meta_details {margin-left:65px; }
+
+#project_home #project_icon {
+background:white none repeat scroll 0% 0%;
+border:1px solid #D6D6D6;
+float:left;
+margin:33px 0px 0px;
+padding:5px;
+position:absolute;
+text-align:center;
+width:auto;}
+
+.ui-dialog .ui-dialog-titlebar-close span {background:url(images/dialog_close.png) no-repeat 0 0;height:18px;
+width:18px;}
+.ui-dialog .ui-dialog-titlebar-close span:hover {background-position: 0 -18px;}
+
+.ui-dialog .ui-dialog-titlebar-close {right:10px;top:15px;}
+
+#quick_add p#success { margin:5px 0 10px !important;}
+#quick_add p#success a, #quick_add p#success a:hover { color:#FFFFFF; text-decoration:underline;}
+
+.select_asignees_inline_widget .company_user span.responsible { background-color:#FFA400;-moz-border-radius:2px;color:#FFFFFF;}
+
+.select_asignees_inline_widget .company_name {background: none;}
+
+/** add, attached, manage etc. buttons **/
+
+a.button_add,
+a.assignees_button,
+.section_options a,
+#files td.options a.button_add,
+a.attach_another_file {
+-moz-border-radius:4px;
+-webkit-border-radius:4px;
+border-color:#D4D4D4 #D4D4D4 #ADADAD #D4D4D4;
+border-width:1px;
+border-style:solid;
+color:#666666;
+background: #FFFFFF url(images/bg_button_add_attache_manage.png) repeat-x 0 0;
+font-size:11px;
+font-weight:bold;
+line-height:20px;
+padding:0pt 10px;
+text-decoration:none;}
+
+#files td.options a.button_add { padding:4px 10px !important;}
+
+div.file div.file_preview {border:0;}
+
+a:hover.button_add,
+a:hover.assignees_button,
+.section_options a:hover,
+#files td.options a:hover.button_add,
+{
+border-color:#C1C1C1 #C1C1C1 #8E8E8E #C1C1C1;
+color:#333333;
+background-position: 0 -22px !important;
+}
+
+
+a.attach_another_file,
+a.add_task_link.button_add,
+a.button_add.attachments { background:#FFFFFF url(images/bg_button_add_attache_plus.png) no-repeat scroll 0 0 !important;line-height:20px;padding:0 10px 0 30px !important; display:block;}
+
+a.assignees_button { background: #FFFFFF url(images/bg_button_change_assignees.png) no-repeat scroll 0 0 !important; padding: 4px 10px 4px 30px !important;}
+
+/** end new buttons **/
+
+.table.jCalendar td.weekday.today {}
+
+.quick_comment_form .uniForm .ctrlHolderContainer { }
+.quick_comment_form .uniForm .buttonHolder { border-top: 1px dotted #E0E0BF !important;margin-top:15px;padding-top:10px; }
+.quick_comment_form .uniForm .ctrlHolderContainer .attachments { margin-top:0;}
+
+.ui-dialog .ui-dialog-titlebar {}
+
+a#select_company_icon,
+a#select_user_icon { padding-bottom:6px; background: transparent url(images/icon-bottom-shadow.png) no-repeat bottom center; float:right;}
+
+.quick_comment_form .uniForm .ctrlHolder {padding-top:0; margin-top:0;}
+
+.main_object .properties {padding:0 0 12px; margin-bottom:10px; background:transparent url(images/bg_bottom_properties.png) repeat-x bottom center; font-size:100%;}
+
+#recent_activities div.activity div.log_info div.log_info_head a,
+#recent_activities div.activity div.log_info div.log_info_head a:hover {color:#333333;}
+#recent_activities div.activity div.log_info div.log_info_head a+a,
+#recent_activities div.activity div.log_info div.log_info_head strong a {color:#3088CF;}
+#recent_activities div.activity div.log_info div.log_info_head a+a:hover {color:#FF6D06;}
+
+#recent_activities div.activity div.log_info_body .comment_body {
+-moz-border-radius:5px;
+background:#FFFFD9 none repeat scroll 0% 0%;
+border:1px dotted #E5DEB1;
+color:#7A6500;
+line-height:150%;
+margin-right:5px;
+margin-top:5px;
+overflow:hidden;
+padding:3px 10px 4px;}
+
+#recent_activities div.activity div.log_info_body .new_object_body,
+#recent_activities div.activity div.log_info_body .file_details {
+-moz-border-radius:5px;
+background:#F6F6F6 none repeat scroll 0% 0%;
+border:1px dotted #E6E6E6;
+color:#666666;
+line-height:150%;
+margin-right:5px;
+margin-top:5px;
+overflow:hidden;
+padding:6px 10px 6px;}
+
+#recent_activities div.activity div.log_info_body {
+background-color:#FFFFFF;
+margin-right:0;
+margin-top:3px;
+padding:0;
+}
+#recent_activities div.activity div.log_info div.log_info_foot {
+font-size:10px;
+margin:4px 0pt 5px 12px;}
+
+.log_info_foot a { color:#999999;}
+.log_info_foot a:hover { color:#666666;}
+
+.uniForm .blockLabels label {font-size:12px;}
+
+.first_subobject {border-top:0;}
+
+.comment .object_attachments .attachments_options li,
+.subobject .object_attachments .attachments_options li,
+.discussion .object_attachments .attachments_options li {
+display:block;
+float:left;
+margin-left:11px;
+line-height:22px;}
+
+.comment .object_attachments .attachments_options,
+.subobject .object_attachments .attachments_options,
+.discussion .object_attachments .attachments_options {
+float:right;
+font-size:11px;
+margin-top:0;
+}
+
+.comment .object_attachments h4,
+.subobject .object_attachments h4,
+.discussion .object_attachments h4 {
+border-bottom:0;
+color:#666666;
+font-size:12px;
+font-weight:bold;
+line-height:20px;
+margin:0 0 5px;
+padding:3px 0 0 5px;}
+
+div.object_attachments div.body.brief {
+-moz-border-radius:4px;
+background:#FFFFFF none repeat scroll 0% 0%;
+border:1px solid #E5E5E5;
+padding:5px !important;}
+
+div.object_attachments div.attach_another_file form { background-color:#FFFFD9;border:0;margin-bottom:0;}
+
+.comment .content p {margin:0;}
+
+table.timerecords {font-size:12px;}
+
+#quick_search_form #search_in_projects,
+#quick_search_form #search_for_people,
+#quick_search_form #search_for_projects {cursor:pointer;}
+
+/********************************************************************************/
+/*                  CUSTOM MODULE / ACTIVECOLLAB CORE HACKS                     */
+
+/*    The follow styles are an effort to support activecollab hacks             */
+/*    and 3rd party modules created by people in the activecollab community     */
+
+/* 'Ticket View Hack' by ncrossland (http://www.activecollab.com/forums/topic/3088/)             */
+/*  note: You should remove the inline styles in his hack and use CSS classes instead (as below) */
+#tickets td.category, #tickets td.assignee { text-align:right; }
+#tickets td.category span, #tickets td.assignee span { background-color:#FEF6A8; padding:1px 3px; }
+/* end ticket view hack by ncrossland */
+
+/* 'Reports Module' by appsMagnet (http://www.appsmagnet.com/)                  */
+#appsmagnet_reports {background-color:#FFFFFF;-moz-border-radius:7px;-webkit-border-radius:7px;border:1px solid #D6D6D6;padding:17px;} /* Add 'panel' wrap style to the module */
+#menu_item_reports span.outer {background: transparent url(images/icons/reports.png) no-repeat center 10px;} /* Add Reports icon to menu */
+/* end Reports Module styles */
+
+/* 'Planning Module' by appsMagnet (http://www.appsmagnet.com/)                  */
+#appsmagnet_planning {background-color:#FFFFFF;-moz-border-radius:7px;-webkit-border-radius:7px;border:1px solid #D6D6D6;padding:17px;} /* Add 'panel' wrap style to the module */
+#menu_item_planning span.outer {background: transparent url(images/icons/planning.png) no-repeat center 10px;} /* Add Planning icon to menu */
+/* end Planning Module styles */
+
+/* 'Budgeted vs. Spent Hours Module' by Martin (http://www.activecollab.com/forums/post/21074/ ) */
+/* Note: Uncomment the following style if you use this module (commented out because of conflict with Access theme styling) */
+/* div.project_progress .progress_wrapper .progress { background: #950000 url(images/wn_progressbar_blue.gif) !important; } */
+div.project_progress .progress_wrapper .progress_under { background: #950000 url(images/wn_progressbar_green.gif) !important; }
+div.project_progress .progress_wrapper .progress_over  { background: #950000 url(images/wn_progressbar_red.gif) !important; }
+div.project_progress .progress_wrapper .progress_near  { background: #950000 url(images/wn_progressbar_yellow.gif) !important; }
+/* end Budgeted vs. Spent Hours style */
+
+
+/*    Got a custom hack or module you'd like to see supported in Access theme?  */
+/*    Get in touch with us via our website - http://www.creativeworld.com.au    */
+
+/*                END CUSTOM MODULE / ACTIVECOLLAB CORE HACKS                   */
+/********************************************************************************/
