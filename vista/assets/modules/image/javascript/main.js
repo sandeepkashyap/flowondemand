@@ -477,7 +477,8 @@ App.image.ManageImages = function() {
 
 		},
 
-		resize_images: function(event, ui) {
+		resize_images: function(event, ui) {			
+			$('#images ul.tiled-images li.image').css('width', 130 + ui.value + "px").css('height', 170 + ui.value + "px");
 			$('#images ul.tiled-images img').css('width', 100 + ui.value + "px");
 		},
 	
@@ -514,7 +515,7 @@ App.image.ManageImages = function() {
 				$(this).addClass("swap");
 				
 				$('#slider').slider({
-					max: 285,
+					max: 280,
 					slide: App.image.ManageImages.resize_images,
 					change: App.image.ManageImages.resize_images
 				});
