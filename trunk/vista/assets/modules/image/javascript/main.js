@@ -484,7 +484,17 @@ App.image.ManageImages = function() {
 	
 		init_print_button : function() {
 			$("#print_button").click(function() {
-				var url = App.extendUrl(App.data.image_print_url, {width: $('#images ul.tiled-images img').eq(0).css('width')}) 
+				var pages = $('.pagination .current')
+				var page = 1
+				if (pages.length > 0) {
+					page = pages.eq(0).text();
+				}
+				var items_per_page = $(':input[name=page_size]').val()
+				var url = App.extendUrl(App.data.image_print_url, {
+					width: $('#images ul.tiled-images img').eq(0).css('width'),
+					page: page, 
+					items_per_page: items_per_page
+				}) 
 				window.open(url)
 				return false;
 			});
