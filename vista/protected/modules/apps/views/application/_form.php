@@ -48,3 +48,24 @@
 <?php echo Html::submitButton($update ? 'Save' : 'Create'); ?>
 </div>
 </form>
+<script>
+	$(function() {
+		$('#application_vc_repository').blur(function() {
+			var vc_repository = $.trim($(this).val());
+			if (/.*\s.*/.test(vc_repository)) {
+				if (confirm('Respository should not contain spaces. Do you want to replace spaces to "_" - under score character?')) {
+					$(this).val(vc_repository.replace(" ", "_"));
+				}				
+			}
+		})
+		$('#form_1').submit(function() {
+			var form = $(this);
+			var vc_repository = $.trim($('#application_vc_repository').val());
+			if (/.*\s.*/.test(vc_repository)) {
+				alert('Please remove spaces on Respository');
+				return false;
+			}
+			return true;
+		})
+	});
+</script>
