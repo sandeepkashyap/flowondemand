@@ -13,6 +13,7 @@ class application extends CActiveRecord
 	 * @var integer $int_teches
 	 * @var string $vc_name
 	 * @var string $vc_description
+	 * @var string $vc_repository
 	 */
 
 	/**
@@ -40,7 +41,7 @@ class application extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_client, vc_name, vc_description, int_size, int_nbanwsers, float_scoremin', 'required'),
+			array('id_client, vc_name, vc_description, int_size, int_nbanwsers, float_scoremin, vc_repository', 'required'),
 			array('id_client, int_size, int_nbanwsers, int_tokens, int_teches', 'numerical', 'integerOnly'=>true),
 			array('float_scoremin', 'numerical'),
 			array('vc_name', 'length', 'max'=>128),
@@ -73,6 +74,7 @@ class application extends CActiveRecord
 			'int_teches' => 'Technes',
 			'nm_sens' => 'Sens',
 			'vc_name' => 'Name',
+			'vc_repository' => 'Repository',
 			'vc_description' => 'Description',
 		);
 	}
