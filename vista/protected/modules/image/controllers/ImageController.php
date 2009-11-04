@@ -1,7 +1,25 @@
 <?php
 
 function helloError($errNo, $errStr, $errFile, $errLine, $errContext) {
-	//throw new Exception("KHANH KHUNG");
+	Yii::log("==============Error================");
+	Yii::log("errNo: $errNo");
+	Yii::log("errStr: $errStr");
+	Yii::log("errFile: $errFile");
+	Yii::log("errLine: $errLine");
+	Yii::log("errContext: $errContext");
+	Yii::log("===================================");
+	//throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
+}
+
+function resizeImageError($errNo, $errStr, $errFile, $errLine, $errContext) {
+	Yii::log("==============Error================");
+	Yii::log("errNo: $errNo");
+	Yii::log("errStr: $errStr");
+	Yii::log("errFile: $errFile");
+	Yii::log("errLine: $errLine");
+	Yii::log("errContext: $errContext");
+	Yii::log("===================================");
+	throw new CHttpException(400, "The application's max picture size (int_size) is too small!");
 }
 
 Yii :: import('apps.models.*');
@@ -297,6 +315,7 @@ class ImageController extends Controller {
 	}
 
 	public function actionQuickAdd() {
+		set_error_handler(resizeImageError);
 		$model = new Image;
 		if (isset ($_POST['Image'])) {
 			$images_folder = Yii :: app()->getModule('image')->images_folder;
@@ -326,7 +345,8 @@ class ImageController extends Controller {
 			$isImage = is_array($arr);
 
 			//resize image
-			$application = application::model()->findByPk($this->application_id);						
+			$application = application::model()->findByPk($this->application_id);
+			
 			if ($isImage && SThumbnail::resize_image($full_path, $full_path . '_rz', $application->int_size)) {
 				unlink($full_path);
 				rename($full_path . '_rz', $full_path);
