@@ -44,6 +44,12 @@
 <?php echo CHtml::encode($model->vc_name); ?>&nbsp;
             </dd>
             <dt class="label">
+<?php echo CHtml::encode($model->getAttributeLabel('vc_repository')); ?>
+            </dt>
+            <dd>
+<?php echo CHtml::encode($model->vc_repository); ?>&nbsp;
+            </dd>
+            <dt class="label">
 <?php echo CHtml::encode($model->getAttributeLabel('vc_description')); ?>&nbsp;
             </dt>
             <dd>

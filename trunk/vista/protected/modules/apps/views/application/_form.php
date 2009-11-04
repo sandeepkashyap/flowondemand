@@ -12,6 +12,10 @@
 <?php echo Html::activeTextField($model,'vc_name',array('size'=>60,'maxlength'=>128)); ?>
 </div>
 <div class="ctrlHolder">
+<?php echo Html::activeLabelEx($model,'vc_repository'); ?>
+<?php echo Html::activeTextField($model,'vc_repository',array('size'=>60,'maxlength'=>128)); ?>
+</div>
+<div class="ctrlHolder">
 <?php echo Html::activeLabelEx($model,'vc_description'); ?>
 <?php echo Html::activeTextArea($model,'vc_description',array('rows'=>6, 'cols'=>50)); ?>
 </div>

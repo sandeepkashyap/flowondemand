@@ -689,7 +689,8 @@ class ImageController extends Controller {
 	}
 	
 	private function _imageIndex($model, $verbose = false) {
-		$url = "http://find.pic2.eu/in/?r=diadeoo&i=" . ROOT_URL ."/uploads/{$model->vc_image}";
+		$url = "http://find.pic2.eu/in/?r={$model->application->vc_repository}&i=" . ROOT_URL ."/uploads/{$model->vc_image}";
+		//fb("Image index url: " . $url);
 		if ($verbose) {
 			echo  $url . '<br/>';			
 		}
