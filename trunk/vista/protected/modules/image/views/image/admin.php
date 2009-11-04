@@ -137,7 +137,3 @@
 	</div>
 </div>
 </div>
-<script type="text/javascript">
-document.write('Javascript is enabled');
-</script>
-<noscript>Javascript is disabled</noscript>
