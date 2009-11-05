@@ -315,7 +315,7 @@ class ImageController extends Controller {
 	}
 
 	public function actionQuickAdd() {
-		set_error_handler(resizeImageError);
+		//set_error_handler(resizeImageError);
 		$model = new Image;
 		if (isset ($_POST['Image'])) {
 			$images_folder = Yii :: app()->getModule('image')->images_folder;
@@ -341,16 +341,23 @@ class ImageController extends Controller {
 				fclose($fp);
 			}
 			
-			$arr = SThumbnail::getImageSize($full_path);
-			$isImage = is_array($arr);
 
 			//resize image
-			$application = application::model()->findByPk($this->application_id);
+//			$application = application::model()->findByPk($this->application_id);
+//			
+//			if (intval($application->int_size) < 100) {
+//				throw new CHttpException(400, "The application's max picture size (int_size) is too small!");
+//			}
 			
-			if ($isImage && SThumbnail::resize_image($full_path, $full_path . '_rz', $application->int_size)) {
-				unlink($full_path);
-				rename($full_path . '_rz', $full_path);
-			}
+//			$arr = SThumbnail::getImageSize($full_path);
+//			$isImage = is_array($arr);
+//			if ($isImage && SThumbnail::resize_image($full_path, $full_path . '_rz', $application->int_size)) {
+//				unlink($full_path);
+//				rename($full_path . '_rz', $full_path);
+//			}
+			// image has been resize, so need to get image size
+			$arr = SThumbnail::getImageSize($full_path);
+			$isImage = is_array($arr);
 			
 			if ($isImage && $file_name) {
 				$thumbnail_folder = Yii::app()->getModule('image')->thumbnails_folder;
@@ -379,7 +386,7 @@ class ImageController extends Controller {
 		die();
 	}
 
-	public function actionQuickUpdate() {
+	public function actionQuickUpdate() {		
 		$key = null;
 		$id = null;
 		list ($key, $id) = explode(':', isset($_POST['id']) ? $_POST['id'] : $_GET['id']);
@@ -388,6 +395,12 @@ class ImageController extends Controller {
 			$file = CUploadedFile::getInstanceByName('value');
 		}
 		$model = $this->loadImage($id);
+//		$application = $model->application;				
+//		if (intval($application->int_size) < 100) {
+//			fb($this->application_id);
+//			fb($application->int_size);
+//			throw new CHttpException(400, "The application's max picture size (int_size) is too small!");
+//		}
 		$file_name = null;
 		if ($file) {
 			$images_folder = Yii :: app()->getModule('image')->images_folder;
@@ -428,15 +441,18 @@ class ImageController extends Controller {
 				$max_size = $application->int_size;				
 			}
 			
+//			$arr = SThumbnail::getImageSize($full_path);
+//			$isImage = is_array($arr);
+//			
+//			if ($isImage && SThumbnail::resize_image($full_path, $full_path . '_rz', $max_size)) {
+//				unlink($full_path);
+//				rename($full_path . '_rz', $full_path);
+//			} else {
+//				
+//			}
+			
 			$arr = SThumbnail::getImageSize($full_path);
 			$isImage = is_array($arr);
-			
-			if ($isImage && SThumbnail::resize_image($full_path, $full_path . '_rz', $max_size)) {
-				unlink($full_path);
-				rename($full_path . '_rz', $full_path);
-			} else {
-				
-			}
 			
 			$thumbnail_folder = Yii::app()->getModule('image')->thumbnails_folder;
 			$thumbail_file = $thumbnail_folder . $file_name . ".jpg";
@@ -567,6 +583,10 @@ class ImageController extends Controller {
 	}
 	
 	public function actionCsvForm() {
+//		$application = application::model()->findByPk($this->application_id);
+//		if (intval($application->int_size) < 100) {
+//			throw new CHttpException(400, "The application's max picture size (int_size) is too small!");
+//		}
 		$this->layout = 'application.views.layouts.application';
 		if (Yii :: app()->request->isPostRequest) {
 			$images_folder = Yii :: app()->getModule('image')->images_folder;
@@ -709,7 +729,12 @@ class ImageController extends Controller {
 	}
 	
 	private function _imageIndex($model, $verbose = false) {
-		$url = "http://find.pic2.eu/in/?r={$model->application->vc_repository}&i=" . ROOT_URL ."/uploads/{$model->vc_image}";
+		$app_size = $model->application->int_size;
+		$s = "";
+		if ($app_size < ($model->int_width * $model->int_height)) {
+			$s = "&s=$app_size";
+		}
+		$url = "http://find.pic2.eu/in/?r={$model->application->vc_repository}&i=" . ROOT_URL ."/uploads/{$model->vc_image}$s";
 		//fb("Image index url: " . $url);
 		if ($verbose) {
 			echo  $url . '<br/>';			
