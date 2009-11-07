@@ -268,12 +268,18 @@ class SThumbnail extends CComponent {
             
             $width = imagesx($image);
             $height = imagesy($image);
+//			fb("$width x $height");
+
             
             $scale = $max_size / ($width * $height);
+//			fb("scale=$scale");
             
             if ($scale < 1) {
-                $new_width = floor($scale * $width);
-                $new_height = floor($scale * $height);
+                $new_width = floor(sqrt($scale) * $width);
+                $new_height = floor(sqrt($scale) * $height);
+				
+//				fb("new $new_width x $new_height");
+				
                 $tmp_img = imagecreatetruecolor($new_width, $new_height);
                 
                 $white_color = imagecolorallocate($tmp_img, 255, 255, 255);

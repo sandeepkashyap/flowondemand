@@ -66,4 +66,13 @@ class SiteController extends Controller
 		flush();
 		exit;
 	}
+	
+	public function actionHello() {
+		Yii::log('Yii hello');
+		for($i = 0; $i < 100; $i++) {
+			Yii::log("i: $i");
+			echo "i: $i<br/>";			
+		}
+		sleep(40);
+	}
 }
