@@ -41,7 +41,7 @@
 	    	<div class="editableInput" id="vc_name:<?=$model->id_image?>" title="Click to edit. Enter to save. Escapse to cancel"><?php echo $model->vc_name?></div>
 	    </td>
 	    <td class="hardbreak editableInput" id="vc_url:<?=$model->id_image?>" title="Click to edit. Enter to save. Escapse to cancel"><?php echo CHtml::encode($model->vc_url)?></div></td>
-	    <td><?php echo $model->dt_received? Yii::app()->dateFormatter->format('MMM. dd yyyy', $model->dt_received) : ''; ?></td>
+	    <td><?php echo $model->dt_received? Yii::app()->dateFormatter->format('MMM. dd yyyy H:m:s', $model->dt_received) : ''; ?></td>
 	    <td>	
 			<?php if ($model->dt_indexed):?>
 				<?php 
@@ -49,7 +49,7 @@
 				?>
 				<img alt="<?=$indicator?>" src="<?=Html::getImageUrl($indicator . "_indicator.gif")?>" alt="<?=$indicator . " " . $message?>" title="<?=$indicator . " " . $message?>"/>
 				
-				<?php echo $model->dt_indexed ? Yii::app()->dateFormatter->format('MMM. dd yyyy', $model->dt_indexed) : ''; ?>
+				<?php echo $model->dt_indexed ? Yii::app()->dateFormatter->format('MMM. dd yyyy H:m:s', $model->dt_indexed) : ''; ?>
 			<?php endif;?>
 		</td>
 	    <td class="action" nowrap="nowrap">
