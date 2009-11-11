@@ -380,9 +380,21 @@ class ImageController extends Controller {
 			$this->_imageIndex($model, false);
 		} else {
 		}
-		$this->renderPartial('quickAdd', array (
-			'model' => $model
-		));
+		if (isset($_REQUEST['format']) && $_REQUEST['format'] == 'json') {
+			$retval = array(
+				'id_image' => $model->id_image,
+	    		'vc_image' => $model->vc_image,
+	    		'vc_name' => $model->vc_name,
+	    		'vc_url' => $model->vc_url,
+	    		'dt_created' => $model->dt_received,
+	    		'dt_indexed' => $model->dt_indexed,        		 
+			);
+			echo "{success: true, model: ". CJSON::encode($retval) ."}";						
+		} else {
+			$this->renderPartial('quickAdd', array (
+				'model' => $model
+			));
+		}
 		die();
 	}
 
@@ -538,9 +550,13 @@ class ImageController extends Controller {
 		}
 		
 		$criteria->order = " id_image DESC";
+		
+		if (isset($_REQUEST['start']) && intval($_REQUEST['start']) > 0) {
+			$_GET['page'] = $_REQUEST['start']  / 5 + 1;
+		}
 
 		$pages = new CPagination(Image :: model()->count($criteria));
-		$pages->pageSize = isset($_GET['items_per_page']) && $_GET['items_per_page'] ? $_GET['items_per_page'] : self :: PAGE_SIZE;
+		$pages->pageSize = isset($_REQUEST['items_per_page']) && $_REQUEST['items_per_page'] ? $_REQUEST['items_per_page'] : self :: PAGE_SIZE;
 		$pages->applyLimit($criteria);
 
 		$sort = new CSort('Image');
@@ -548,12 +564,23 @@ class ImageController extends Controller {
 
 		$models = Image :: model()->findAll($criteria);
 
-		$this->renderPartial('getPage', array (
-			'models' => $models,
-			'pages' => $pages,
-			'sort' => $sort,
-
-		));
+		if (isset($_REQUEST['format']) && $_REQUEST['format'] == 'json') {
+			header('Content-Type: text/json');
+			$this->renderPartial('getPageJson', array (
+				'models' => $models,
+				'pages' => $pages,
+				'sort' => $sort,
+	
+			));			
+		} else {
+			$this->renderPartial('getPage', array (
+				'models' => $models,
+				'pages' => $pages,
+				'sort' => $sort,
+	
+			));			
+		}
+		
 		die();
 	}
 
