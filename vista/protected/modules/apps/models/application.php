@@ -84,6 +84,7 @@ class application extends CActiveRecord
 //		$command = $this->dbConnection->createCommand($sql);
 //		$array = $command->queryColumn();
 //		return $array[0] > 0;
-		return $user->id == $this->id_client;
+		fb("rank {$user->rank}");
+		return $user->rank >= 4 || $user->id == $this->id_client;
 	}
 }

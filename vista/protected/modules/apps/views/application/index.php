@@ -3,7 +3,7 @@
     	<h2>Select an application</h2><br/>
 <?php 
 //	$models = application::model()->findAllBySql("SELECT a.* FROM apps a JOIN app_user_admin t ON a.id = t.app_id AND t.user_id = " . Yii::app()->user->id);
-	$models = application::model()->findAllBySql("SELECT a.* FROM apps a WHERE a.id_client = " . Yii::app()->user->id . " ORDER BY vc_name");
+//	$models = application::model()->findAllBySql("SELECT a.* FROM apps a WHERE a.id_client = " . Yii::app()->user->id . " ORDER BY vc_name");
 	$arr_apps = CHtml::listData($models, 'id', 'vc_name');
 	$arr_apps[0] = '';
 	ksort($arr_apps);

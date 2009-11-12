@@ -16,6 +16,7 @@ class ApplicationController extends Controller
 
 	public function init() {
       	parent::init();
+		fb(Yii::app()->user);
       	$this->application_id = Yii :: app()->getRequest()->getParam('id', 0);
 		if ($this->application_id > 0 ) {
 			$this->loadapplication($this->application_id);
@@ -239,7 +240,8 @@ class ApplicationController extends Controller
 
 		Yii::app()->clientScript->registerScript('App.data.application_image_url', 'App.data.application_image_url=' . CJSON::encode(Yii::app()->createUrl('image/image/admin/application/')), 4);
 		
-		$models = application::model()->findAllBySql("SELECT a.* FROM apps a WHERE a.id_client = " . Yii::app()->user->id . " ORDER BY vc_name");
+		$models = application::model()->findAllBySql("SELECT a.* FROM apps a WHERE a.id_client = " . Yii::app()->user->id . " OR " . Yii::app()->user->rank . " >=4 ORDER BY vc_name");
+		fb("SELECT a.* FROM apps a WHERE a.id_client = " . Yii::app()->user->id . " OR " . Yii::app()->user->rank . " >=4 ORDER BY vc_name");
 		if (count($models) == 1) {
 			$this->redirect(Yii::app()->createUrl('image/image/admin/', array('application' => $models[0]->id)));
 			exit;
