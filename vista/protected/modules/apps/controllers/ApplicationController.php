@@ -234,19 +234,25 @@ class ApplicationController extends Controller
 	}
 
 	public function actionIndex() {
-		Yii::app()->wireframe->addBreadCrumb('Select an application');
 		
+		$criteria = new CDbCriteria;		
+		$criteria->condition = "id_client = " . Yii::app()->user->id . " OR " . Yii::app()->user->rank . " >=4";
+		$criteria->order = "vc_name ASC";		
+		
+		Yii::app()->wireframe->addBreadCrumb('Select an application');		
 		Yii::app()->wireframe->addPageAction('New Application', $this->createUrl('application/create'));
-
 		Yii::app()->clientScript->registerScript('App.data.application_image_url', 'App.data.application_image_url=' . CJSON::encode(Yii::app()->createUrl('image/image/admin/application/')), 4);
 		
-		$models = application::model()->findAllBySql("SELECT a.* FROM apps a WHERE a.id_client = " . Yii::app()->user->id . " OR " . Yii::app()->user->rank . " >=4 ORDER BY vc_name");
-		fb("SELECT a.* FROM apps a WHERE a.id_client = " . Yii::app()->user->id . " OR " . Yii::app()->user->rank . " >=4 ORDER BY vc_name");
-		if (count($models) == 1) {
+		//$models = application::model()->findAllBySql("SELECT a.* FROM apps a WHERE a.id_client = " . Yii::app()->user->id . " OR " . Yii::app()->user->rank . " >=4 ORDER BY vc_name ASC");
+		//fb("SELECT a.* FROM apps a WHERE a.id_client = " . Yii::app()->user->id . " OR " . Yii::app()->user->rank . " >=4 ORDER BY vc_name");
+		if (application::model()->count($criteria) == 1) {
 			$this->redirect(Yii::app()->createUrl('image/image/admin/', array('application' => $models[0]->id)));
 			exit;
 		}
-		$this->render('index', array('models' => $models));
+		else{
+			$models = application::model()->findAll($criteria);
+			$this->render('index', array('models' => $models));
+		}		
 	}
 
 }
