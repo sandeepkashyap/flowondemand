@@ -35,7 +35,7 @@ Pictomobile.Store.ImagesGridStore = new Ext.data.JsonStore({
     id: 'imagesStore',
     root: 'images',
     totalProperty: 'totalCount',
-    url: 'http://localhost/vista/index.php/image/image/getPage/application/4',
+    url: App.data.images_store,
     baseParams: {
         format: 'json',
         skip_layout: '1',

@@ -51,24 +51,24 @@ function Application(){
         
     } // End initMain().
     var createDataStores = function(){
-        application.imagesStore = new Ext.data.JsonStore({
-            url: 'mock/images.js',
-            root: 'images',
-            id: 'vc_name',
-            fields: application.imageRecord,
-            listeners: {
-                "add": {
-                    fn: function(inStore, inRecords, inIndex){
-                    }
-                },
-                "remove": {
-                    fn: function(inStore, inRecord, inIndex){
-                    }
-                }
-            }
-        });
-        
-        application.imagesStore.load();
+//        application.imagesStore = new Ext.data.JsonStore({
+//            url: 'mock/images.js',
+//            root: 'images',
+//            id: 'vc_name',
+//            fields: application.imageRecord,
+//            listeners: {
+//                "add": {
+//                    fn: function(inStore, inRecords, inIndex){
+//                    }
+//                },
+//                "remove": {
+//                    fn: function(inStore, inRecord, inIndex){
+//                    }
+//                }
+//            }
+//        });
+//        
+//        application.imagesStore.load();
     } //eo createDataStores
     var createRecordDescriptors = function(){
         // Create record descriptor for note.
@@ -102,7 +102,7 @@ function Application(){
                 // Categories accordion on left side of screen.
                 region: "west",
                 id: "categoriesArea",
-                title: "Categories",
+                
                 split: true,
                 width: 260,
                 minSize: 10,
@@ -116,7 +116,17 @@ function Application(){
                 layoutConfig: {
                     animate: true
                 },
-                items: []
+                items: [{
+					title: "Categories"
+				}, {
+                    title: "Upload",
+                    id: "uploadImage",
+                    xtype: "picuploadform"
+                }, {
+                    title: "Upload CSV",
+                    id: "uploadCsv",
+                    xtype: "picuploadform"
+                }]
             }, {
                 id: "toolbarArea",
                 autoHeight: true,
@@ -136,35 +146,6 @@ function Application(){
                 
                 }]
             }, {
-                region: "south",
-                id: "formArea",
-                split: true,
-                collapsible: true,
-                height: 330,
-                minSize: 10,
-                maxSize: 400,
-                title: "Upload",
-                layout: 'hbox',
-                layoutConfig: {
-                    padding: '5 10 5 10',
-                    align: 'stretch',
-                    pack: 'start',
-                },
-                items: [{
-                    title: "Upload",
-                    flex: 1,
-                    id: "uploadImage",
-                    xtype: "picuploadform"
-                }, {
-                    xtype: 'spacer',
-                    width: 10
-                }, {
-                    title: "Upload CSV",
-                    flex: 1,
-                    id: "uploadCsv",
-                    xtype: "picuploadform"
-                }]
-            }, {
                 region: "center",
                 id: "mainArea",
                 title: "Pictures",
@@ -172,7 +153,7 @@ function Application(){
                 items: [{
                     // Contacts icon view.
                     xtype: "imagesgrid",
-                    id: "imagesGrid"                    
+                    id: "imagesGrid"
                 }]
             }]
         });
