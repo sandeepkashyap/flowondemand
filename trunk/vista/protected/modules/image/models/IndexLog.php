@@ -67,7 +67,7 @@ class IndexLog extends CActiveRecord
 			return array("error", $this->vc_result);
 		}
 		if ($this->int_keypoint < 100) {
-			return array("warning", "Diem nho qua hok co gia tri loi dung");
+			return array("warning", "The keypoint is too small");
 		}
 		if ($this->int_keypoint < 500) {
 			return array("warning", "The image seems to be too small or in low quality. Please check it or provide another");
