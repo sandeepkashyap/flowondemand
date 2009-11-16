@@ -222,24 +222,9 @@ class ImageController extends Controller {
 	 * Lists all models.
 	 */
 	public function actionList() {
-		Yii :: app()->wireframe->addBreadCrumb(Yii :: t('application', 'List'));
-
-		Yii :: app()->wireframe->addPageAction(Yii :: t('application', 'New') . '', $this->createUrl('image/create'));
+		$this->layout = 'application.views.layouts.desktop';
 		
-		$criteria = new CDbCriteria;
-		$criteria->condition = "is_trash < 1 && id_application = $this->application_id";
-		$criteria->order = " id_image DESC";
-
-		$pages = new CPagination(Image :: model()->count($criteria));
-		$pages->pageSize = isset($_GET['items_per_page']) && $_GET['items_per_page'] ? $_GET['items_per_page'] : self :: PAGE_SIZE;
-		$pages->applyLimit($criteria);
-
-		$models = Image :: model()->findAll($criteria);
-
-		$this->render('list', array (
-				'models' => $models,
-				'pages' => $pages,	
-			));
+		$this->render('list');
 	}
 
 	/**

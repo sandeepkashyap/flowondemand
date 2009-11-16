@@ -6,7 +6,7 @@ Pictomobile.UploadForm = Ext.extend(Ext.form.FormPanel, {
     border: false,
     frame: true,
     labelWidth: 80,
-    url: 'http://localhost/vista/index.php/image/image/quickAdd/application/4/skip_layout/1',
+    url: App.data.image_quick_add_url,
     
     constructor: function(config){
         config = config ||
