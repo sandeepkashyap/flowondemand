@@ -489,8 +489,11 @@ class ImageController extends Controller {
 	}
 
 	public function actionLog() {
+		
 		$criteria = new CDbCriteria;
-		$criteria->order = " id DESC";
+		$criteria->join = "inner join `index` on index.id_image = index_log.id_image";
+		$criteria->condition = "index.id_application = $this->application_id";
+		$criteria->order = " index_log.id DESC";
 
 		$pages = new CPagination(IndexLog::model()->count($criteria));
 		$pages->pageSize = isset($_GET['items_per_page']) && $_GET['items_per_page'] ? $_GET['items_per_page'] : self :: PAGE_SIZE;
