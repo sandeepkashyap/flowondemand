@@ -1266,7 +1266,7 @@ table.jCalendar td.weekend:hover {background-color:#FFD284;}
 h2.section_name, h3.section_name,
 .ui-dialog .ui-dialog-titlebar {
 background:#F5F5F5 url(images/bg-h2-h3-headers.png) repeat-x bottom;
-border-bottom:1px solid #D0D0D0;
+border:1px solid #D0D0D0;
 color:#333333;
 font-size:1.1em;
 font-weight:bold;
