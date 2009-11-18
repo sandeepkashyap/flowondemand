@@ -57,6 +57,8 @@ class IndexLog extends CActiveRecord
 
 	protected function beforeValidate()
 	{
+		//fb('beforeValidate');
+		//fb("this->isNewRecord is $this->isNewRecord");
 		if($this->isNewRecord)
 			$this->dt_created = date('Y:m:d H:i:s');
 		return true;
