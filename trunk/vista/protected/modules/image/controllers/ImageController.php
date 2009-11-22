@@ -461,30 +461,41 @@ class ImageController extends Controller {
 				$model->int_width = $arr[0]; 
 				$model->int_height = $arr[1]; 				
 			}
+			if ($isImage && $model->save()) {
+				$this->_imageIndex($model);
+				echo CJSON::encode(array(
+					'src' => Yii::app()->createUrl("/site/thumbnail/image/$model->vc_image", array('rand'=>time())),
+					'width' => $model->int_width, 
+					'height' => $model->int_height, 
+					'full_url' => Yii::app()->createUrl('image/image/viewFull', array('id'=>$model->id_image, 'rand'=>time().'.jpg'))
+				));					
+				exit;
+			} else {
+				throw new CHttpException(500, "May be url uploaded file is invalid image or url is invalid. Please try again!");
+			}
 		} else {
 			$model->$key = $_POST['value'];
 		}
-
-		if ($isImage && $model->save()) {
-			$this->_imageIndex($model);
+		if ($model->save()) {
 			switch ($key) {
 				case 'id_application' :
 					die($model->application->vc_name);
 					break;
-				case 'vc_image' :
-					echo CJSON::encode(array(
-						'src' => Yii::app()->createUrl("/site/thumbnail/image/$model->vc_image", array('rand'=>time())),
-						'width' => $model->int_width, 
-						'height' => $model->int_height, 
-						'full_url' => Yii::app()->createUrl('image/image/viewFull', array('id'=>$model->id_image, 'rand'=>time().'.jpg'))
-					));					
-					exit;
 				default :
 					die($model->$key);
 					break;
 			}
 		} else {
-			throw new CHttpException(500, "May be url uploaded file is invalid image or url is invalid. Please try again!");
+			$errMsg = '';
+			
+				foreach($model->getErrors() as $errors)
+				{
+					foreach($errors as $error)
+					{
+						$errMsg .= "$error ";
+					}
+				}
+			throw new CHttpException(500, $errMsg);
 		}
 	}
 
