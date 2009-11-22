@@ -16,7 +16,6 @@ class ApplicationController extends Controller
 
 	public function init() {
       	parent::init();
-		fb(Yii::app()->user);
       	$this->application_id = Yii :: app()->getRequest()->getParam('id', 0);
 		if ($this->application_id > 0 ) {
 			$this->loadapplication($this->application_id);
@@ -107,6 +106,13 @@ class ApplicationController extends Controller
 		Yii::app()->wireframe->addBreadCrumb('Create Application');
 
 		$model=new application;
+		$model->int_size = 50000;
+		$model->int_nbanwsers = 1;
+		$model->float_scoremin = 0.25;
+		$model->int_tokens = 0;
+		$model->int_teches = 0;
+		$model->nm_sens = 0;
+		 
 		if(isset($_POST['application']))
 		{
 			$model->attributes=$_POST['application'];
