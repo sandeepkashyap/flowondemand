@@ -41,8 +41,8 @@
 	    	<div class="editableInput" id="vc_name:<?=$model->id_image?>" title="Click to edit. Enter to save. Escapse to cancel"><?php echo $model->vc_name?></div>
 	    </td>
 	    <td class="hardbreak editableInput" id="vc_url:<?=$model->id_image?>" title="Click to edit. Enter to save. Escapse to cancel"><?php echo CHtml::encode($model->vc_url)?></div></td>
-	    <td><?php echo $model->dt_received? Yii::app()->dateFormatter->format('MMM. dd yyyy H:m:s', $model->dt_received) : ''; ?></td>
-	    <td>	
+	    <td align="center"><?php echo $model->dt_received? Yii::app()->dateFormatter->format('MMM. dd yyyy H:m:s', $model->dt_received) : ''; ?></td>
+	    <td align="center">	
 			<?php if ($model->dt_indexed):?>
 				<?php 
 					list($indicator, $message) = $model->getIndicator();
