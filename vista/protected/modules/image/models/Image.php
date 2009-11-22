@@ -40,7 +40,8 @@ class Image extends CActiveRecord
 		return array(
 			array('id_application, vc_image, vc_url', 'required'),
 			array('id_application', 'numerical', 'integerOnly'=>true),
-			array('vc_image, vc_name, vc_url', 'length', 'max'=>128),
+			array('vc_image, vc_name', 'length', 'max'=>255),
+			array('vc_url', 'length', 'max'=>512),
 		);
 	}
 
