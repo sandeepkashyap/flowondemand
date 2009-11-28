@@ -29,7 +29,7 @@
 </div>
 <div class="ctrlHolder">
 <?php echo Html::activeLabelEx($model,'float_scoremin'); ?>
-<?php echo Html::activeTextField($model,'float_scoremin'); ?>
+<?php echo Html::activeTextField($model,'float_scoremin',array('class'=> 'required'); ?>
 </div>
 <div class="ctrlHolder">
 <?php echo Html::activeLabelEx($model,'int_tokens'); ?>
