@@ -153,6 +153,20 @@ UniForm = function() {
     }, 
     
     /**
+     * Validate if provided value is valid URL
+     *
+     * @param jQuery field
+     * @param string caption
+     */
+    validate_folder_name : function(field, caption) {
+    	if(field.val().match(/^[A-Za-z0-9-_%&\?\/.=]+$/)) {
+    		return true;
+    	} else {
+    		return caption + ' should not contain spaces or weird characters';
+    	}
+    }, 
+    
+    /**
      * Number is only valid value (integers and floats)
      *
      * @param jQuery field
