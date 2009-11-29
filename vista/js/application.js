@@ -1,6 +1,6 @@
 /*global Ext, Application */
 
-Ext.BLANK_IMAGE_URL = 'ext/resources/images/default/s.gif';
+Ext.BLANK_IMAGE_URL = App.data.homepage_url + '/ext/resources/images/default/s.gif';
 
 Ext.ns('Pictomobile');
 
@@ -51,24 +51,24 @@ function Application(){
         
     } // End initMain().
     var createDataStores = function(){
-//        application.imagesStore = new Ext.data.JsonStore({
-//            url: 'mock/images.js',
-//            root: 'images',
-//            id: 'vc_name',
-//            fields: application.imageRecord,
-//            listeners: {
-//                "add": {
-//                    fn: function(inStore, inRecords, inIndex){
-//                    }
-//                },
-//                "remove": {
-//                    fn: function(inStore, inRecord, inIndex){
-//                    }
-//                }
-//            }
-//        });
-//        
-//        application.imagesStore.load();
+        //        application.imagesStore = new Ext.data.JsonStore({
+        //            url: 'mock/images.js',
+        //            root: 'images',
+        //            id: 'vc_name',
+        //            fields: application.imageRecord,
+        //            listeners: {
+        //                "add": {
+        //                    fn: function(inStore, inRecords, inIndex){
+        //                    }
+        //                },
+        //                "remove": {
+        //                    fn: function(inStore, inRecord, inIndex){
+        //                    }
+        //                }
+        //            }
+        //        });
+        //        
+        //        application.imagesStore.load();
     } //eo createDataStores
     var createRecordDescriptors = function(){
         // Create record descriptor for note.
@@ -117,8 +117,8 @@ function Application(){
                     animate: true
                 },
                 items: [{
-					title: "Categories"
-				}, {
+                    title: "Categories"
+                }, {
                     title: "Upload",
                     id: "uploadImage",
                     xtype: "picuploadform"
@@ -135,13 +135,47 @@ function Application(){
                 items: [{
                     xtype: "toolbar",
                     items: [{
-                        text: "New Note",
-                        icon: "images/toolbarNote.gif",
-                        cls: "x-btn-text-icon"
+                        text: "Switch to: ",
                     }, {
                         xtype: "tbspacer"
-                    }, {
-                        xtype: "tbspacer"
+                    }, Pictomobile.AppSwitcher, {
+                        xtype: 'splitbutton',
+                        text: 'Edit application',
+                        iconCls: 'icon-form-edit',
+                        plugins: ['msgbus'],
+                        handler: function(){
+                            //this.publish('pictomobile.application.edit', {p: 'khanh'})
+                            new Ext.Window({
+                                id: "wndEditApplication",
+                                title: 'Edit application',
+                                modal: true,
+                                layout: 'fit',
+                                width: 500,
+                                height: 350,
+                                items: [{
+                                    xtype: 'picapplicationform',
+                                    data: {}
+                                }]
+                            }).show();
+                        },
+                        menu: [{
+                            text: 'New application',
+                            iconCls: 'icon-form-add',
+                            handler: function(){
+                                new Ext.Window({
+                                    id: "wndEditApplication",
+                                    title: 'New application',
+                                    modal: true,
+                                    layout: 'fit',
+                                    width: 500,
+                                    height: 350,
+                                    items: [{
+                                        xtype: 'picapplicationform',
+                                        data: {}
+                                    }]
+                                }).show();
+                            }
+                        }]
                     }]
                 
                 }]

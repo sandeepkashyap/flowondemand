@@ -71,6 +71,7 @@ Pictomobile.action = new Ext.ux.grid.RowActions({
         'icon-open': function(grid, record, action, row, col){
             Ext.ux.Toast.msg('Callback: OPEN', 'You have clicked row: <b>{0}</b>, action: <b>{0}</b>', row, action);
 			new Ext.Window({
+				id: "wndEditPicture",
 				title: 'Edit picture',
 				modal: true,
 				layout: 'fit',
@@ -114,8 +115,7 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 
     // configurables
     border: false // {{{
-    ,
-    initComponent: function(){
+    ,initComponent: function(){
     
         // hard coded - cannot be changed from outside
         var config = {
@@ -123,7 +123,7 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
             store: Pictomobile.Store.ImagesGridStore,
             plugins: [new Ext.ux.grid.RowEditor({
                 saveText: 'Update'
-            }), Pictomobile.action],
+            }), Pictomobile.action, 'msgbus'],
             columns: [{
                 dataIndex: 'thumbnail',
                 header: 'Thumbnail',
@@ -180,13 +180,12 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
         Ext.apply(this, Ext.apply(this.initialConfig, config));
         
         // call parent
-        Pictomobile.ImagesGrid.superclass.initComponent.apply(this, arguments);
-        
+        Pictomobile.ImagesGrid.superclass.initComponent.apply(this, arguments);        
+		
     } // eo function initComponent
     // }}}
     // {{{
-    ,
-    onRender: function(){
+    ,onRender: function(){
     
         // call parent
         Pictomobile.ImagesGrid.superclass.onRender.apply(this, arguments);
@@ -194,11 +193,16 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
         // load store
         this.store.load();
         
+		this.subscribe("pictomobile.appswitcher.change")
     } // eo function onRender
-    ,
-    renderThumbnail: function(val, cell, record){
+    ,renderThumbnail: function(val, cell, record){
         return "<img src=\"/vista/index.php/site/thumbnail/image/" + val + "\" alt=\"" + val + "\" title=\"\"/>";
     }
+	,onMessage: function(message, subject) {
+		this.store.load({
+			params: {application_id: subject.record.get('id')}
+		});
+	}
 }); // eo extend
 // register xtype
 Ext.reg('imagesgrid', Pictomobile.ImagesGrid);

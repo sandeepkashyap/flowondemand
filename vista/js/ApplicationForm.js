@@ -1,6 +1,6 @@
 Ext.ns('Pictomobile');
 
-Pictomobile.EditPictureForm = Ext.extend(Ext.form.FormPanel, {
+Pictomobile.ApplicationForm = Ext.extend(Ext.form.FormPanel, {
     // defaults - can be changed from outside
     fileUpload: true,
     border: false,
@@ -25,20 +25,21 @@ Pictomobile.EditPictureForm = Ext.extend(Ext.form.FormPanel, {
                 }
             }
         });
-        Pictomobile.UploadForm.superclass.constructor.call(this, config);
+        Pictomobile.ApplicationForm.superclass.constructor.call(this, config);
     },
     initComponent: function(){
+    
         // hard coded - cannot be changed from outsid
         var config = {
             defaultType: 'textfield',
             defaults: {
                 anchor: '-24'
             },
+			plugins: ['msgbus'],
             monitorValid: true,
             autoScroll: true, // ,buttonAlign:'right'
             labelAlign: 'top',
-            items: [
-			{
+            items: [{
                 name: 'Image[vc_image]',
                 fieldLabel: 'Image from computer',
                 xtype: 'fileuploadfield',
@@ -49,25 +50,15 @@ Pictomobile.EditPictureForm = Ext.extend(Ext.form.FormPanel, {
                 },
                 allowBlank: false
             }, {
-                xtype: 'box',
-                anchor: '',
-                isFormField: true,
-                fieldLabel: 'Image',
-                autoEl: {
-                    tag: 'div',
-                    children: [{
-                        tag: 'img',
-                        qtip: 'You can also have a tooltip on the image',
-                        src: '/vista/index.php/site/thumbnail/image/' + this.data.record.data.thumbnail 
-                    }, {
-                        tag: 'div',
-                        style: 'margin:0 0 4px 0',
-                        html: 'Image Caption'
-                    }]
-                }
-            }, {
                 name: 'Image[from_url]',
                 fieldLabel: 'From Url'
+            }, {
+                name: 'Image[vc_name]',
+                fieldLabel: 'Name'
+            }, {
+                name: 'Image[vc_url]',
+                fieldLabel: 'Url',
+                allowBlank: false
             }],
             buttons: [{
                 text: 'Reset',
@@ -84,7 +75,7 @@ Pictomobile.EditPictureForm = Ext.extend(Ext.form.FormPanel, {
         Ext.apply(this, Ext.apply(this.initialConfig, config));
         
         // call parent
-        Pictomobile.UploadForm.superclass.initComponent.apply(this, arguments);
+        Pictomobile.ApplicationForm.superclass.initComponent.apply(this, arguments);
         
     } // eo function initComponent
     /**
@@ -94,19 +85,28 @@ Pictomobile.EditPictureForm = Ext.extend(Ext.form.FormPanel, {
     onRender: function(){
     
         // call parent
-        Pictomobile.UploadForm.superclass.onRender.apply(this, arguments);
+        Pictomobile.ApplicationForm.superclass.onRender.apply(this, arguments);
         
         // set wait message target
         this.getForm().waitMsgTarget = this.getEl();
         
         // loads form after initial layout
         // this.on('afterlayout', this.onLoadClick, this, {single:true});
+		
+		this.subscribe('pictomobile.application.edit')
+		this.subscribe('pictomobile.application.add')
     
     } // eo function onRender
-    /**
+    
+	,onMessage: function(message, subject) {
+		console.log(message)
+		console.log(subject)
+	}
+	
+	/**
      * Load button click handler
-     */
-    ,
+     */   
+	,
     onResetClick: function(){
         this.form.reset();
         // any additional load click processing here
@@ -117,19 +117,16 @@ Pictomobile.EditPictureForm = Ext.extend(Ext.form.FormPanel, {
      */
     ,
     submit: function(){
-		console.log(this.data.record.data)
-		this.data.record.set('thumbnail', '7999-4790-6716-7938-3514');
-		Ext.getCmp('wndEditPicture').destroy();
-//        this.getForm().submit({
-//            url: this.url,
-//            scope: this,
-//            success: this.onSuccess,
-//            failure: this.onFailure,
-//            params: {
-//                format: 'json'
-//            },
-//            waitMsg: 'Saving...'
-//        });
+        this.getForm().submit({
+            url: this.url,
+            scope: this,
+            success: this.onSuccess,
+            failure: this.onFailure,
+            params: {
+                format: 'json'
+            },
+            waitMsg: 'Saving...'
+        });
     } // eo function submit
     /**
      * Success handler
@@ -149,7 +146,7 @@ Pictomobile.EditPictureForm = Ext.extend(Ext.form.FormPanel, {
             created: '',
             indexed: ''
         });
-        
+		
         Pictomobile.Store.ImagesGridStore.add(record);
         //        Ext.Msg.show({
         //            title: 'Success',
@@ -186,6 +183,6 @@ Pictomobile.EditPictureForm = Ext.extend(Ext.form.FormPanel, {
             buttons: Ext.Msg.OK
         });
     } // eo function showError
-}) //eo UploadForm
+}) //eo ApplicationForm
 // register xtype
-Ext.reg('editpictureform', Pictomobile.EditPictureForm);
+Ext.reg('picapplicationform', Pictomobile.ApplicationForm);

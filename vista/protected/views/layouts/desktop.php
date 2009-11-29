@@ -13,6 +13,7 @@
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/RowEditor.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/RowActions.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/Toast.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/MsgBus.js');?>
 		
 		<?=CHtml::cssFile(ROOT_URL . '/css/application.css');?>
 		
@@ -44,11 +45,16 @@
 			  return extended_url + parameters.join('&');
 			};
 			
+			App.data.homepage_url = '<?=ROOT_URL?>';
+			App.data.assets_url = '<?=ASSETS_URL?>';
+			
 			App.data.images_store = '<?=$this->createUrl('image/getPage/application/'. $this->application_id)?>';
 			App.data.image_quick_add_url = '<?=$this->createUrl('image/quickAdd/application/'. $this->application_id, array('skip_layout'=>1))?>';
 		</script>
 		
 		<?=CHtml::scriptFile(ROOT_URL . '/js/application.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/js/ApplicationForm.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/js/AppSwitcher.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/js/UploadForm.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/js/EditPictureForm.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/js/ImagesGrid.js');?>
