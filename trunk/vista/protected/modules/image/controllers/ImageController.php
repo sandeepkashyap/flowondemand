@@ -44,7 +44,11 @@ class ImageController extends Controller {
 
 	public function init() {
 		parent :: init();
-		$this->application_id = Yii :: app()->getRequest()->getQuery('application', 0);
+		if (isset($_POST['application_id'])) {
+			$this->application_id = $_POST['application_id'];
+		} else {
+			$this->application_id = Yii :: app()->getRequest()->getQuery('application', 0);
+		}
 		
 		$this->skip_layout = Yii :: app()->getRequest()->getQuery('skip_layout', 0);
 
