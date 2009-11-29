@@ -3,10 +3,16 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         
 		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ext-all.css');?>
+		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ux/RowEditor.css');?>
+		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ux/RowActions.css');?>
+		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ux/icons.css');?>
 		
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/adapter/ext/ext-base.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ext-all.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/FileUploadField.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/RowEditor.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/RowActions.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/Toast.js');?>
 		
 		<?=CHtml::cssFile(ROOT_URL . '/css/application.css');?>
 		
@@ -44,6 +50,7 @@
 		
 		<?=CHtml::scriptFile(ROOT_URL . '/js/application.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/js/UploadForm.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/js/EditPictureForm.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/js/ImagesGrid.js');?>
 		
 		
