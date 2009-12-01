@@ -58,7 +58,7 @@ Pictomobile.EditPictureForm = Ext.extend(Ext.form.FormPanel, {
                     children: [{
                         tag: 'img',
                         qtip: 'You can also have a tooltip on the image',
-                        src: '/vista/index.php/site/thumbnail/image/' + this.data.record.data.thumbnail 
+                        src:  App.data.thumnail_url + "/" + this.data.record.data.thumbnail 
                     }, {
                         tag: 'div',
                         style: 'margin:0 0 4px 0',
