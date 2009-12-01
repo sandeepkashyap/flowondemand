@@ -174,10 +174,21 @@ class ApplicationController extends Controller
 
 		$models=application::model()->findAll($criteria);
 
-		$this->render('list',array(
-			'models'=>$models,
-			'pages'=>$pages,
-		));
+		if (isset($_REQUEST['format']) && $_REQUEST['format'] == 'json') {
+			header('Content-Type: text/json');
+			$this->renderPartial('getPageJson', array (
+				'models' => $models,
+				'pages' => $pages,
+				'sort' => $sort,
+	
+			));			
+		} else {
+			$this->render('list',array(
+				'models'=>$models,
+				'pages'=>$pages,
+			));			
+		}
+		die();		
 	}
 
 	/**
