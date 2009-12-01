@@ -40,25 +40,54 @@ Pictomobile.ApplicationForm = Ext.extend(Ext.form.FormPanel, {
             autoScroll: true, // ,buttonAlign:'right'
             labelAlign: 'top',
             items: [{
-                name: 'Image[vc_image]',
-                fieldLabel: 'Image from computer',
-                xtype: 'fileuploadfield',
-                emptyText: 'Select an image',
-                buttonText: '',
-                buttonCfg: {
-                    iconCls: 'upload-icon'
-                },
+                name: 'application[vc_name]',
+				dataIndex: 'vc_name',
+                fieldLabel: '* Name',
                 allowBlank: false
             }, {
-                name: 'Image[from_url]',
-                fieldLabel: 'From Url'
+                name: 'application[vc_repository]',
+				dataIndex: 'vc_repository',
+                fieldLabel: '* Repository',
+				allowBlank: false
             }, {
-                name: 'Image[vc_name]',
-                fieldLabel: 'Name'
+                name: 'application[vc_description]',
+				dataIndex: 'vc_description',
+                fieldLabel: '* Description'
             }, {
-                name: 'Image[vc_url]',
-                fieldLabel: 'Url',
+                name: 'application[int_size]',
+				dataIndex: 'int_size',
+                fieldLabel: 'Image size',
                 allowBlank: false
+            }, {
+                name: 'application[int_nbanwsers]',
+				dataIndex: 'int_size',
+                fieldLabel: '* Anwsers',
+                allowBlank: false
+            }, {
+                name: 'application[float_scoremin]',
+				dataIndex: 'float_scoremin',
+                fieldLabel: '* Score min',
+                allowBlank: false
+            }, {
+                name: 'application[int_size]',
+				dataIndex: 'int_size',
+                fieldLabel: 'Image pixels',
+                allowBlank: false
+            }, {
+                name: 'application[int_tokens]',
+				dataIndex: 'int_tokens',
+                fieldLabel: 'Tokens',
+                allowBlank: true
+            }, {
+                name: 'application[int_teches]',
+				dataIndex: 'int_teches',
+                fieldLabel: 'Technes',
+                allowBlank: true
+            }, {
+                name: 'application[nm_sens]',
+				dataIndex: 'nm_sens',
+                fieldLabel: 'Sens',
+                allowBlank: true
             }],
             buttons: [{
                 text: 'Reset',
@@ -95,6 +124,8 @@ Pictomobile.ApplicationForm = Ext.extend(Ext.form.FormPanel, {
 		
 		this.subscribe('pictomobile.application.edit')
 		this.subscribe('pictomobile.application.add')
+		
+		this.getForm().loadRecord(this.data.record);
     
     } // eo function onRender
     
