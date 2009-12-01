@@ -1,7 +1,6 @@
 Ext.ns('Pictomobile');
 Ext.ns('Pictomobile.Record');
 Ext.ns('Pictomobile.Store');
-Ext.ns('Pictomobile.Store');
 
 /**
  * @class Example.Grid

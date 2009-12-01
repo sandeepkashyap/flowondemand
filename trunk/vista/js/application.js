@@ -145,6 +145,7 @@ function Application(){
                         plugins: ['msgbus'],
                         handler: function(){
                             //this.publish('pictomobile.application.edit', {p: 'khanh'})
+							var rec = Ext.getCmp('appSwitcher').getStore().getById(Ext.getCmp('appSwitcher').getValue())
                             new Ext.Window({
                                 id: "wndEditApplication",
                                 title: 'Edit application',
@@ -154,7 +155,7 @@ function Application(){
                                 height: 350,
                                 items: [{
                                     xtype: 'picapplicationform',
-                                    data: {}
+                                    data: {record: rec}
                                 }]
                             }).show();
                         },
@@ -162,6 +163,7 @@ function Application(){
                             text: 'New application',
                             iconCls: 'icon-form-add',
                             handler: function(){
+								
                                 new Ext.Window({
                                     id: "wndEditApplication",
                                     title: 'New application',
@@ -171,7 +173,14 @@ function Application(){
                                     height: 350,
                                     items: [{
                                         xtype: 'picapplicationform',
-                                        data: {}
+                                        data: {record:  new Pictomobile.Record.Application({
+											int_nbanwsers: 1,
+											int_tokens: 0,
+											int_size: 50000,
+											float_scoremin: 0.25,
+											int_teches: 0,
+											nm_sens: 0
+										})}
                                     }]
                                 }).show();
                             }
