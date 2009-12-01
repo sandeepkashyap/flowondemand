@@ -195,7 +195,7 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 		this.subscribe("pictomobile.appswitcher.change")
     } // eo function onRender
     ,renderThumbnail: function(val, cell, record){
-        return "<img src=\"/vista/index.php/site/thumbnail/image/" + val + "\" alt=\"" + val + "\" title=\"\"/>";
+        return "<img src=\"" + App.data.thumnail_url + "/" + val + "\" alt=\"" + val + "\" title=\"\"/>";
     }
 	,onMessage: function(message, subject) {
 		this.store.load({

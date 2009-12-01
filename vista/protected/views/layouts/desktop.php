@@ -48,6 +48,7 @@
 			App.data.homepage_url = '<?=ROOT_URL?>';
 			App.data.assets_url = '<?=ASSETS_URL?>';
 			
+			App.data.thumnail_url = '<?=Yii::app()->createUrl('site/thumbnail/image/')?>';
 			App.data.images_store = '<?=$this->createUrl('image/getPage/application/'. $this->application_id)?>';
 			App.data.image_quick_add_url = '<?=$this->createUrl('image/quickAdd/application/'. $this->application_id, array('skip_layout'=>1))?>';
 		</script>
