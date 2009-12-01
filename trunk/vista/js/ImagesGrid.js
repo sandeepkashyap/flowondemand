@@ -161,6 +161,7 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
             ,
             // paging bar on the bottom
             bbar: new Ext.PagingToolbar({
+				id: 'imagePaging',
                 pageSize: 5,
                 store: Pictomobile.Store.ImagesGridStore,
                 displayInfo: true,
@@ -198,9 +199,9 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
         return "<img src=\"" + App.data.thumnail_url + "/" + val + "\" alt=\"" + val + "\" title=\"\"/>";
     }
 	,onMessage: function(message, subject) {
-		this.store.load({
-			params: {application_id: subject.record.get('id')}
-		});
+		this.store.setBaseParam('application_id', subject.record.get('id')); 
+		this.store.load();
+		
 	}
 }); // eo extend
 // register xtype
