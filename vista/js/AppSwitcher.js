@@ -32,10 +32,12 @@ Pictomobile.Record.Application = Ext.data.Record.create([{
 }]);
 
 var appsStore = new Ext.data.JsonStore({
-    url: 'http://localhost/vista/mock/apps.js',
+    url: App.data.apps_store,
     root: 'apps',
     baseParams: {
-        action: 'categories'
+        format: 'json',
+        skip_layout: '1',
+        items_per_page: 20
     },
     fields: Pictomobile.Record.Application
 });
