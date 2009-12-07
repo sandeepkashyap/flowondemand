@@ -43,10 +43,10 @@ Pictomobile.Store.ImagesGridStore = new Ext.data.JsonStore({
 }); // column model
 // Create RowActions Plugin
 Pictomobile.action = new Ext.ux.grid.RowActions({
-    header: 'Actions'    			
-	//,autoWidth:false
+    header: 'Actions'    //,autoWidth:false
     //,hideMode:'display'
-    ,keepSelection: true,
+    ,
+    keepSelection: true,
     actions: [{
         qtipIndex: 'qtip1',
         iconCls: 'icon-open',
@@ -69,25 +69,22 @@ Pictomobile.action = new Ext.ux.grid.RowActions({
         },
         'icon-open': function(grid, record, action, row, col){
             Ext.ux.Toast.msg('Callback: OPEN', 'You have clicked row: <b>{0}</b>, action: <b>{0}</b>', row, action);
-			new Ext.Window({
-				id: "wndEditPicture",
-				title: 'Edit picture',
-				modal: true,
-				layout: 'fit',
-				width: 500,
-				height: 350,
-				items: [
-					{
-						xtype: 'editpictureform',
-						data: {
-							grid: grid,
-							record: record,
-							row: row							
-						}
-					}
-				
-				]
-			}).show();
+            new Ext.Window({
+                id: "wndEditPicture",
+                title: 'Edit picture',
+                modal: true,
+                layout: 'fit',
+                width: 500,
+                height: 350,
+                items: [{
+                    xtype: 'editpictureform',
+                    data: {
+                        grid: grid,
+                        record: record,
+                        row: row
+                    }
+                }]
+            }).show();
         },
     }
 });
@@ -114,7 +111,8 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 
     // configurables
     border: false // {{{
-    ,initComponent: function(){
+    ,
+    initComponent: function(){
     
         // hard coded - cannot be changed from outside
         var config = {
@@ -126,32 +124,32 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
             columns: [{
                 dataIndex: 'thumbnail',
                 header: 'Thumbnail',
-                width: 200,
-                renderer: this.renderThumbnail.createDelegate(this)
+                width: 110,
+                renderer: this.renderThumbnail.createDelegate(this),
+                editable: false
             }, {
-                dataIndex: 'name',
-                header: 'Name',
-                width: 40,
+                dataIndex: 'url',
+                header: 'Url/Name',
+                renderer: this.renderUrlAndName.createDelegate(this),
+                width: 250,
                 editor: {
                     xtype: 'textfield',
                     allowBlank: true
                 }
             }, {
-                dataIndex: 'url',
-                header: 'Url',
-                width: 80,
+                dataIndex: 'name',
+                header: 'Name',
+                hidden: true,
+                menuDisabled: true,
                 editor: {
                     xtype: 'textfield',
-                    allowBlank: false
+                    allowBlank: true
                 }
             }, {
                 dataIndex: 'received',
-                header: 'created',
-                width: 200
-            }, {
-                dataIndex: 'indexed',
-                header: 'Indexed',
-                width: 200
+                header: 'Created/Indexed',
+                width: 100,
+                renderer: this.renderReceived.createDelegate(this),
             }, Pictomobile.action] // force fit
             ,
             viewConfig: {
@@ -161,7 +159,7 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
             ,
             // paging bar on the bottom
             bbar: new Ext.PagingToolbar({
-				id: 'imagePaging',
+                id: 'imagePaging',
                 pageSize: 5,
                 store: Pictomobile.Store.ImagesGridStore,
                 displayInfo: true,
@@ -171,7 +169,10 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
                     pressed: true,
                     enableToggle: true,
                     text: 'Show Preview',
-                    cls: 'x-btn-text-icon details'
+                    cls: 'x-btn-text-icon details',
+                    handler: function(){
+                        Ext.ux.Toast.msg('Show preview', 'You have clicked row: <b>{0}</b>, action: <b>{0}</b>', 1, 2);
+                    }
                 }]
             })
         
@@ -180,12 +181,13 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
         Ext.apply(this, Ext.apply(this.initialConfig, config));
         
         // call parent
-        Pictomobile.ImagesGrid.superclass.initComponent.apply(this, arguments);        
-		
+        Pictomobile.ImagesGrid.superclass.initComponent.apply(this, arguments);
+        
     } // eo function initComponent
     // }}}
     // {{{
-    ,onRender: function(){
+    ,
+    onRender: function(){
     
         // call parent
         Pictomobile.ImagesGrid.superclass.onRender.apply(this, arguments);
@@ -193,17 +195,140 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
         // load store
         this.store.load();
         
-		this.subscribe("pictomobile.appswitcher.change")
+        this.subscribe("pictomobile.appswitcher.change")
     } // eo function onRender
-    ,renderThumbnail: function(val, cell, record){
+    ,
+    renderThumbnail: function(val, cell, record){
         return "<img src=\"" + App.data.thumnail_url + "/" + val + "\" alt=\"" + val + "\" title=\"\"/>";
+    },
+    renderUrlAndName: function(val, cell, record){
+        return "<span>" + record.get('url') + "</span><br/>" + "<span>" + record.get('name') + "</span>";
+    },
+    renderReceived: function(val, cell, record){
+        return "<span>" + record.get('created') + "</span><br/>" + "<span>" + record.get('indexed') + "</span>";
+    },
+    onMessage: function(message, subject){
+        this.store.setBaseParam('application_id', subject.record.get('id'));
+        this.store.load();
+        
     }
-	,onMessage: function(message, subject) {
-		this.store.setBaseParam('application_id', subject.record.get('id')); 
-		this.store.load();
-		
-	}
 }); // eo extend
 // register xtype
 Ext.reg('imagesgrid', Pictomobile.ImagesGrid);
+
+
+
+Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
+
+    // configurables    
+    border: false // {{{
+    ,
+    initComponent: function(){
+    
+        // hard coded - cannot be changed from outside
+        var config = {
+			layout: 'fit',
+			items: new Ext.DataView({
+			store: Pictomobile.Store.ImagesGridStore,
+            tpl: new Ext.XTemplate(
+				'<tpl for=".">', 
+					'<div class="thumb-wrap" id="{name}">', 
+					'<div class="thumb"><img src="' + App.data.thumnail_url + "/" +  '{thumbnail}" title="{name}"></div>', 
+					'<span class="x-editable">{name}</span></div>', 
+				'</tpl>', '<div class="x-clear"></div>'),
+            autoHeight: true,
+            multiSelect: true,
+            overClass: 'x-view-over',
+            itemSelector: 'div.thumb-wrap',
+            emptyText: 'No images to display',
+            
+            plugins: ['msgbus'],
+            
+            prepareData: function(data){
+//                data.shortName = Ext.util.Format.ellipsis(data.name, 15);
+//                data.sizeString = Ext.util.Format.fileSize(data.size);
+//                data.dateString = data.lastmod.format("m/d/Y g:i a");
+                return data;
+            },
+            
+            listeners: {
+                selectionchange: {
+                    fn: function(dv, nodes){
+                        var l = nodes.length;
+                        var s = l != 1 ? 's' : '';
+                        panel.setTitle('Simple DataView (' + l + ' item' + s + ' selected)');
+                    }
+                }
+            }	
+			}),
+            
+			tbar: new Ext.Toolbar({            
+        	items: [
+        		new Ext.ux.SliderButton({
+        			showText: true,
+				    prependText: 'Icons size: ',
+				    items: [{
+				        text:'Large',
+				        iconCls:'icon-large',
+				        checked:true,
+						value: 2
+				    },{
+				        text:'Big',
+				        iconCls:'icon-big',
+						value: 1.5
+				    },{
+				        text:'Medium',
+				        iconCls:'icon-medium',
+						value: 1
+				    },{
+				        text:'Small',
+				        iconCls:'icon-small',
+						value: 0.5
+				    }],
+				    imageBaseSize: {
+				    	width: 80,
+				    	height: 60
+				    },
+					listeners: {
+						sliderchange: function(c, item){
+							if(Ext.get('dataViewExample')){
+								var items = Ext.get('dataViewExample').query("div.thumb-wrap .thumb img");
+								changeSize(c, items, item);
+							}
+						}
+					}
+        		})
+        	]
+        })
+        
+        }; // eo config object
+        // apply config
+        Ext.apply(this, Ext.apply(this.initialConfig, config));
+        
+        // call parent
+        Pictomobile.ImagesTile.superclass.initComponent.apply(this, arguments);
+        
+    } // eo function initComponent
+    // }}}
+    // {{{
+    ,
+    onRender: function(){
+    
+        // call parent
+        Pictomobile.ImagesTile.superclass.onRender.apply(this, arguments);
+        
+        // load store
+//        this.store.load();
+        
+//        this.subscribe("pictomobile.appswitcher.change")
+    } // eo function onRender
+    ,
+    onMessage: function(message, subject){
+//        this.store.setBaseParam('application_id', subject.record.get('id'));
+//        this.store.load();
+        
+    }
+}); // eo extend
+// register xtype
+Ext.reg('ImagesTile', Pictomobile.ImagesTile);
 // eof

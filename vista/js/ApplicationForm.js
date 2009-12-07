@@ -130,8 +130,6 @@ Pictomobile.ApplicationForm = Ext.extend(Ext.form.FormPanel, {
     } // eo function onRender
     
 	,onMessage: function(message, subject) {
-		console.log(message)
-		console.log(subject)
 	}
 	
 	/**
