@@ -102,7 +102,7 @@ function Application(){
                 // Categories accordion on left side of screen.
                 region: "west",
                 id: "categoriesArea",
-                
+                title: '    ',
                 split: true,
                 width: 260,
                 minSize: 10,
@@ -117,8 +117,6 @@ function Application(){
                     animate: true
                 },
                 items: [{
-                    title: "Categories"
-                }, {
                     title: "Upload",
                     id: "uploadImage",
                     xtype: "picuploadform"
@@ -145,7 +143,7 @@ function Application(){
                         plugins: ['msgbus'],
                         handler: function(){
                             //this.publish('pictomobile.application.edit', {p: 'khanh'})
-							var rec = Ext.getCmp('appSwitcher').getStore().getById(Ext.getCmp('appSwitcher').getValue())
+                            var rec = Ext.getCmp('appSwitcher').getStore().getById(Ext.getCmp('appSwitcher').getValue())
                             new Ext.Window({
                                 id: "wndEditApplication",
                                 title: 'Edit application',
@@ -155,7 +153,9 @@ function Application(){
                                 height: 350,
                                 items: [{
                                     xtype: 'picapplicationform',
-                                    data: {record: rec}
+                                    data: {
+                                        record: rec
+                                    }
                                 }]
                             }).show();
                         },
@@ -163,7 +163,7 @@ function Application(){
                             text: 'New application',
                             iconCls: 'icon-form-add',
                             handler: function(){
-								
+                            
                                 new Ext.Window({
                                     id: "wndEditApplication",
                                     title: 'New application',
@@ -173,14 +173,16 @@ function Application(){
                                     height: 350,
                                     items: [{
                                         xtype: 'picapplicationform',
-                                        data: {record:  new Pictomobile.Record.Application({
-											int_nbanwsers: 1,
-											int_tokens: 0,
-											int_size: 50000,
-											float_scoremin: 0.25,
-											int_teches: 0,
-											nm_sens: 0
-										})}
+                                        data: {
+                                            record: new Pictomobile.Record.Application({
+                                                int_nbanwsers: 1,
+                                                int_tokens: 0,
+                                                int_size: 50000,
+                                                float_scoremin: 0.25,
+                                                int_teches: 0,
+                                                nm_sens: 0
+                                            })
+                                        }
                                     }]
                                 }).show();
                             }
@@ -192,11 +194,44 @@ function Application(){
                 region: "center",
                 id: "mainArea",
                 title: "Pictures",
-                layout: 'fit',
+                layout: 'card',
+                layoutConfig: {
+                    deferredRender: true
+                },
+                border: false,
+                closable: false,
+                activeItem: 0,
+                plain: true,
+				plugins     : [  new Ext.plugins.TDGi.PanelHeaderToolbar({items: [{
+            		text : 'Switch view: '
+        		}, {
+                    id: 'nextButton',
+            		xtype : 'button',
+					toggleGroup: 'g1', 
+					iconCls: 'icon-view-tile',
+					handler: function(){
+                        var cmp = Ext.getCmp('mainArea')
+                        cmp.getLayout().setActiveItem(1);
+                    }
+        		}, {
+                    id: 'prevButton',
+            		xtype : 'button',
+					toggleGroup: 'g1', 
+					iconCls: 'icon-grid',
+					enableToggle: true,
+					handler: function(){
+                        var cmp = Ext.getCmp('mainArea')
+                        cmp.getLayout().setActiveItem(0);
+                    }
+        		}]})],
+                
                 items: [{
                     // Contacts icon view.
                     xtype: "imagesgrid",
                     id: "imagesGrid"
+                }, {
+                    xtype: 'ImagesTile',
+					id: 'imagesTile'
                 }]
             }]
         });
