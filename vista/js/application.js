@@ -202,29 +202,7 @@ function Application(){
                 closable: false,
                 activeItem: 0,
                 plain: true,
-				plugins     : [  new Ext.plugins.TDGi.PanelHeaderToolbar({items: [{
-            		text : 'Switch view: '
-        		}, {
-                    id: 'nextButton',
-            		xtype : 'button',
-					toggleGroup: 'g1', 
-					iconCls: 'icon-view-tile',
-					handler: function(){
-                        var cmp = Ext.getCmp('mainArea')
-                        cmp.getLayout().setActiveItem(1);
-                    }
-        		}, {
-                    id: 'prevButton',
-            		xtype : 'button',
-					toggleGroup: 'g1', 
-					iconCls: 'icon-grid',
-					enableToggle: true,
-					handler: function(){
-                        var cmp = Ext.getCmp('mainArea')
-                        cmp.getLayout().setActiveItem(0);
-                    }
-        		}]})],
-                
+				plugins : ['msgbus'],               
                 items: [{
                     // Contacts icon view.
                     xtype: "imagesgrid",
@@ -232,7 +210,17 @@ function Application(){
                 }, {
                     xtype: 'ImagesTile',
 					id: 'imagesTile'
-                }]
+                }], 
+				listeners: {
+					'render': {
+						fn: function() {
+							this.subscribe("pictomobile.image.viewmode.change")							
+						}
+					}
+				},
+				onMessage: function(message, subject) {
+					Ext.getCmp('mainArea').getLayout().setActiveItem(subject)
+				}
             }]
         });
         

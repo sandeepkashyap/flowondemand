@@ -166,14 +166,18 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
                 displayMsg: 'Displaying topics {0} - {1} of {2}',
                 emptyMsg: "No topics to display",
                 items: ['-', {
-                    pressed: true,
-                    enableToggle: true,
-                    text: 'Show Preview',
-                    cls: 'x-btn-text-icon details',
-                    handler: function(){
-                        Ext.ux.Toast.msg('Show preview', 'You have clicked row: <b>{0}</b>, action: <b>{0}</b>', 1, 2);
-                    }
-                }]
+					pressed: true,
+					text: 'Switch to tile',
+					scope: this,
+					cls: 'x-btn-text-icon icon-grid',
+					handler: function(){
+						Ext.ux.Toast.msg('Show preview', 'You have clicked row: <b>{0}</b>, action: <b>{0}</b>', 1, 2);
+						this.publish('pictomobile.image.viewmode.change', 1);
+					}
+				}, '-'
+				, {
+						
+				}]
             })
         
         }; // eo config object
@@ -222,11 +226,11 @@ Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
 
     // configurables    
     border: false // {{{
-    ,
-    initComponent: function(){
+    ,initComponent: function(){
     
         // hard coded - cannot be changed from outside
         var config = {
+			plugins: ['msgbus'],
 			layout: 'fit',
 			items: new Ext.DataView({
 			store: Pictomobile.Store.ImagesGridStore,
@@ -241,8 +245,6 @@ Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
             overClass: 'x-view-over',
             itemSelector: 'div.thumb-wrap',
             emptyText: 'No images to display',
-            
-            plugins: ['msgbus'],
             
             prepareData: function(data){
 //                data.shortName = Ext.util.Format.ellipsis(data.name, 15);
@@ -298,8 +300,26 @@ Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
 						}
 					}
         		})
-        	]
-        })
+        	]}) //eo tbar
+        	// paging bar on the bottom
+            ,bbar: new Ext.PagingToolbar({
+                id: 'tilePaging',
+                pageSize: 5,
+                store: Pictomobile.Store.ImagesGridStore,
+                displayInfo: true,
+                displayMsg: 'Displaying topics {0} - {1} of {2}',
+                emptyMsg: "No topics to display",
+                items: ['-', {
+                    pressed: true,
+					text: 'Switch to grid',
+                    cls: 'x-btn-text-icon details',
+					scope: this,
+                    handler: function(){
+                        Ext.ux.Toast.msg('Show preview', 'You have clicked row: <b>{0}</b>, action: <b>{0}</b>', 1, 2);
+						this.publish('pictomobile.image.viewmode.change', 0);
+                    }
+                }]
+            })//eo bbar
         
         }; // eo config object
         // apply config
