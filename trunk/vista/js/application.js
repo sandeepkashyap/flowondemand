@@ -133,7 +133,7 @@ function Application(){
                 items: [{
                     xtype: "toolbar",
                     items: [{
-                        text: "Switch to: ",
+                        text: "Switch to: "
                     }, {
                         xtype: "tbspacer"
                     }, Pictomobile.AppSwitcher, {

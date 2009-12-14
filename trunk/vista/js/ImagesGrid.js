@@ -37,7 +37,7 @@ Pictomobile.Store.ImagesGridStore = new Ext.data.JsonStore({
     baseParams: {
         format: 'json',
         skip_layout: '1',
-        items_per_page: 5
+        items_per_page: 20
     },
     fields: Pictomobile.Record.Image
 }); // column model
@@ -54,7 +54,7 @@ Pictomobile.action = new Ext.ux.grid.RowActions({
     }, {
         iconCls: 'icon-p',
         tooltip: 'Configure',
-        qtipIndex: 'qtip2',
+        qtipIndex: 'qtip2'
         //,text:'Open'
     }, {
         iconIndex: 'action3',
@@ -85,7 +85,7 @@ Pictomobile.action = new Ext.ux.grid.RowActions({
                     }
                 }]
             }).show();
-        },
+        }
     }
 });
 
@@ -111,8 +111,7 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 
     // configurables
     border: false // {{{
-    ,
-    initComponent: function(){
+    ,initComponent: function(){
     
         // hard coded - cannot be changed from outside
         var config = {
@@ -149,18 +148,15 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
                 dataIndex: 'received',
                 header: 'Created/Indexed',
                 width: 100,
-                renderer: this.renderReceived.createDelegate(this),
+                renderer: this.renderReceived.createDelegate(this)
             }, Pictomobile.action] // force fit
-            ,
-            viewConfig: {
+            ,viewConfig: {
                 forceFit: true,
                 scrollOffset: 0
             } // tooltip template
-            ,
-            // paging bar on the bottom
-            bbar: new Ext.PagingToolbar({
+            ,bbar: new Ext.PagingToolbar({ // paging bar on the bottom
                 id: 'imagePaging',
-                pageSize: 5,
+                pageSize: 20,
                 store: Pictomobile.Store.ImagesGridStore,
                 displayInfo: true,
                 displayMsg: 'Displaying topics {0} - {1} of {2}',
@@ -174,10 +170,7 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 						Ext.ux.Toast.msg('Show preview', 'You have clicked row: <b>{0}</b>, action: <b>{0}</b>', 1, 2);
 						this.publish('pictomobile.image.viewmode.change', 1);
 					}
-				}, '-'
-				, {
-						
-				}]
+				}, '-']
             })
         
         }; // eo config object
@@ -201,17 +194,16 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
         
         this.subscribe("pictomobile.appswitcher.change")
     } // eo function onRender
-    ,
-    renderThumbnail: function(val, cell, record){
+    ,renderThumbnail: function(val, cell, record){
         return "<img src=\"" + App.data.thumnail_url + "/" + val + "\" alt=\"" + val + "\" title=\"\"/>";
-    },
-    renderUrlAndName: function(val, cell, record){
+    }
+	,renderUrlAndName: function(val, cell, record){
         return "<span>" + record.get('url') + "</span><br/>" + "<span>" + record.get('name') + "</span>";
-    },
-    renderReceived: function(val, cell, record){
+    }
+	,renderReceived: function(val, cell, record){
         return "<span>" + record.get('created') + "</span><br/>" + "<span>" + record.get('indexed') + "</span>";
-    },
-    onMessage: function(message, subject){
+    }
+	,onMessage: function(message, subject){
         this.store.setBaseParam('application_id', subject.record.get('id'));
         this.store.load();
         
@@ -236,9 +228,13 @@ Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
 			store: Pictomobile.Store.ImagesGridStore,
             tpl: new Ext.XTemplate(
 				'<tpl for=".">', 
-					'<div class="thumb-wrap" id="{name}">', 
-					'<div class="thumb"><img src="' + App.data.thumnail_url + "/" +  '{thumbnail}" title="{name}"></div>', 
-					'<span class="x-editable">{name}</span></div>', 
+//					'<div class="thumb-wrap" id="{name}">', 
+//					'<div class="thumb"><img src="' + App.data.thumnail_url + "/" +  '{thumbnail}" title="{name}"></div>', 
+//					'<span class="x-editable">{name}</span></div>', 
+					'<div class="tile-image">',
+						'<table cellspacing="0" cellpadding="0"><tbody><tr><td width="160px" valign="middle" height="165px" align="center" style="padding: 0px;">',	
+                        '<a href=""><img alt="{name}" title="" src="' + App.data.thumnail_url + "/" +  '{thumbnail}"/></a></td></tr></tbody></table>',
+                    '</div>',
 				'</tpl>', '<div class="x-clear"></div>'),
             autoHeight: true,
             multiSelect: true,
@@ -304,7 +300,7 @@ Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
         	// paging bar on the bottom
             ,bbar: new Ext.PagingToolbar({
                 id: 'tilePaging',
-                pageSize: 5,
+                pageSize: 20,
                 store: Pictomobile.Store.ImagesGridStore,
                 displayInfo: true,
                 displayMsg: 'Displaying topics {0} - {1} of {2}',
