@@ -232,7 +232,7 @@ Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
 //					'<div class="thumb"><img src="' + App.data.thumnail_url + "/" +  '{thumbnail}" title="{name}"></div>', 
 //					'<span class="x-editable">{name}</span></div>', 
 					'<div class="tile-image">',
-						'<table cellspacing="0" cellpadding="0"><tbody><tr><td width="160px" valign="middle" height="165px" align="center" style="padding: 0px;">',	
+						'<table cellspacing="0" cellpadding="0"><tbody><tr><td class="td-thumb" width="160px" valign="middle" height="165px" align="center" style="padding: 0px;">',	
                         '<a href=""><img alt="{name}" title="" src="' + App.data.thumnail_url + "/" +  '{thumbnail}"/></a></td></tr></tbody></table>',
                     '</div>',
 				'</tpl>', '<div class="x-clear"></div>'),
@@ -289,9 +289,19 @@ Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
 				    },
 					listeners: {
 						sliderchange: function(c, item){
-							if(Ext.get('dataViewExample')){
-								var items = Ext.get('dataViewExample').query("div.thumb-wrap .thumb img");
-								changeSize(c, items, item);
+							if(Ext.get('imagesTile')){
+								var rw = 1.6
+								var rh = 2.3
+								
+								var items = Ext.get('imagesTile').select("div.tile-image");
+								items.setWidth(165 * rw).setHeight(165 * rh)
+								
+								var tds = Ext.get('imagesTile').select("td.td-thumb");
+								tds.setWidth(165 * rw).setHeight(165 * rh)
+								
+								var imgs = Ext.get('imagesTile').select("img");
+								imgs.setWidth(100 * rw).setHeight(70 * rh)
+								//changeSize(c, items, item);
 							}
 						}
 					}
