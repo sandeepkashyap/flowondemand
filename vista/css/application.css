@@ -61,6 +61,7 @@
 	float: left;
 	width: 165px;
 	height: 165px;
+	overflow: hidden;
 	vertical-align: middle;
 	background-color: #eff5fb;
 	margin: 5px;
