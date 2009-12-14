@@ -56,3 +56,12 @@
     z-index: 3;
     color: #777;
 }
+
+.tile-image {
+	float: left;
+	width: 165px;
+	height: 165px;
+	vertical-align: middle;
+	background-color: #eff5fb;
+	margin: 5px;
+}
