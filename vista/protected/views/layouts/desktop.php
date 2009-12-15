@@ -14,8 +14,8 @@
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/RowActions.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/Toast.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/MsgBus.js');?>
-		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/SliderButton.js');?>
-		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/plugins.TDGi.PanelHeaderToolbar.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/SliderTip.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/SliderImage.js');?>
 		
 		<?=CHtml::cssFile(ROOT_URL . '/css/application.css');?>
 		
