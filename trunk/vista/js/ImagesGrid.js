@@ -222,6 +222,7 @@ Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
     
         // hard coded - cannot be changed from outside
         var config = {
+			autoScroll: true,
 			plugins: ['msgbus'],
 			layout: 'fit',
 			items: new Ext.DataView({
@@ -232,7 +233,7 @@ Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
 //					'<div class="thumb"><img src="' + App.data.thumnail_url + "/" +  '{thumbnail}" title="{name}"></div>', 
 //					'<span class="x-editable">{name}</span></div>', 
 					'<div class="tile-image">',
-						'<table cellspacing="0" cellpadding="0"><tbody><tr><td class="td-thumb" width="160px" valign="middle" height="165px" align="center" style="padding: 0px;">',	
+						'<table cellspacing="0" cellpadding="0"><tbody><tr><td class="td-thumb" >',	
                         '<a href=""><img alt="{name}" title="" src="' + App.data.thumnail_url + "/" +  '{thumbnail}"/></a></td></tr></tbody></table>',
                     '</div>',
 				'</tpl>', '<div class="x-clear"></div>'),
@@ -258,55 +259,7 @@ Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
                     }
                 }
             }	
-			}),
-            
-			tbar: new Ext.Toolbar({            
-        	items: [
-        		new Ext.ux.SliderButton({
-        			showText: true,
-				    prependText: 'Icons size: ',
-				    items: [{
-				        text:'Large',
-				        iconCls:'icon-large',
-				        checked:true,
-						value: 2
-				    },{
-				        text:'Big',
-				        iconCls:'icon-big',
-						value: 1.5
-				    },{
-				        text:'Medium',
-				        iconCls:'icon-medium',
-						value: 1
-				    },{
-				        text:'Small',
-				        iconCls:'icon-small',
-						value: 0.5
-				    }],
-				    imageBaseSize: {
-				    	width: 80,
-				    	height: 60
-				    },
-					listeners: {
-						sliderchange: function(c, item){
-							if(Ext.get('imagesTile')){
-								var rw = 1.6
-								var rh = 2.3
-								
-								var items = Ext.get('imagesTile').select("div.tile-image");
-								items.setWidth(165 * rw).setHeight(165 * rh)
-								
-								var tds = Ext.get('imagesTile').select("td.td-thumb");
-								tds.setWidth(165 * rw).setHeight(165 * rh)
-								
-								var imgs = Ext.get('imagesTile').select("img");
-								imgs.setWidth(100 * rw).setHeight(70 * rh)
-								//changeSize(c, items, item);
-							}
-						}
-					}
-        		})
-        	]}) //eo tbar
+			})
         	// paging bar on the bottom
             ,bbar: new Ext.PagingToolbar({
                 id: 'tilePaging',
@@ -324,7 +277,34 @@ Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
                         Ext.ux.Toast.msg('Show preview', 'You have clicked row: <b>{0}</b>, action: <b>{0}</b>', 1, 2);
 						this.publish('pictomobile.image.viewmode.change', 0);
                     }
-                }]
+                }, {xtype: 'tbseparator'}, 'Resize images: ', new Ext.Slider({
+					id: 'imageSlider',
+					width: 300,
+					minValue: 110,
+					maxValue: 440,
+					plugins: new Ext.ux.SliderTip({
+		                getText : function(s){
+		                    return String.format('{0}px', s.value);
+		                }
+		            }),
+					listeners: {
+						change: function(slider, value){
+							if(Ext.get('imagesTile')){
+								var rw = 1.6
+								var rh = 2.3
+								
+								var items = Ext.get('imagesTile').select("div.tile-image");
+								items.setWidth(value).setHeight((value + 5))
+								
+								var tds = Ext.get('imagesTile').select("td.td-thumb");
+								tds.setWidth(value).setHeight(value + 5)
+								
+								var imgs = Ext.get('imagesTile').select("img");
+								imgs.setWidth(value - 10)
+							}
+						}
+					}
+				})]
             })//eo bbar
         
         }; // eo config object
@@ -346,10 +326,13 @@ Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
         // load store
 //        this.store.load();
         
-//        this.subscribe("pictomobile.appswitcher.change")
+        this.subscribe("pictomobile.appswitcher.change")
     } // eo function onRender
     ,
     onMessage: function(message, subject){
+		if (message == 'pictomobile.appswitcher.change') {
+			Ext.getCmp('imageSlider').setValue(110)
+		}
 //        this.store.setBaseParam('application_id', subject.record.get('id'));
 //        this.store.load();
         

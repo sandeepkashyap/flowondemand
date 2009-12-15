@@ -59,10 +59,18 @@
 
 .tile-image {
 	float: left;
-	width: 165px;
-	height: 165px;
+	width: 110px;
+	height: 115px;
 	overflow: hidden;
 	vertical-align: middle;
 	background-color: #eff5fb;
 	margin: 5px;
+}
+
+.td-thumb {
+	width: 110px;
+	height: 115px;
+	vertical-align: middle;
+	text-align: center;
+	padding: 0px;
 }
