@@ -65,6 +65,8 @@ Pictomobile.UploadForm = Ext.extend(Ext.form.FormPanel, {
                 handler: this.onResetClick
             }, {
                 text: 'Submit',
+				cls: 'x-btn-text-icon',
+				iconCls: 'icon-upload',
                 formBind: true,
                 scope: this,
                 handler: this.submit

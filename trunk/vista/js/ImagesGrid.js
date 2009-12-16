@@ -48,9 +48,9 @@ Pictomobile.action = new Ext.ux.grid.RowActions({
     ,
     keepSelection: true,
     actions: [{
-        qtipIndex: 'qtip1',
-        iconCls: 'icon-open',
-        tooltip: 'Open'
+        qtipIndex: 'Change image',
+        iconCls: 'icon-image-edit',
+        tooltip: 'Change image'
     }, {
         iconCls: 'icon-p',
         tooltip: 'Configure',
@@ -65,10 +65,10 @@ Pictomobile.action = new Ext.ux.grid.RowActions({
     }],
     callbacks: {
         'icon-plus': function(grid, record, action, row, col){
-            Ext.ux.Toast.msg('Callback: icon-plus', 'You have clicked row: <b>{0}</b>, action: <b>{0}</b>', row, action);
+            //Ext.ux.Toast.msg('Callback: icon-plus', 'You have clicked row: <b>{0}</b>, action: <b>{0}</b>', row, action);
         },
-        'icon-open': function(grid, record, action, row, col){
-            Ext.ux.Toast.msg('Callback: OPEN', 'You have clicked row: <b>{0}</b>, action: <b>{0}</b>', row, action);
+        'icon-image-edit': function(grid, record, action, row, col){
+            //Ext.ux.Toast.msg('Callback: OPEN', 'You have clicked row: <b>{0}</b>, action: <b>{0}</b>', row, action);
             new Ext.Window({
                 id: "wndEditPicture",
                 title: 'Edit picture',
@@ -92,16 +92,16 @@ Pictomobile.action = new Ext.ux.grid.RowActions({
 // dummy action event handler - just outputs some arguments to console
 Pictomobile.action.on({
     action: function(grid, record, action, row, col){
-        Ext.ux.Toast.msg('Event: action', 'You have clicked row: <b>{0}</b>, action: <b>{1}</b>', row, action);
+        //Ext.ux.Toast.msg('Event: action', 'You have clicked row: <b>{0}</b>, action: <b>{1}</b>', row, action);
     },
     beforeaction: function(){
-        Ext.ux.Toast.msg('Event: beforeaction', 'You can cancel the action by returning false from this event handler.');
+        //Ext.ux.Toast.msg('Event: beforeaction', 'You can cancel the action by returning false from this event handler.');
     },
     beforegroupaction: function(){
-        Ext.ux.Toast.msg('Event: beforegroupaction', 'You can cancel the action by returning false from this event handler.');
+        //Ext.ux.Toast.msg('Event: beforegroupaction', 'You can cancel the action by returning false from this event handler.');
     },
     groupaction: function(grid, records, action, groupId){
-        Ext.ux.Toast.msg('Event: groupaction', 'Group: <b>{0}</b>, action: <b>{1}</b>, records: <b>{2}</b>', groupId, action, records.length);
+        //Ext.ux.Toast.msg('Event: groupaction', 'Group: <b>{0}</b>, action: <b>{1}</b>, records: <b>{2}</b>', groupId, action, records.length);
     }
 });
 
@@ -162,10 +162,12 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
                 displayMsg: 'Displaying topics {0} - {1} of {2}',
                 emptyMsg: "No topics to display",
                 items: ['-', {
-					pressed: true,
-					text: 'Switch to tile',
+					enableToggle: false,
+					//pressed: true,
+					text: 'View tile',
 					scope: this,
-					cls: 'x-btn-text-icon icon-grid',
+					cls: 'x-btn-text-icon',
+					iconCls: 'icon-view-tile',
 					handler: function(){
 						Ext.ux.Toast.msg('Show preview', 'You have clicked row: <b>{0}</b>, action: <b>{0}</b>', 1, 2);
 						this.publish('pictomobile.image.viewmode.change', 1);
@@ -195,7 +197,7 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
         this.subscribe("pictomobile.appswitcher.change")
     } // eo function onRender
     ,renderThumbnail: function(val, cell, record){
-        return "<img src=\"" + App.data.thumnail_url + "/" + val + "\" alt=\"" + val + "\" title=\"\"/>";
+        return "<a rel=\"lightbox\" class=\"lb-flower\" href=\"" + App.data.image_full_url + "/id/" + record.get('id') + "\"><img src=\"" + App.data.thumnail_url + "/" + val + "\" alt=\"" + val + "\" title=\"\"/></a>";
     }
 	,renderUrlAndName: function(val, cell, record){
         return "<span>" + record.get('url') + "</span><br/>" + "<span>" + record.get('name') + "</span>";
@@ -206,6 +208,7 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 	,onMessage: function(message, subject){
         this.store.setBaseParam('application_id', subject.record.get('id'));
         this.store.load();
+		
         
     }
 }); // eo extend
@@ -233,8 +236,8 @@ Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
 //					'<div class="thumb"><img src="' + App.data.thumnail_url + "/" +  '{thumbnail}" title="{name}"></div>', 
 //					'<span class="x-editable">{name}</span></div>', 
 					'<div class="tile-image">',
-						'<table cellspacing="0" cellpadding="0"><tbody><tr><td class="td-thumb" >',	
-                        '<a href=""><img alt="{name}" title="" src="' + App.data.thumnail_url + "/" +  '{thumbnail}"/></a></td></tr></tbody></table>',
+						'<table cellspacing="0" cellpadding="0"><tbody><tr><td class="td-thumb" >',
+                        '<a rel="lightbox" class="lb-flower" href="' + App.data.image_full_url + '/id/{id}"><img alt="{name}" title="" src="' + App.data.thumnail_url + "/" +  '{thumbnail}"/></a></td></tr></tbody></table>',
                     '</div>',
 				'</tpl>', '<div class="x-clear"></div>'),
             autoHeight: true,
@@ -269,9 +272,10 @@ Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
                 displayMsg: 'Displaying topics {0} - {1} of {2}',
                 emptyMsg: "No topics to display",
                 items: ['-', {
-                    pressed: true,
-					text: 'Switch to grid',
-                    cls: 'x-btn-text-icon details',
+                    pressed: false,
+					text: 'View grid',
+                    cls: 'x-btn-text-icon',
+					iconCls: 'icon-grid',
 					scope: this,
                     handler: function(){
                         Ext.ux.Toast.msg('Show preview', 'You have clicked row: <b>{0}</b>, action: <b>{0}</b>', 1, 2);
