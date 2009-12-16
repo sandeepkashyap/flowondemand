@@ -3,11 +3,17 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         
 		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ext-all.css');?>
+		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/xtheme-human.css');?>
 		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ux/RowEditor.css');?>
 		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ux/RowActions.css');?>
 		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ux/icons.css');?>
+		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ux/Lightbox.css');?>
+		<?=CHtml::cssFile(ROOT_URL . '/assets/stylesheets/overlay-basic.css');?>
+		<?=CHtml::cssFile(ROOT_URL . '/assets/stylesheets/overlay-gallery.css');?>
+		
 		
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/adapter/ext/ext-base.js');?>
+		
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ext-all.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/FileUploadField.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/RowEditor.js');?>
@@ -16,6 +22,7 @@
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/MsgBus.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/SliderTip.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/SliderImage.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/Lightbox.js');?>
 		
 		<?=CHtml::cssFile(ROOT_URL . '/css/application.css');?>
 		
@@ -54,6 +61,7 @@
 			App.data.apps_store = '<?=Yii::app()->createUrl('apps/application/list/')?>';
 			App.data.images_store = '<?=$this->createUrl('image/getPage/application/'. $this->application_id)?>';
 			App.data.image_quick_add_url = '<?=$this->createUrl('image/quickAdd/application/'. $this->application_id, array('skip_layout'=>1))?>';
+			App.data.image_full_url = '<?=Yii::app()->createUrl('image/image/viewFull')?>'
 		</script>
 		
 		<?=CHtml::scriptFile(ROOT_URL . '/js/application.js');?>
@@ -81,5 +89,23 @@
                 </table>
             </div>
         </div>
+		
+		<!-- overlay element --> 
+		<div class="simple_overlay" id="gallery"> 
+		 
+		    <!-- "previous image" action --> 
+		    <a class="prev">prev</a> 
+		 
+		    <!-- "next image" action --> 
+		    <a class="next">next</a> 
+		 
+		    <!-- image information --> 
+		    <div class="info"></div> 
+		 
+		    <!-- load indicator (animated gif) --> 
+		    <img class="progress" src="http://static.flowplayer.org/tools/img/overlay/loading.gif" /> 
+		</div>
+
+
     </body>
 </html>
