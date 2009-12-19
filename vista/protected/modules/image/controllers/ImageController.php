@@ -700,7 +700,7 @@ class ImageController extends Controller {
 		if ($model == null || !file_exists($image)) {
 			$image = ASSETS_PATH . 'images/image-load-error.gif';
 		}
-		header('Content-Type: image/jpeg');
+		header('Content-Type: image/jpg');
 		
 		$handle = fopen($image, 'r');
 		while (!feof($handle))

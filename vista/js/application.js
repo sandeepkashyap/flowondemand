@@ -237,8 +237,8 @@ Ext.onReady(function(){
     
     application.init();
     
-	Ext.ux.Lightbox.register('a[rel^=lightbox]');
-	Ext.ux.Lightbox.register('a.lb-flower', true); // true to show them as a set
+//	Ext.ux.Lightbox.register('a[rel^=lightbox]');
+//	Ext.ux.Lightbox.register('a.lb-flower', true); // true to show them as a set
 
     // code here
 
