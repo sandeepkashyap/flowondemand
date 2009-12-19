@@ -11,8 +11,16 @@
 		<?=CHtml::cssFile(ROOT_URL . '/assets/stylesheets/overlay-basic.css');?>
 		<?=CHtml::cssFile(ROOT_URL . '/assets/stylesheets/overlay-gallery.css');?>
 		
+		<?=CHtml::cssFile(ROOT_URL . '/assets/stylesheets/fancybox.css');?>
 		
-		<?=CHtml::scriptFile(ROOT_URL . '/ext/adapter/ext/ext-base.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/assets/javascript/jquery.js');?>
+		
+		
+		
+		<?=CHtml::scriptFile(ROOT_URL . '/ext/adapter/jquery/ext-jquery-adapter.js');?>
+		
+		<?=CHtml::scriptFile(ROOT_URL . '/assets/javascript/jquery.fancybox.js');?>
+		
 		
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ext-all.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/FileUploadField.js');?>

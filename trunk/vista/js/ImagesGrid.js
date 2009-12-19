@@ -16,6 +16,12 @@ Pictomobile.Record.Image = Ext.data.Record.create([{
     name: "image",
     mapping: "vc_image"
 }, {
+    name: "width",
+    mapping: "int_width"
+}, {
+    name: "height",
+    mapping: "int_height"
+}, {
     name: "name",
     mapping: "vc_name"
 }, {
@@ -117,9 +123,10 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
         var config = {
             // store
             store: Pictomobile.Store.ImagesGridStore,
-            plugins: [new Ext.ux.grid.RowEditor({
-                saveText: 'Update'
-            }), Pictomobile.action, 'msgbus'],
+            plugins: ['msgbus'],
+//            plugins: [new Ext.ux.grid.RowEditor({
+//                saveText: 'Update'
+//            }), Pictomobile.action, 'msgbus'],
             columns: [{
                 dataIndex: 'thumbnail',
                 header: 'Thumbnail',
@@ -195,9 +202,11 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
         this.store.load();
         
         this.subscribe("pictomobile.appswitcher.change")
+		
+		this.getView().on('refresh', this.onViewRefresh, this)
     } // eo function onRender
     ,renderThumbnail: function(val, cell, record){
-        return "<a rel=\"lightbox\" class=\"lb-flower\" href=\"" + App.data.image_full_url + "/id/" + record.get('id') + "\"><img src=\"" + App.data.thumnail_url + "/" + val + "\" alt=\"" + val + "\" title=\"\"/></a>";
+        return "<a rel=\"lightbox\" class=\"fancy-group\" href=\"" + App.data.image_full_url + "/id/" + record.get('id') + ".jpg\" int_width='"+record.get('width')+"' int_height='"+record.get('height')+"' title='" +record.get('name') +  "'><img src=\"" + App.data.thumnail_url + "/" + val + "\" alt=\"" + val + "\" title=\"\"/></a>";
     }
 	,renderUrlAndName: function(val, cell, record){
         return "<span>" + record.get('url') + "</span><br/>" + "<span>" + record.get('name') + "</span>";
@@ -208,9 +217,28 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 	,onMessage: function(message, subject){
         this.store.setBaseParam('application_id', subject.record.get('id'));
         this.store.load();
-		
-        
     }
+	,onViewRefresh: function() {
+		$('a.fancy-group').fancybox({
+			'zoomSpeedIn': 300, 
+			'zoomSpeedOut': 300,
+			'hideOnContentClick': true, 
+			'overlayShow': false,
+			'ignorePreload': true,
+			'width':	1024,
+			'height':	768,
+			callbackOnStart: function(elem, $opts) {
+				//find title
+				var self = $(elem)
+				$opts.width = self.attr('int_width');
+				$opts.height = self.attr('int_height');
+				var title = self.attr('title')
+				self.attr('title', title);
+				return true;
+			} 
+		});
+	}
+	
 }); // eo extend
 // register xtype
 Ext.reg('imagesgrid', Pictomobile.ImagesGrid);
@@ -237,7 +265,7 @@ Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
 //					'<span class="x-editable">{name}</span></div>', 
 					'<div class="tile-image">',
 						'<table cellspacing="0" cellpadding="0"><tbody><tr><td class="td-thumb" >',
-                        '<a rel="lightbox" class="lb-flower" href="' + App.data.image_full_url + '/id/{id}"><img alt="{name}" title="" src="' + App.data.thumnail_url + "/" +  '{thumbnail}"/></a></td></tr></tbody></table>',
+                        '<a rel="lightbox" class="fancy-group" href="' + App.data.image_full_url + '/id/{id}.jpg" int_width="{width}" int_height="{height}" title="{name}"><img alt="{name}" title="" src="' + App.data.thumnail_url + "/" +  '{thumbnail}"/></a></td></tr></tbody></table>',
                     '</div>',
 				'</tpl>', '<div class="x-clear"></div>'),
             autoHeight: true,
