@@ -257,10 +257,58 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 // register xtype
 Ext.reg('imagesgrid', Pictomobile.ImagesGrid);
 
+Pictomobile.ImagesDataView = Ext.extend(Ext.DataView, {
+	initComponent: function(){
+		var config = {
+			store: Pictomobile.Store.ImagesGridStore,
+			tpl: new Ext.XTemplate('<tpl for=".">', '<div class="tile-image">', '<table cellspacing="0" cellpadding="0"><tbody><tr><td class="td-thumb" >', '<a title="{title}" class="fancy-group" href="' + App.data.image_full_url + '/id/{id}.jpg" int_width="{width}" int_height="{height}" title="{name}"><img alt="{name}" title="" src="' + App.data.thumnail_url + "/" + '{thumbnail}"/></a></td></tr></tbody></table>', '</div>', '</tpl>', '<div class="x-clear"></div>'),
+			autoHeight: true,
+			multiSelect: false,
+			overClass: 'x-view-over',
+			itemSelector: 'td.td-thumb',
+			emptyText: 'No images to display',
+			
+			listeners: {
+				click: {
+					fn: function(dataView, index, elem, e){
+						$(elem).find('a.fancy-group').click();
+					}
+				}
+			}
+		}
+		
+		Ext.apply(this, Ext.apply(this.initialConfig, config));
+        
+        Pictomobile.ImagesDataView.superclass.initComponent.apply(this, arguments);
+	}
+	,refresh: function() {
+		Pictomobile.ImagesDataView.superclass.refresh.apply(this, arguments);
+		
+		$('a.fancy-group').fancybox({
+			'zoomSpeedIn': 300,
+			'zoomSpeedOut': 300,
+			'hideOnContentClick': true,
+			'overlayShow': false,
+			'ignorePreload': true,
+			'width': 1024,
+			'height': 768,
+			callbackOnStart: function(elem, $opts){
+				//find title
+				var self = $(elem)
+				$opts.width = self.attr('int_width');
+				$opts.height = self.attr('int_height');
+				var title = self.attr('title')
+				self.attr('title', title);
+				return true;
+			}
+		});
+	}
+});
 
+Ext.reg('imagesdataview', Pictomobile.ImagesDataView);
 
 Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
-
+	
     // configurables    
     border: false // {{{
     ,initComponent: function(){
@@ -270,41 +318,7 @@ Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
 			autoScroll: true,
 			plugins: ['msgbus'],
 			layout: 'fit',
-			items: new Ext.DataView({
-			store: Pictomobile.Store.ImagesGridStore,
-            tpl: new Ext.XTemplate(
-				'<tpl for=".">', 
-//					'<div class="thumb-wrap" id="{name}">', 
-//					'<div class="thumb"><img src="' + App.data.thumnail_url + "/" +  '{thumbnail}" title="{name}"></div>', 
-//					'<span class="x-editable">{name}</span></div>', 
-					'<div class="tile-image">',
-						'<table cellspacing="0" cellpadding="0"><tbody><tr><td class="td-thumb" >',
-                        '<a rel="lightbox" class="fancy-group" href="' + App.data.image_full_url + '/id/{id}.jpg" int_width="{width}" int_height="{height}" title="{name}"><img alt="{name}" title="" src="' + App.data.thumnail_url + "/" +  '{thumbnail}"/></a></td></tr></tbody></table>',
-                    '</div>',
-				'</tpl>', '<div class="x-clear"></div>'),
-            autoHeight: true,
-            multiSelect: true,
-            overClass: 'x-view-over',
-            itemSelector: 'div.thumb-wrap',
-            emptyText: 'No images to display',
-            
-            prepareData: function(data){
-//                data.shortName = Ext.util.Format.ellipsis(data.name, 15);
-//                data.sizeString = Ext.util.Format.fileSize(data.size);
-//                data.dateString = data.lastmod.format("m/d/Y g:i a");
-                return data;
-            },
-            
-            listeners: {
-                selectionchange: {
-                    fn: function(dv, nodes){
-                        var l = nodes.length;
-                        var s = l != 1 ? 's' : '';
-                        panel.setTitle('Simple DataView (' + l + ' item' + s + ' selected)');
-                    }
-                }
-            }	
-			})
+			items: {xtype: 'imagesdataview'}
         	// paging bar on the bottom
             ,bbar: new Ext.PagingToolbar({
                 id: 'tilePaging',
