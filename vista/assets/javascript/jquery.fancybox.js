@@ -60,7 +60,7 @@
 				var item = {};
 
 				if (!elem.rel || elem.rel == '') {
-					var item = {href: elem.href, title: elem.title};
+					var item = {href: elem.href, title: elem.title, width: parseInt($(elem).attr('int_width')), height: parseInt($(elem).attr('int_height'))};
 
 					if ($(elem).children("img:first").length) {
 						item.orig = $(elem).children("img:first");
@@ -75,9 +75,10 @@
 					var item = {};
 
 					for (var i = 0; i < subGroup.length; i++) {
-						item = {href: subGroup[i].href, title: subGroup[i].title};
+						var sub = $(subGroup[i])
+						item = {href: subGroup[i].href, title: subGroup[i].title, width: parseInt(sub.attr('int_width')), height: parseInt(sub.attr('int_height'))};
 
-						if ($(subGroup[i]).children("img:first").length) {
+						if (sub.children("img:first").length) {
 							item.orig = $(subGroup[i]).children("img:first");
 						}
 
@@ -105,6 +106,13 @@
 			$("#fancy_right, #fancy_left, #fancy_close, #fancy_title").hide();
 
 			var href = opts.itemArray[ opts.itemCurrent ].href;
+			
+			if (opts.itemArray[ opts.itemCurrent ].width > 0) {
+				opts.width = opts.itemArray[ opts.itemCurrent ].width
+			}
+			if (opts.itemArray[ opts.itemCurrent ].height > 0) {
+				opts.height = opts.itemArray[ opts.itemCurrent ].height
+			}
 
 			if (href.match(/#/)) {
 				var target = window.location.href.split('#')[0]; target = href.replace(target, ''); target = target.substr(target.indexOf('#'));

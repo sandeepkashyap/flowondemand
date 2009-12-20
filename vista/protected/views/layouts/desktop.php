@@ -20,6 +20,7 @@
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/adapter/jquery/ext-jquery-adapter.js');?>
 		
 		<?=CHtml::scriptFile(ROOT_URL . '/assets/javascript/jquery.fancybox.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/assets/javascript/jquery.jeditable.js');?>
 		
 		
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ext-all.js');?>
@@ -29,8 +30,6 @@
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/Toast.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/MsgBus.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/SliderTip.js');?>
-		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/SliderImage.js');?>
-		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/Lightbox.js');?>
 		
 		<?=CHtml::cssFile(ROOT_URL . '/css/application.css');?>
 		
