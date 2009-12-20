@@ -189,6 +189,7 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
         // call parent
         Pictomobile.ImagesGrid.superclass.initComponent.apply(this, arguments);
         
+		
     } // eo function initComponent
     // }}}
     // {{{
@@ -209,7 +210,7 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
         return "<a rel=\"lightbox\" class=\"fancy-group\" href=\"" + App.data.image_full_url + "/id/" + record.get('id') + ".jpg\" int_width='"+record.get('width')+"' int_height='"+record.get('height')+"' title='" +record.get('name') +  "'><img src=\"" + App.data.thumnail_url + "/" + val + "\" alt=\"" + val + "\" title=\"\"/></a>";
     }
 	,renderUrlAndName: function(val, cell, record){
-        return "<span>" + record.get('url') + "</span><br/>" + "<span>" + record.get('name') + "</span>";
+        return "<span id='vc_url:"+record.get('id')+"' title='Click to edit' class='editableInput'>" + record.get('url') + "</span><br/>" + "<span id='vc_name:"+record.get('id')+"' class='editableInput'>" + record.get('name') + "</span>";
     }
 	,renderReceived: function(val, cell, record){
         return "<span>" + record.get('created') + "</span><br/>" + "<span>" + record.get('indexed') + "</span>";
@@ -237,6 +238,19 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 				return true;
 			} 
 		});
+		
+		$('span.editableInput').editable(App.data.image_quick_update_url, {
+			placeholder: '<span class="edit_placeholder">Click to edit...</span>',
+			tooltip   : "Click to edit. Press <Ente>r to save or <Escapse> to cancel",
+			event : 'click',
+			submit: null,
+			cancel: null,
+			heigth: 70,
+			onerror: function(form, target, xhr) {
+				alert(xhr.responseText)
+			}
+
+		});	
 	}
 	
 }); // eo extend
