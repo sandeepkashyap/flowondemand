@@ -50,24 +50,21 @@ Pictomobile.Store.ImagesGridStore = new Ext.data.JsonStore({
 // Create RowActions Plugin
 Pictomobile.action = new Ext.ux.grid.RowActions({
     header: 'Actions'    //,autoWidth:false
+	,width: 200
     //,hideMode:'display'
-    ,
-    keepSelection: true,
+    ,keepSelection: true,
     actions: [{
-        qtipIndex: 'Change image',
+        qtipIndex: 'Change picture',
         iconCls: 'icon-image-edit',
-        tooltip: 'Change image'
+        tooltip: 'Change picture'
     }, {
-        iconCls: 'icon-p',
-        tooltip: 'Configure',
-        qtipIndex: 'qtip2'
-        //,text:'Open'
+        iconCls: 'icon-minus',
+        tooltip: 'Delete picture',
+        qtipIndex: 'Delete picture'
     }, {
-        iconIndex: 'action3',
-        qtipIndex: 'qtip3',
-        iconCls: 'icon-user',
-        tooltip: 'User',
-        style: 'background-image:url(../images/silk/icons/application_go.png) ! important;'
+        qtipIndex: 'Manual index picture',
+        iconCls: 'icon-manual-index',
+        tooltip: 'Manual index pictureUser'
     }],
     callbacks: {
         'icon-plus': function(grid, record, action, row, col){
@@ -123,10 +120,7 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
         var config = {
             // store
             store: Pictomobile.Store.ImagesGridStore,
-            plugins: ['msgbus'],
-//            plugins: [new Ext.ux.grid.RowEditor({
-//                saveText: 'Update'
-//            }), Pictomobile.action, 'msgbus'],
+            plugins: ['msgbus', Pictomobile.action],
             columns: [{
                 dataIndex: 'thumbnail',
                 header: 'Thumbnail',
@@ -358,11 +352,11 @@ Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
 					width: 300,
 					minValue: 110,
 					maxValue: 440,
-					plugins: new Ext.ux.SliderTip({
+					plugins: [new Ext.ux.SliderTip({
 		                getText : function(s){
 		                    return String.format('{0}px', s.value);
 		                }
-		            }),
+		            }), Ext.ux.FillSlider],
 					listeners: {
 						change: function(slider, value){
 							if(Ext.get('imagesTile')){
