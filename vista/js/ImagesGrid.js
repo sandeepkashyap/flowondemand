@@ -284,6 +284,22 @@ Pictomobile.ImagesDataView = Ext.extend(Ext.DataView, {
 	,refresh: function() {
 		Pictomobile.ImagesDataView.superclass.refresh.apply(this, arguments);
 		
+		var slideValue = Ext.getCmp('imageSlider').getValue();
+		
+		$('td.td-thumb img').load(function() {
+			var self = $(this);
+			var img = new Image();
+			if (self.data('isLoaded')) {
+				return;
+			}
+			img.onload = function() {
+				self.data('isLoaded', true)
+				self
+				.attr('src', this.src).css('width', slideValue - 10)
+			}
+			img.src = self.parent().attr('href');
+		});
+		
 		$('a.fancy-group').fancybox({
 			'zoomSpeedIn': 300,
 			'zoomSpeedOut': 300,
