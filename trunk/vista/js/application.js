@@ -210,11 +210,56 @@ function Application(){
                 }, {
                     xtype: 'ImagesTile',
 					id: 'imagesTile'
-                }], 
-				listeners: {
+                }],
+				bbar: new Ext.ux.StatusBar({
+					id: 'statusbar',
+					plugins: ['msgbus']
+					// defaults to use when the status is cleared:
+		            ,defaultText: 'Default status text',
+		            //defaultIconCls: 'default-icon',
+		        
+		            // values to set initially:
+		            text: 'Ready',
+		            iconCls: 'x-status-valid',
+		
+		            // any standard Toolbar items:
+		            items: [{
+						id: 'sbar-btn-undo',
+	                    text: 'Undo delete',						
+						disabled: true,
+	                    handler: function (){
+	                        var rel = $('a.undo_link').attr('rel')
+							var undo_url = App.extendUrl(App.data.image_undo_trash_url, {id: rel, format: 'json'});
+							$.ajax({
+							url: undo_url,
+							success: function(responseText) {
+								var json = $(document.body).data('deleted-record')
+								var record = new Pictomobile.Record.Image({
+									id: json.id_image,
+									name: json.vc_name,
+									url: json.vc_url,
+									thumbnail: json.vc_image,
+									created: json.dt_created,
+									indexed: json.dt_indexed,
+									height: json.int_height,
+									width: json.int_widht
+								});
+								Ext.getCmp('imagesGrid').getStore().add(record)
+							},
+							error: function(res) {
+
+							},
+							complete: function(res) {
+
+							}
+						});
+	                    }
+					}] //oe item status bar
+				})//eo bbar 
+				,listeners: {
 					'render': {
 						fn: function() {
-							this.subscribe("pictomobile.image.viewmode.change")							
+							this.subscribe("pictomobile.image.viewmode.change")
 						}
 					}
 				},

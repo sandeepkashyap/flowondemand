@@ -1,7 +1,7 @@
 /*  
 // Icon Classes */
 .icon-ob {
-	background-image:url(../img/icons/ob_16.png) ! important;
+	background-image:url(../images/silk/icons/ob_16.png) ! important;
 }
 .icon-graph {
 	background-image:url(../images/silk/icons/chart_curve.png) ! important;
@@ -14,7 +14,7 @@
 	background-position: 1px 1px;
 }
 .icon-ok {
-	background-image:url(../img/icons/ok16.png) ! important;
+	background-image:url(../images/silk/icons/ok16.png) ! important;
 }
 .icon-view-tile {
 	background-image:url(../images/silk/icons/application_view_tile.png) ! important;
@@ -26,7 +26,7 @@
 	background-image:url(../ext/resources/images/default/menu/checked.gif) ! important;
 }
 .icon-stat-data {
-	background-image:url(../img/icons/kate_16.png) ! important;
+	background-image:url(../images/silk/icons/kate_16.png) ! important;
 }
 .icon-rename {
 	background-image:url(../images/silk/icons/textfield_rename.png) ! important;
@@ -56,7 +56,7 @@
 	background-image:url(../images/silk/icons/table_delete.png) ! important;
 }
 .icon-admin {
-	background-image:url(../img/icons/adv_settings_16.png) ! important;
+	background-image:url(../images/silk/icons/adv_settings_16.png) ! important;
 }
 .icon-grid {
     background-image:url(../images/silk/icons/application_view_columns.png) !important;
@@ -65,22 +65,22 @@
 	background-image:url(../images/silk/icons/key.png) ! important;
 }
 .icon-key2 {
-	background-image:url(../img/icons/key_16.png) ! important;
+	background-image:url(../images/silk/icons/key_16.png) ! important;
 }
 .icon-under-construction {
-	background-image:url(../img/icons/under-construction16.png) ! important;
+	background-image:url(../images/silk/icons/under-construction16.png) ! important;
 }
 .icon-expand-all {
-	background-image:url(../img/icons/expand-all.gif) ! important;
+	background-image:url(../images/silk/icons/expand-all.gif) ! important;
 }
 .icon-collapse-all {
-	background-image:url(../img/icons/collapse-all.gif) ! important;
+	background-image:url(../images/silk/icons/collapse-all.gif) ! important;
 }
 .icon-expand {
-	background-image:url(../img/icons/expand-all.gif) ! important;
+	background-image:url(../images/silk/icons/expand-all.gif) ! important;
 }
 .icon-collapse {
-	background-image:url(../img/icons/collapse-all.gif) ! important;
+	background-image:url(../images/silk/icons/collapse-all.gif) ! important;
 }
 .icon-tree-orgboard {
 	background-image:url(../images/silk/icons/chart_organisation.png) ! important;
@@ -98,10 +98,10 @@
 	background-image:url(../images/silk/icons/delete.png) ! important;
 }
 .icon-house {
-	background-image:url(../img/icons/house_16.png) ! important;
+	background-image:url(../images/silk/icons/house_16.png) ! important;
 }
 .icon-user {
-	background-image:url(../img/icons/user2_16.png) ! important;
+	background-image:url(../images/silk/icons/user2_16.png) ! important;
 }
 .icon-trash-empty {
 	background-image:url(../images/silk/icons/bin_empty.png) ! important;
@@ -131,7 +131,7 @@
 	background-image:url(../images/silk/icons/magnifier.png) ! important;
 }
 .icon-wrench {
-	background-image:url(../img/icons/wrench_16.png) ! important;
+	background-image:url(../images/silk/icons/wrench_16.png) ! important;
 }
 .icon-wrench-orange {
 	background-image:url(../images/silk/icons/wrench_orange.png) ! important;
@@ -149,13 +149,13 @@
 	background-image:url(../images/silk/icons/group_delete.png) ! important;
 }
 .icon-stat-portal {
-	background-image:url(../img/icons/stat_portal_16.png) ! important;
+	background-image:url(../images/silk/icons/stat_portal_16.png) ! important;
 }
 .icon-stat-list {
-	background-image:url(../img/icons/stat_list_16.png) ! important;
+	background-image:url(../images/silk/icons/stat_list_16.png) ! important;
 }
 .icon-cancel {
-	background-image:url(../img/icons/cancel16.png) ! important;
+	background-image:url(../images/silk/icons/cancel16.png) ! important;
 }
 .icon-cross {
 	background-image:url(../images/silk/icons/cross.png) ! important;
@@ -278,7 +278,7 @@
 	background-image:url(../images/silk/icons/error.png) ! important;
 }
 .icon-wages {
-	background-image:url(../img/icons/euro_16.png) ! important;
+	background-image:url(../images/silk/icons/euro_16.png) ! important;
 }
 .icon-calculator {
 	background-image:url(../images/silk/icons/calculator.png) ! important;
@@ -293,10 +293,10 @@
 	background-image:url(../images/silk/icons/book_open.png) ! important;
 }
 .icon-lock {
-	background-image:url(../img/icons/lock16.png) ! important;
+	background-image:url(../images/silk/icons/lock16.png) ! important;
 }
 .icon-lock-open {
-	background-image:url(../img/icons/unlock16.png) ! important;
+	background-image:url(../images/silk/icons/unlock16.png) ! important;
 }
 .icon-arrow-down {
 	background-image:url(../images/silk/icons/arrow_down.png) ! important;
@@ -311,7 +311,7 @@
 	background-image:url(../images/silk/icons/bin_empty.png) ! important;
 }
 .icon-tree {
-	background-image:url(../img/icons/tree_16.png) ! important;
+	background-image:url(../images/silk/icons/tree_16.png) ! important;
 }
 .icon-image-edit {
 	background-image:url(../images/silk/icons/image_edit.png) ! important;
@@ -323,14 +323,20 @@
 	background-image:url(../images/silk/icons/application_form_add.png) ! important;
 }
 .icon-filter {
-	background-image:url(../img/icons/view-filter16.png) ! important;
+	background-image:url(../images/silk/icons/view-filter16.png) ! important;
 }
 .icon-filter-active {
-	background-image:url(../img/icons/view-filter-go16.png) ! important;
+	background-image:url(../images/silk/icons/view-filter-go16.png) ! important;
 }
 .icon-stat-cat {
-	background-image:url(../img/icons/stat-cat_16.png) ! important;
+	background-image:url(../images/silk/icons/stat-cat_16.png) ! important;
 }
+
+.icon-manual-index {
+	background-image:url(../images/silk/icons/cog.png) ! important;
+}
+/*  Icon Classes end */
+
 .x-form-field-wrap .trigger-tag-add {
 	background-image: url(../img/trigger-tag-add.png);
 	cursor:pointer;
@@ -348,7 +354,3 @@
 	background-image: url(../img/trigger-tree.png);
 	cursor:pointer;
 }
-
-
-/*  Icon Classes end */
-
