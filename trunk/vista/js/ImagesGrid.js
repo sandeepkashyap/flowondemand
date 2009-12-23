@@ -49,8 +49,10 @@ Pictomobile.Store.ImagesGridStore = new Ext.data.JsonStore({
 }); // column model
 // Create RowActions Plugin
 Pictomobile.action = new Ext.ux.grid.RowActions({
-    header: 'Actions'    //,autoWidth:false
-	,width: 200
+    header: 'Actions'    
+	,autoWidth:true
+	//,width: 200
+	,fixed: true
     //,hideMode:'display'
     ,keepSelection: true,
     actions: [{
@@ -124,23 +126,15 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
             columns: [{
                 dataIndex: 'thumbnail',
                 header: 'Thumbnail',
-                width: 110,
+                width: 120,
+				fixed: true,
                 renderer: this.renderThumbnail.createDelegate(this),
                 editable: false
             }, {
                 dataIndex: 'url',
                 header: 'Url/Name',
+				width: 550,
                 renderer: this.renderUrlAndName.createDelegate(this),
-                width: 250,
-                editor: {
-                    xtype: 'textfield',
-                    allowBlank: true
-                }
-            }, {
-                dataIndex: 'name',
-                header: 'Name',
-                hidden: true,
-                menuDisabled: true,
                 editor: {
                     xtype: 'textfield',
                     allowBlank: true
@@ -148,14 +142,15 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
             }, {
                 dataIndex: 'received',
                 header: 'Created/Indexed',
-                width: 100,
+                width: 120,
+				fixed: true,
                 renderer: this.renderReceived.createDelegate(this)
             }, Pictomobile.action] // force fit
             ,viewConfig: {
-                forceFit: true,
+                forceFit: false,
                 scrollOffset: 0
             } // tooltip template
-            ,bbar: new Ext.PagingToolbar({ // paging bar on the bottom
+            ,tbar: new Ext.PagingToolbar({ // paging bar on the bottom
                 id: 'imagePaging',
                 pageSize: 20,
                 store: Pictomobile.Store.ImagesGridStore,
@@ -239,7 +234,10 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 			event : 'click',
 			submit: null,
 			cancel: null,
-			heigth: 70,
+			width: '100%',
+			height: 'none',			
+			cssclass: 'textInput',
+			select: true,
 			onerror: function(form, target, xhr) {
 				alert(xhr.responseText)
 			}
@@ -330,7 +328,7 @@ Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
 			layout: 'fit',
 			items: {xtype: 'imagesdataview'}
         	// paging bar on the bottom
-            ,bbar: new Ext.PagingToolbar({
+            ,tbar: new Ext.PagingToolbar({
                 id: 'tilePaging',
                 pageSize: 20,
                 store: Pictomobile.Store.ImagesGridStore,
