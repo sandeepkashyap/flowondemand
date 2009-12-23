@@ -216,7 +216,7 @@ class ImageController extends Controller {
 			$model = $this->loadImage($_POST['image_id']);
 			// we only allow deletion via POST request
 			$model->moveTrash();
-			echo '<p id="success" class="flash"><span class="flash_inner">The image ['. $model->vc_name .'] has been moved to the Trash. <a class="undo_link" rel="'.$model->id_image.'">Undo</a></span></p>';
+			echo '<p id="success" class="flash"><span class="flash_inner">The image ['. $model->vc_name .'] has been moved to the Trash. <a class=" x-btn-text undo_link" rel="'.$model->id_image.'">Undo</a></span></p>';
 		} else {
 			throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
 		}
@@ -599,9 +599,14 @@ class ImageController extends Controller {
 	public function actionUndoTrash() {
 		$model = $this->loadImage();
 		$model->undoTrash();
-		$this->renderPartial('quickAdd', array(
-			'model' => $model
-		));
+		if (isset($_GET['format']) && $_GET['format'] == 'json') {
+			
+		} else {
+			$this->renderPartial('quickAdd', array(
+				'model' => $model
+			));
+			
+		}
 		die();
 	}
 

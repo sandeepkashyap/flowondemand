@@ -71,8 +71,34 @@ Pictomobile.action = new Ext.ux.grid.RowActions({
     callbacks: {
         'icon-plus': function(grid, record, action, row, col){
             //Ext.ux.Toast.msg('Callback: icon-plus', 'You have clicked row: <b>{0}</b>, action: <b>{0}</b>', row, action);
-        },
-        'icon-image-edit': function(grid, record, action, row, col){
+        }
+		
+		,'icon-minus': function(grid, record, action, row, col){
+			var delete_url = App.extendUrl(App.data.image_delete_url, {id: record.get('id')})
+			//Ext.ux.Toast.msg('Callback: DELETE1212 ' + delete_url, 'You have clicked row: <b>{0}</b>, action: <b>{0}</b>', row );
+			var sbar = Ext.getCmp('statusbar');
+			sbar.showBusy({
+				text: 'Deleting'
+			});
+			$.ajax({
+				type: "POST",
+				url: App.data.image_delete_url,
+				data: ({image_id: record.get('id')}),
+				success: function(res) {
+					Ext.ux.Toast.msg('Delete', 'The picture <b>[{0}]</b> has been delete', record.get('name'));
+					grid.getStore().remove(record)
+					sbar.clearStatus({useDefaults:true});
+					sbar.setStatus({
+						text: res
+					})
+					var btnUndo = Ext.getCmp('sbar-btn-undo');
+					btnUndo.setDisabled(false)					
+					$(document.body).data('deleted-record', record.json)
+				}
+			});
+		} 
+		
+        ,'icon-image-edit': function(grid, record, action, row, col){
             //Ext.ux.Toast.msg('Callback: OPEN', 'You have clicked row: <b>{0}</b>, action: <b>{0}</b>', row, action);
             new Ext.Window({
                 id: "wndEditPicture",
@@ -91,6 +117,7 @@ Pictomobile.action = new Ext.ux.grid.RowActions({
                 }]
             }).show();
         }
+		
     }
 });
 
@@ -169,7 +196,7 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 						this.publish('pictomobile.image.viewmode.change', 1);
 					}
 				}, '-']
-            })
+            })// eo tbar
         
         }; // eo config object
         // apply config
