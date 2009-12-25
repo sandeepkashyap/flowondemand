@@ -215,8 +215,8 @@ function Application(){
 					id: 'statusbar',
 					plugins: ['msgbus']
 					// defaults to use when the status is cleared:
-		            ,defaultText: 'Default status text',
-		            //defaultIconCls: 'default-icon',
+		            ,defaultText: 'Ready'
+		            ,defaultIconCls: 'x-status-valid',
 		        
 		            // values to set initially:
 		            text: 'Ready',
@@ -225,9 +225,11 @@ function Application(){
 		            // any standard Toolbar items:
 		            items: [{
 						id: 'sbar-btn-undo',
-	                    text: 'Undo delete',						
+	                    text: 'Undo delete',
+						iconCls: 'icon-undo',						
 						disabled: true,
 	                    handler: function (){
+							this.setDisabled(true)
 	                        var rel = $('a.undo_link').attr('rel')
 							var undo_url = App.extendUrl(App.data.image_undo_trash_url, {id: rel, format: 'json'});
 							$.ajax({
@@ -242,9 +244,13 @@ function Application(){
 									created: json.dt_created,
 									indexed: json.dt_indexed,
 									height: json.int_height,
-									width: json.int_widht
+									width: json.int_width
 								});
-								Ext.getCmp('imagesGrid').getStore().add(record)
+								Ext.getCmp('imagesGrid').getStore().insert(0, record);
+								Ext.getCmp('imagesGrid').getView().scrollToTop();
+								
+								Ext.getCmp('statusbar').clearStatus({useDefaults:true});
+								Ext.ux.Toast.msg('Undo', 'The image <b>{0}</b> has been restore from Trash', record.get('name'));
 							},
 							error: function(res) {
 

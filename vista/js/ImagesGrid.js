@@ -85,11 +85,12 @@ Pictomobile.action = new Ext.ux.grid.RowActions({
 				url: App.data.image_delete_url,
 				data: ({image_id: record.get('id')}),
 				success: function(res) {
-					Ext.ux.Toast.msg('Delete', 'The picture <b>[{0}]</b> has been delete', record.get('name'));
+					Ext.ux.Toast.msg('Delete', 'The image <b>{0}</b> has been moved to the Trash. Click undo button to restore the image', record.get('name'));
 					grid.getStore().remove(record)
 					sbar.clearStatus({useDefaults:true});
 					sbar.setStatus({
-						text: res
+						iconCls: 'x-status-valid',
+						text: 'The image ' + record.get('name') + ' has been moved to the Trash. Click undo button to restore the image'
 					})
 					var btnUndo = Ext.getCmp('sbar-btn-undo');
 					btnUndo.setDisabled(false)					
@@ -221,6 +222,7 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
         this.subscribe("pictomobile.appswitcher.change")
 		
 		this.getView().on('refresh', this.onViewRefresh, this)
+		this.getView().on('rowsinserted', this.onRowAdded, this)
     } // eo function onRender
     ,renderThumbnail: function(val, cell, record){
         return "<a rel=\"lightbox\" class=\"fancy-group\" href=\"" + App.data.image_full_url + "/id/" + record.get('id') + ".jpg\" int_width='"+record.get('width')+"' int_height='"+record.get('height')+"' title='" +record.get('name') +  "'><img src=\"" + App.data.thumnail_url + "/" + val + "\" alt=\"" + val + "\" title=\"\"/></a>";
@@ -235,6 +237,9 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
         this.store.setBaseParam('application_id', subject.record.get('id'));
         this.store.load();
     }
+	,onRowAdded: function() {
+		this.onViewRefresh()
+	}
 	,onViewRefresh: function() {
 		$('a.fancy-group').fancybox({
 			'zoomSpeedIn': 300, 
@@ -263,10 +268,7 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 			cancel: null,
 			width: '100%',
 			height: 'none',			
-			cssclass: 'textInput',
-			select: true,
 			onerror: function(form, target, xhr) {
-				alert(xhr.responseText)
 			}
 
 		});	
