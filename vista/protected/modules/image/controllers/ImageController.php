@@ -465,9 +465,14 @@ class ImageController extends Controller {
 				$model->int_width = $arr[0]; 
 				$model->int_height = $arr[1]; 				
 			}
-			if ($isImage && $model->save()) {
+			$isSave = $model->save();
+//			fb("isImage: $isImage");
+//			fb("isSave: $isSave");
+			if ($isImage && $isSave) {
 				$this->_imageIndex($model);
 				echo CJSON::encode(array(
+					'success' => 'true',
+					'thumbnail' => $model->vc_image . '?rand=' . time(),
 					'src' => Yii::app()->createUrl("/site/thumbnail/image/$model->vc_image", array('rand'=>time())),
 					'width' => $model->int_width, 
 					'height' => $model->int_height, 
