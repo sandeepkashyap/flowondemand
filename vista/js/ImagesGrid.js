@@ -69,8 +69,28 @@ Pictomobile.action = new Ext.ux.grid.RowActions({
         tooltip: 'Manual index pictureUser'
     }],
     callbacks: {
-        'icon-plus': function(grid, record, action, row, col){
-            //Ext.ux.Toast.msg('Callback: icon-plus', 'You have clicked row: <b>{0}</b>, action: <b>{0}</b>', row, action);
+        'icon-manual-index': function(grid, record, action, row, col){
+			var sbar = Ext.getCmp('statusbar')
+			sbar.showBusy({
+				text: 'Indexing image <b>' + record.get('name') + '</b>'
+			})
+			$.ajax({
+				url: App.data.image_manual_index_url,
+				data: ({id: record.get('id')}),
+				success: function(res){
+					eval('var data= ' + res)
+					if (data.indicator == 'error') {
+			            Ext.ux.Toast.msg('Error', data.message);
+					} else {
+			            Ext.ux.Toast.msg('Index image', 'The image <b>{0}</b> successful indexed', record.get('name'));
+					}
+					sbar.clearStatus({useDefaults:true});						
+				},
+				error: function(req, textStatus, error) {
+		            Ext.ux.Toast.msg('Error', 'Something wrong when index image<br/> <b>{0}</b>', error);
+					sbar.clearStatus({useDefaults:true});
+				}
+			});
         }
 		
 		,'icon-minus': function(grid, record, action, row, col){
