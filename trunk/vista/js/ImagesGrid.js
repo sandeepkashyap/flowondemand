@@ -240,9 +240,11 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
         this.store.load();
         
         this.subscribe("pictomobile.appswitcher.change")
+        this.subscribe("pictomobile.image.change")
 		
 		this.getView().on('refresh', this.onViewRefresh, this)
 		this.getView().on('rowsinserted', this.onRowAdded, this)
+		this.getView().on('rowupdated', this.onRowUpdated, this)
     } // eo function onRender
     ,renderThumbnail: function(val, cell, record){
         return "<a rel=\"lightbox\" class=\"fancy-group\" href=\"" + App.data.image_full_url + "/id/" + record.get('id') + ".jpg\" int_width='"+record.get('width')+"' int_height='"+record.get('height')+"' title='" +record.get('name') +  "'><img src=\"" + App.data.thumnail_url + "/" + val + "\" alt=\"" + val + "\" title=\"\"/></a>";
@@ -254,10 +256,24 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
         return "<span>" + record.get('created') + "</span><br/>" + "<span>" + record.get('indexed') + "</span>";
     }
 	,onMessage: function(message, subject){
-        this.store.setBaseParam('application_id', subject.record.get('id'));
-        this.store.load();
+		if (message == 'pictomobile.image.change') {
+			var store = this.getStore();
+			var record = store.getById(subject.old.id)
+			record.set('thumbnail', subject.model.thumbnail);
+			record.set('width', subject.model.width);
+			record.set('height', subject.model.height);
+			record.set('rand', true);
+			store.commitChanges();
+			Ext.ux.Toast.msg('Image changed', 'Image change successful');
+		} else if (message == 'pictomobile.appswitcher.change') {
+	        this.store.setBaseParam('application_id', subject.record.get('id'));
+	        this.store.load();			
+		}
     }
 	,onRowAdded: function() {
+		this.onViewRefresh()
+	}
+	,onRowUpdated: function() {
 		this.onViewRefresh()
 	}
 	,onViewRefresh: function() {

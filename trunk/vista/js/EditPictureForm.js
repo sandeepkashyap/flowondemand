@@ -6,7 +6,8 @@ Pictomobile.EditPictureForm = Ext.extend(Ext.form.FormPanel, {
     border: false,
     frame: true,
     labelWidth: 80,
-    url: App.data.image_quick_add_url,
+    url: App.data.image_quick_update_url,
+	plugins: ['msgbus'],
     
     constructor: function(config){
         config = config ||
@@ -39,7 +40,7 @@ Pictomobile.EditPictureForm = Ext.extend(Ext.form.FormPanel, {
             labelAlign: 'top',
             items: [
 			{
-                name: 'Image[vc_image]',
+                name: 'value',
                 fieldLabel: 'Image from computer',
                 xtype: 'fileuploadfield',
                 emptyText: 'Select an image',
@@ -117,19 +118,16 @@ Pictomobile.EditPictureForm = Ext.extend(Ext.form.FormPanel, {
      */
     ,
     submit: function(){
-		console.log(this.data.record.data)
-		this.data.record.set('thumbnail', '7999-4790-6716-7938-3514');
-		Ext.getCmp('wndEditPicture').destroy();
-//        this.getForm().submit({
-//            url: this.url,
-//            scope: this,
-//            success: this.onSuccess,
-//            failure: this.onFailure,
-//            params: {
-//                format: 'json'
-//            },
-//            waitMsg: 'Saving...'
-//        });
+        this.getForm().submit({
+            url: this.url + '?id=vc_image:' + this.data.record.get('id'),
+            scope: this,
+            success: this.onSuccess,
+            failure: this.onFailure,
+            params: {
+                format: 'json'
+            },
+            waitMsg: 'Saving...'
+        });		
     } // eo function submit
     /**
      * Success handler
@@ -139,25 +137,8 @@ Pictomobile.EditPictureForm = Ext.extend(Ext.form.FormPanel, {
      */
     ,
     onSuccess: function(form, action){
-        form.reset();
-        var model = action.result.model
-        var record = new Pictomobile.Record.Image({
-            id: model.id_image,
-            thumbnail: model.vc_image,
-            name: model.vc_name,
-            url: model.vc_url,
-            created: '',
-            indexed: ''
-        });
-        
-        Pictomobile.Store.ImagesGridStore.add(record);
-        //        Ext.Msg.show({
-        //            title: 'Success',
-        //            msg: 'Form submitted successfully',
-        //            modal: true,
-        //            icon: Ext.Msg.INFO,
-        //            buttons: Ext.Msg.OK
-        //        });
+		this.publish('pictomobile.image.change', {old: this.data.record, model: action.result})
+		Ext.getCmp('wndEditPicture').destroy();        
     } // eo function onSuccess
     /**
      * Failure handler
