@@ -247,6 +247,10 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 		this.getView().on('rowupdated', this.onRowUpdated, this)
     } // eo function onRender
     ,renderThumbnail: function(val, cell, record){
+		if (record.get('rand')) {
+			var rand = new Date().format('U');
+	        return "<a rel=\"lightbox\" class=\"fancy-group\" href=\"" + App.data.image_full_url + "/id/" + record.get('id') + ".jpg?rand="+rand+"\" int_width='"+record.get('width')+"' int_height='"+record.get('height')+"' title='" +record.get('name') +  "'><img src=\"" + App.data.thumnail_url + "/" + val + "?rand="+ rand + " \" alt=\"" + val + "\" title=\"\"/></a>";			
+		}
         return "<a rel=\"lightbox\" class=\"fancy-group\" href=\"" + App.data.image_full_url + "/id/" + record.get('id') + ".jpg\" int_width='"+record.get('width')+"' int_height='"+record.get('height')+"' title='" +record.get('name') +  "'><img src=\"" + App.data.thumnail_url + "/" + val + "\" alt=\"" + val + "\" title=\"\"/></a>";
     }
 	,renderUrlAndName: function(val, cell, record){

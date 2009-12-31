@@ -230,12 +230,12 @@ function Application(){
 						disabled: true,
 	                    handler: function (){
 							this.setDisabled(true)
-	                        var rel = $('a.undo_link').attr('rel')
-							var undo_url = App.extendUrl(App.data.image_undo_trash_url, {id: rel, format: 'json'});
+							var json = $(document.body).data('deleted-record')
+							var undo_url = App.extendUrl(App.data.image_undo_trash_url, {id: json.id_image, format: 'json'});
 							$.ajax({
 							url: undo_url,
 							success: function(responseText) {
-								var json = $(document.body).data('deleted-record')
+								
 								var record = new Pictomobile.Record.Image({
 									id: json.id_image,
 									name: json.vc_name,
@@ -244,7 +244,8 @@ function Application(){
 									created: json.dt_created,
 									indexed: json.dt_indexed,
 									height: json.int_height,
-									width: json.int_width
+									width: json.int_width,
+									rand: true
 								});
 								Ext.getCmp('imagesGrid').getStore().insert(0, record);
 								Ext.getCmp('imagesGrid').getView().scrollToTop();

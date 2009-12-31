@@ -48,7 +48,7 @@ Pictomobile.EditPictureForm = Ext.extend(Ext.form.FormPanel, {
                 buttonCfg: {
                     iconCls: 'upload-icon'
                 },
-                allowBlank: false
+                allowBlank: true
             }, {
                 xtype: 'box',
                 anchor: '',
@@ -57,18 +57,28 @@ Pictomobile.EditPictureForm = Ext.extend(Ext.form.FormPanel, {
                 autoEl: {
                     tag: 'div',
                     children: [{
+						id: 'formImage',
                         tag: 'img',
-                        qtip: 'You can also have a tooltip on the image',
-                        src:  App.data.thumnail_url + "/" + this.data.record.data.thumbnail 
+                        width: '80px',
+                        src:  App.data.thumnail_url + "/" + this.data.record.data.thumbnail  + '?rand=' + new Date().format('U')
                     }, {
                         tag: 'div',
-                        style: 'margin:0 0 4px 0',
-                        html: 'Image Caption'
+                        style: 'margin:0 0 4px 0'
                     }]
                 }
             }, {
                 name: 'Image[from_url]',
-                fieldLabel: 'From Url'
+                fieldLabel: 'From Url',
+				enableKeyEvents: true,
+				listeners: {
+					'keyup': {
+						fn: function(field, e) {
+							var value = field.getValue();
+							$('#formImage').attr('src', value)
+						}
+						,deplay: 4000
+					}
+				}
             }],
             buttons: [{
                 text: 'Reset',

@@ -47,11 +47,39 @@ Pictomobile.UploadForm = Ext.extend(Ext.form.FormPanel, {
                 buttonCfg: {
                     iconCls: 'upload-icon'
                 },
-                allowBlank: false
+                allowBlank: true
             }, {
                 name: 'Image[from_url]',
-                fieldLabel: 'From Url'
+                fieldLabel: 'From Url',
+				enableKeyEvents: true,
+				listeners: {
+					'keyup': {
+						fn: function(field, e) {
+							var value = field.getValue();
+							$('#mainFormImage').attr('src', value)
+						}
+						,deplay: 4000
+					}
+				}
             }, {
+				xtype: 'box',
+                anchor: '',
+                isFormField: true,
+                fieldLabel: 'Image',
+                autoEl: {
+                    tag: 'div',
+                    children: [{
+						id: 'mainFormImage',
+                        tag: 'img',
+                        qtip: '',
+						width: '80px',
+                        src:  '' 
+                    }, {
+                        tag: 'div',
+                        style: 'margin:0 0 4px 0'
+                    }]
+                }
+			}, {
                 name: 'Image[vc_name]',
                 fieldLabel: 'Name'
             }, {
@@ -135,11 +163,13 @@ Pictomobile.UploadForm = Ext.extend(Ext.form.FormPanel, {
             thumbnail: model.vc_image,
             name: model.vc_name,
             url: model.vc_url,
+			width: model.int_width,
+			height: model.int_height,
             created: '',
             indexed: ''
         });
 		
-        Pictomobile.Store.ImagesGridStore.add(record);
+        Pictomobile.Store.ImagesGridStore.insert(0, record);
         //        Ext.Msg.show({
         //            title: 'Success',
         //            msg: 'Form submitted successfully',

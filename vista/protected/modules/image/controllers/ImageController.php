@@ -376,7 +376,9 @@ class ImageController extends Controller {
 	    		'vc_name' => $model->vc_name,
 	    		'vc_url' => $model->vc_url,
 	    		'dt_created' => $model->dt_received,
-	    		'dt_indexed' => $model->dt_indexed,        		 
+	    		'dt_indexed' => $model->dt_indexed,
+				'int_width' => $model->int_width,        		 
+				'int_height' => $model->int_height,        		 
 			);
 			echo "{success: true, model: ". CJSON::encode($retval) ."}";						
 		} else {
