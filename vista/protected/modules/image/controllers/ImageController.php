@@ -695,7 +695,7 @@ class ImageController extends Controller {
 			fclose($handle);
 			echo 'Finished!<br/>';
 			if ($success > 0) {
-				echo "<script>parent.image_csv_upload_success=$success</script>";
+				echo "<script>parent.image_csv_upload_success=$success; window.parent.Ext.getCmp('imagesGrid').getStore().load()</script>";
 			}
 			return;
 		}

@@ -3,25 +3,21 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         
 		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ext-all.css');?>
-		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/xtheme-human.css');?>
 		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ux/RowEditor.css');?>
 		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ux/RowActions.css');?>
 		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ux/icons.css');?>
 		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ux/Lightbox.css');?>
+		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ux/FillSlider.css');?>
+		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ux/statusbar.css');?>
+		
 		<?=CHtml::cssFile(ROOT_URL . '/assets/stylesheets/overlay-basic.css');?>
 		<?=CHtml::cssFile(ROOT_URL . '/assets/stylesheets/overlay-gallery.css');?>
-		
 		<?=CHtml::cssFile(ROOT_URL . '/assets/stylesheets/fancybox.css');?>
 		
 		<?=CHtml::scriptFile(ROOT_URL . '/assets/javascript/jquery.js');?>
-		
-		
-		
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/adapter/jquery/ext-jquery-adapter.js');?>
-		
 		<?=CHtml::scriptFile(ROOT_URL . '/assets/javascript/jquery.fancybox.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/assets/javascript/jquery.jeditable.js');?>
-		
 		
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ext-all.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/FileUploadField.js');?>
@@ -30,6 +26,9 @@
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/Toast.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/MsgBus.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/SliderTip.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/FillSlider.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/StatusBar.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/MIFrame.js');?>
 		
 		<?=CHtml::cssFile(ROOT_URL . '/css/application.css');?>
 		
@@ -69,6 +68,12 @@
 			App.data.images_store = '<?=$this->createUrl('image/getPage/application/'. $this->application_id)?>';
 			App.data.image_quick_add_url = '<?=$this->createUrl('image/quickAdd/application/'. $this->application_id, array('skip_layout'=>1))?>';
 			App.data.image_full_url = '<?=Yii::app()->createUrl('image/image/viewFull')?>'
+			App.data.image_quick_update_url = '<?=Yii::app()->createUrl('image/image/quickUpdate')?>'
+			App.data.image_delete_url = '<?=Yii::app()->createUrl('image/image/delete')?>'
+			App.data.image_undo_trash_url = '<?=Yii::app()->createUrl('image/image/undoTrash')?>'
+			App.data.image_manual_index_url = '<?=Yii::app()->createUrl('image/image/manualIndex')?>'
+			App.data.image_change_url = '<?=Yii::app()->createUrl('image/image/changeImage')?>'
+			App.data.image_csv_url = '<?=Yii::app()->createUrl('/image/image/csvForm')?>'
 		</script>
 		
 		<?=CHtml::scriptFile(ROOT_URL . '/js/application.js');?>
@@ -77,6 +82,7 @@
 		<?=CHtml::scriptFile(ROOT_URL . '/js/UploadForm.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/js/EditPictureForm.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/js/ImagesGrid.js');?>
+		
 		
 		
         <title>Pictomobile</title>
