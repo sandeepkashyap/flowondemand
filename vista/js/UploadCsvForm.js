@@ -48,10 +48,28 @@ Pictomobile.UploadCsvForm = Ext.extend(Ext.form.FormPanel, {
                 buttonCfg: {
                     iconCls: 'upload-icon'
                 },
-                allowBlank: true
+                allowBlank: false
             }, {
+				xtype: 'combo',
+				allowBlank: false,
+				blankText: 'Please select or enter a delimiter character',
                 name: 'delimiter',
-                fieldLabel: 'Delimiter'
+                fieldLabel: 'Delimiter',
+			    typeAhead: true,
+			    triggerAction: 'all',
+			    lazyRender:true,
+			    mode: 'local',
+			    store: new Ext.data.ArrayStore({
+			        id: 0,
+			        fields: [
+			            'myId',
+			            'displayText'
+			        ],
+			        data: [[';', ';'], [',', ','], ['|', '|'], ['tab', 'tab']]
+			    }),
+			    valueField: 'myId',
+			    displayField: 'displayText',
+				value: ';'
             }],
             buttons: [{
                 text: 'Reset',
