@@ -28,7 +28,6 @@
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/SliderTip.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/FillSlider.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/StatusBar.js');?>
-		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/MIFrame.js');?>
 		
 		<?=CHtml::cssFile(ROOT_URL . '/css/application.css');?>
 		
@@ -80,6 +79,7 @@
 		<?=CHtml::scriptFile(ROOT_URL . '/js/ApplicationForm.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/js/AppSwitcher.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/js/UploadForm.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/js/UploadCsvForm.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/js/EditPictureForm.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/js/ImagesGrid.js');?>
 		
@@ -102,23 +102,22 @@
                 </table>
             </div>
         </div>
-		
-		<!-- overlay element --> 
-		<div class="simple_overlay" id="gallery"> 
-		 
-		    <!-- "previous image" action --> 
-		    <a class="prev">prev</a> 
-		 
-		    <!-- "next image" action --> 
-		    <a class="next">next</a> 
-		 
-		    <!-- image information --> 
-		    <div class="info"></div> 
-		 
-		    <!-- load indicator (animated gif) --> 
-		    <img class="progress" src="http://static.flowplayer.org/tools/img/overlay/loading.gif" /> 
-		</div>
-
-
+        
+		<div id="dialogCsvUpload" class="x-hidden">
+            <div class="x-window-header">
+                Please Wait
+            </div>
+            <div class="x-window-body">
+                <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0" class="cssPleaseWait">
+                    <tr>
+                        <td align="center" valign="middle">
+                            <iframe id="upload_target" name="upload_target" width="100%" height="100%" style="border: none;">
+                            	
+                            </iframe>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </body>
 </html>
