@@ -121,20 +121,9 @@ function Application(){
                     id: "uploadImage",
                     xtype: "picuploadform"
                 }, {
-					xtype       : 'iframepanel',
-                    title: "Upload CSV",
+                    title: "Batch upload",
                     id: "uploadCsv",
-				    loadMask  	: true,
-				    frame		: true,
-				    frameConfig	: {autoCreate:{id: 'frame-123'}},
-				    defaultSrc 	: App.data.image_csv_url + '/application/18',
-				    layout		: 'fit',
-					tbar: [{
-						text: 'Reload',
-						handler: function() {
-							Ext.getCmp('uploadCsv').setSrc();
-						}
-					}]
+                    xtype: "picUploadCsvForm"
                 }]
             }, {
                 id: "toolbarArea",
