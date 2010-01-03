@@ -6,7 +6,7 @@ Pictomobile.UploadCsvForm = Ext.extend(Ext.form.FormPanel, {
     border: false,
     frame: true,
     labelWidth: 80,
-    url: App.data.image_quick_add_url,
+    url: '',
 	popup_window: null,
     
     constructor: function(config){
@@ -146,7 +146,7 @@ Pictomobile.UploadCsvForm = Ext.extend(Ext.form.FormPanel, {
 		var f_id = f.id
 		f = document.getElementById(f_id);
 		f.target = 'upload_target'
-		f.action = App.data.image_csv_url + '/application/18';
+		f.action = App.data.image_csv_url + '/application/' + App.data.application_id;
 		f.onsubmit = function() {
 			document.getElementById(f_id).target = "upload_target";
 		}

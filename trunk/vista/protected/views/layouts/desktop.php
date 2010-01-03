@@ -73,6 +73,7 @@
 			App.data.image_manual_index_url = '<?=Yii::app()->createUrl('image/image/manualIndex')?>'
 			App.data.image_change_url = '<?=Yii::app()->createUrl('image/image/changeImage')?>'
 			App.data.image_csv_url = '<?=Yii::app()->createUrl('/image/image/csvForm')?>'
+			App.data.logout_url = '<?=Yii::app()->createUrl('/base/user/logout')?>'
 		</script>
 		
 		<?=CHtml::scriptFile(ROOT_URL . '/js/application.js');?>

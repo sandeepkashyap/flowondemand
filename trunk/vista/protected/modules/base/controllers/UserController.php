@@ -35,8 +35,17 @@ class UserController extends Controller {
 			if (isset($_POST['User']))
 				$user->setAttributes($_POST['User']);
 			// validate user input and redirect to previous page if valid
-			if ($user->validate())// ;
-				$this->redirect(Yii::app()->user->returnUrl);
+			if ($user->validate()) {
+				$returnUrl = Yii::app()->user->returnUrl;
+				if (Yii::app()->request->getIsAjaxRequest()) {
+					echo CJSON::encode(array('success' => true, 'returnUrl' => $returnUrl));
+					exit;
+				}
+				$this->redirect($returnUrl);
+			} else if (Yii::app()->request->getIsAjaxRequest()) {
+				echo CJSON::encode(array('success' => false, 'errors' => Html::errorSummary($user)));
+				exit;
+			}
 		}
 		// display the login form
 		$this->layout = 'application.views.layouts.login';
