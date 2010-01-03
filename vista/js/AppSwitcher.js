@@ -56,7 +56,8 @@ Pictomobile.AppSwitcher = {
     emptyText: 'Select a application...',
     selectOnFocus: true,
     listeners: {
-        'select': function(cmb, rec, idx){			
+        'select': function(cmb, rec, idx){
+			App.data.application_id = rec.get('id');
             cmb.publish('pictomobile.appswitcher.change', {record: rec, idx: idx});
         },
         

@@ -143,7 +143,8 @@ Pictomobile.UploadForm = Ext.extend(Ext.form.FormPanel, {
             success: this.onSuccess,
             failure: this.onFailure,
             params: {
-                format: 'json'
+                format: 'json',
+				application_id: App.data.application_id
             },
             waitMsg: 'Saving...'
         });

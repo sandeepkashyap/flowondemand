@@ -187,7 +187,14 @@ function Application(){
                                 }).show();
                             }
                         }]
-                    }]
+                    }, {xtype: 'tbfill'}, {
+						xtype: 'button',
+						text: 'Logout',
+						iconCls: 'icon-cancel',
+						handler: function() {
+							window.location = App.data.logout_url
+						}
+					}]
                 
                 }]
             }, {
