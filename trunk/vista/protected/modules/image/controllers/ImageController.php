@@ -91,6 +91,32 @@ class ImageController extends Controller {
 
 			),
 			array (
+				'denied', // allow authenticated user to perform 'create' and 'update' actions
+				'actions' => array (
+					'admin',
+					'list',
+					'create',
+					'update',
+					'quickAdd',
+					'quickUpdate',
+					'changeImage',
+					'viewFull',
+					'undoTrash',
+					'csvForm',
+					'iframe',
+					'updateImageSize',
+					'updateIndexed',
+					'manualIndex',
+					'getPage',
+					'print',
+					'log'
+				),
+				'users' => array (
+					'?'
+				),
+
+			),
+			array (
 				'allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions' => array (
 					'admin',
@@ -561,12 +587,14 @@ class ImageController extends Controller {
 		
 		$criteria->order = " id_image DESC";
 		
+		$pageSize = isset($_REQUEST['items_per_page']) && $_REQUEST['items_per_page'] ? $_REQUEST['items_per_page'] : self :: PAGE_SIZE;
+		
 		if (isset($_REQUEST['start']) && intval($_REQUEST['start']) > 0) {
-			$_GET['page'] = $_REQUEST['start']  / 5 + 1;
+			$_GET['page'] = $_REQUEST['start']  / $pageSize + 1;
 		}
 
 		$pages = new CPagination(Image :: model()->count($criteria));
-		$pages->pageSize = isset($_REQUEST['items_per_page']) && $_REQUEST['items_per_page'] ? $_REQUEST['items_per_page'] : self :: PAGE_SIZE;
+		$pages->pageSize = $pageSize;
 		$pages->applyLimit($criteria);
 
 		$sort = new CSort('Image');

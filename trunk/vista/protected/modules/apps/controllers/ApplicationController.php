@@ -167,9 +167,17 @@ class ApplicationController extends Controller
 		Yii::app()->wireframe->addPageAction('New Application', $this->createUrl('application/create'));
 
 		$criteria=new CDbCriteria;
+		$criteria->condition = "id_client = " . Yii::app()->user->id . " OR " . Yii::app()->user->rank . " >=4";
+		$criteria->order = "vc_name ASC";
+		
+		$pageSize = isset($_REQUEST['items_per_page']) && $_REQUEST['items_per_page'] ? $_REQUEST['items_per_page'] : self :: PAGE_SIZE;
+		
+		if (isset($_REQUEST['start']) && intval($_REQUEST['start']) > 0) {
+			$_GET['page'] = $_REQUEST['start']  / $pageSize + 1;
+		}
 
 		$pages=new CPagination(application::model()->count($criteria));
-		$pages->pageSize=self::PAGE_SIZE;
+		$pages->pageSize=$pageSize;
 		$pages->applyLimit($criteria);
 
 		$models=application::model()->findAll($criteria);
@@ -182,6 +190,7 @@ class ApplicationController extends Controller
 				'sort' => $sort,
 	
 			));			
+			
 		} else {
 			$this->render('list',array(
 				'models'=>$models,
