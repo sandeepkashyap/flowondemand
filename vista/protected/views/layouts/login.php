@@ -24,7 +24,7 @@
 			App.data.application_url = '<?=Yii::app()->createUrl('image/image/list')?>';
 			
 			App.data.login_url = '<?=Yii::app()->createUrl('/base/user/login')?>'
-			App.data.forgot_password_url = '<?=Yii::app()->createUrl('/base/user/recover')?>'
+			App.data.forgot_password_url = '<?=Yii::app()->createUrl('/base/user/recoverPassword')?>'
 		</script>
 		
 		<?=CHtml::scriptFile(ROOT_URL . '/js/LoginWindow.js');?>
