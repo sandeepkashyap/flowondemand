@@ -190,25 +190,30 @@ class UserController extends Controller {
 		$this->render('recover', compact('user'));
 	}
 	public function actionRecoverPassword() {
-		if (!isset($_GET['id'], $_GET['pass']))
+		if (!isset($_POST['email']))
 			throw new CHttpException(404,'Invalid request');
 
-		if ($user = User::model()->findbyPk($_GET['id'])) {
-			if ($user->password != $_GET['pass'])
-				throw new CHttpException(404,'Invalid auth key');
-			$user->password = $user->generatePassword(6);
-			$user->encryptPassword();
-			$user->save(false);
-
-			$email = Yii::app()->email;
-			$email->to = $user->email;
-			$email->view = 'UserRecover';
-			$email->send(array('user' => $user, 'newPassword'=>true));
-
-			Yii::app()->user->setFlash('recover', "Thank you.  A new password has been sent to your email.");
-			$this->render('recover',array('user' => $user));
-		} else
-			throw new CHttpException(404,'Invalid user');
+		$found = User::model()->findByAttributes(array('email'=>$_POST['email']));
+		if ($found != null) {
+			if ($user = User::model()->findbyPk($found->id)) {
+				$user->password = $user->generatePassword(6);
+				$user->encryptPassword();
+				$user->save(false);
+	
+				$email = Yii::app()->email;
+				$email->to = $user->email;
+				$email->view = 'UserRecover';
+				$email->send(array('user' => $user, 'newPassword'=>true));
+	
+				//Yii::app()->user->setFlash('recover', "Thank you.  A new password has been sent to your email.");
+				//$this->render('recover',array('user' => $user));
+				echo CJSON::encode(array('success' => true, 'message' => 'Thank you. A new password has been sent to your email.'));
+			} else
+				throw new CHttpException(404,'Invalid user');
+		} else {
+			throw new CHttpException(404,'Invalid user email');
+		}
+		die();
 	}
 
 	public function actionDelete() {

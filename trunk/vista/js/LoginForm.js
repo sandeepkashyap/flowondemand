@@ -41,10 +41,13 @@ Pictomobile.LoginForm = Ext.extend(Ext.form.FormPanel, {
             items: [{
                 name: 'User[username]',
                 fieldLabel: 'User name',
+				enableKeyEvents: true, 
                 allowBlank: false
             }, {
                 name: 'User[password]',
+				enableKeyEvents: true, 
                 fieldLabel: 'Password',
+				inputType: 'password',
 				allowBlank: false
             }, {
 				xtype: 'checkbox',
@@ -53,6 +56,7 @@ Pictomobile.LoginForm = Ext.extend(Ext.form.FormPanel, {
 			}],
 			buttonAlign: 'center',
             buttons: [{
+				name: 'login',
                 text: 'Login',
 				cls: 'x-btn-text-icon',
 				iconCls: 'icon-key',
@@ -119,7 +123,7 @@ Pictomobile.ForgotPassword = Ext.extend(Ext.form.FormPanel, {
     border: false,
     frame: true,
     labelWidth: 80,
-    url: App.data.image_quick_add_url,
+    url: App.data.forgot_password_url,
     
     constructor: function(config){
         config = config ||
@@ -153,7 +157,8 @@ Pictomobile.ForgotPassword = Ext.extend(Ext.form.FormPanel, {
             labelAlign: 'right',
 			labelWidth: 90,
             items: [{
-                name: 'User[email]',
+				vtype: 'email',
+                name: 'email',
                 fieldLabel: 'Email',
                 allowBlank: false
             }],
@@ -197,21 +202,25 @@ Pictomobile.ForgotPassword = Ext.extend(Ext.form.FormPanel, {
      */
     ,
     submit: function(){
-		var sbar = Ext.getCmp('statusbar')
-		sbar.showBusy({
-			text: 'Waiting...'
-		})
-//        this.getForm().submit({
-//            url: this.url,
-//            scope: this,
-//            success: this.onSuccess,
-//            failure: this.onFailure,
-//            params: {
-//                format: 'json'
-//            },
-//            waitMsg: 'Saving...'
-//        });
-    } // eo function submit    
+        this.getForm().submit({
+            url: this.url,
+            scope: this,
+            success: this.onSuccess,
+            failure: this.onFailure,
+            waitMsg: 'Saving...'
+        });
+    } // eo function submit
+    ,onSuccess: function(form, action) {
+		eval('var result = ' + action.response.responseText);
+		if (result.success) {
+			Ext.ux.Toast.msg('Forgot password', result.message);			
+		} else {
+			Ext.ux.Toast.msg('Forgot password error', result.message);
+		}
+	}
+	,onFailure: function(form, action) {
+		Ext.ux.Toast.msg('Forgot password error', action.response.responseText);
+	}    
 }) //eo ForgotPassword
 // register xtype
 Ext.reg('picForgotPassword', Pictomobile.ForgotPassword);
