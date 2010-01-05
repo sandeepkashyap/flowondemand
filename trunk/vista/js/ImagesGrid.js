@@ -345,8 +345,6 @@ Pictomobile.ImagesDataView = Ext.extend(Ext.DataView, {
 	,refresh: function() {
 		Pictomobile.ImagesDataView.superclass.refresh.apply(this, arguments);
 		
-		var slideValue = Ext.getCmp('imageSlider').getValue();
-		
 		$('td.td-thumb img').load(function() {
 			var self = $(this);
 			var img = new Image();
@@ -354,6 +352,7 @@ Pictomobile.ImagesDataView = Ext.extend(Ext.DataView, {
 				return;
 			}
 			img.onload = function() {
+				var slideValue = Ext.getCmp('imageSlider').getValue();
 				self.data('isLoaded', true)
 				self
 				.attr('src', this.src).css('width', slideValue - 10)
