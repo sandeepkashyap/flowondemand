@@ -32,15 +32,19 @@ Pictomobile.Record.Application = Ext.data.Record.create([{
 }]);
 
 var appsStore = new Ext.data.JsonStore({
+	autoLoad: false,
     url: App.data.apps_store,
+	totalProperty: 'totalCount',
     root: 'apps',
     baseParams: {
         format: 'json',
         skip_layout: '1',
-        items_per_page: 20
+        items_per_page: 10
     },
     fields: Pictomobile.Record.Application
 });
+
+
 
 Pictomobile.AppSwitcher = {
 	id: 'appSwitcher',
@@ -50,7 +54,9 @@ Pictomobile.AppSwitcher = {
     displayField: 'vc_name',
     valueField: 'id',
     editable: false,
-    mode: 'remote',
+	pageSize: 10,
+	width: 200,
+    mode: 'local',
     forceSelection: true,
     triggerAction: 'all',
     emptyText: 'Select a application...',
@@ -59,9 +65,21 @@ Pictomobile.AppSwitcher = {
         'select': function(cmb, rec, idx){
 			App.data.application_id = rec.get('id');
             cmb.publish('pictomobile.appswitcher.change', {record: rec, idx: idx});
-        },
-        
-		onMessage: function(subject, message){
+        }
+		,'render': function() {
+			this.getStore().load()
+			this.getStore().on('load', function(store) {
+				var count = store.getTotalCount()
+				if (count == 1) {
+					var rec = store.getAt(0)
+					var cmb = Ext.getCmp('appSwitcher')
+					cmb.setValue(rec.get('id'));
+					cmb.fireEvent('select', cmb, rec, 0)
+				}
+			})
+		}
+		,onMessage: function(subject, message){
         } // eo function onMessage
     }
+	
 }
