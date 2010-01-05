@@ -67,6 +67,9 @@ Pictomobile.AppSwitcher = {
             cmb.publish('pictomobile.appswitcher.change', {record: rec, idx: idx});
         }
 		,'render': function() {
+			this.subscribe("pictomobile.applicaiton.added")
+			this.subscribe("pictomobile.applicaiton.updated")
+			
 			this.getStore().load()
 			this.getStore().on('load', function(store) {
 				var count = store.getTotalCount()
@@ -78,8 +81,35 @@ Pictomobile.AppSwitcher = {
 				}
 			})
 		}
-		,onMessage: function(subject, message){
-        } // eo function onMessage
     }
+	,onMessage: function(subject, message){
+		if (subject == 'pictomobile.applicaiton.updated') {
+			var record = this.getStore().getById(message.recordId)
+			for(var i in record.fields.keys) {
+				var key = record.fields.keys[i]
+				
+				if (Ext.isPrimitive(key)) {
+					record.set(key, message.model[key]);					
+				}
+			}
+			this.getStore().commitChanges();
+			this.setValue(record.get('id'));
+		} else if (subject == 'pictomobile.applicaiton.added') {
+			var record = new Pictomobile.Record.Application({
+	            id: message.model.id
+	        });
+			record.id = message.model.id;
+			for(var i in record.fields.keys) {
+				var key = record.fields.keys[i]
+				
+				if (Ext.isPrimitive(key)) {
+					record.set(key, message.model[key]);					
+				}
+			}
+			this.getStore().insert(0, record)
+			this.setValue(record.get('id'))
+			this.fireEvent('select', this, record, 0)
+		}
+    } // eo function onMessage
 	
 }

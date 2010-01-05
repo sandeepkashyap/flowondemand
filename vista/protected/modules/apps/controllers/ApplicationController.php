@@ -117,8 +117,19 @@ class ApplicationController extends Controller
 		{
 			$model->attributes=$_POST['application'];
 			$model->id_client = Yii::app()->user->id;
-			if($model->save())
-				$this->redirect(array('show','id'=>$model->id));
+			if($model->save()) {
+				if (Yii::app()->request->getIsAjaxRequest()) {
+					echo CJSON::encode(array('success' => true, 'isNew' => true, 'model' => $model));
+					exit;
+				} else {
+					$this->redirect(array('show','id'=>$model->id));					
+				}
+			} else {
+				if (Yii::app()->request->getIsAjaxRequest()) {
+					echo CJSON::encode(array('success' => false, 'errors' => Html::errorSummary($model)));
+					exit;
+				}
+			}
 		}
 		$this->render('create',array('model'=>$model));
 	}
@@ -135,8 +146,19 @@ class ApplicationController extends Controller
 		if(isset($_POST['application']))
 		{
 			$model->attributes=$_POST['application'];
-			if($model->save())
-				$this->redirect(array('show','id'=>$model->id));
+			if($model->save()) {
+				if (Yii::app()->request->getIsAjaxRequest()) {
+					echo CJSON::encode(array('success' => true, 'isNew' => false, 'model' => $model));
+					exit;
+				} else {
+					$this->redirect(array('show','id'=>$model->id));					
+				}
+			} else {
+				if (Yii::app()->request->getIsAjaxRequest()) {
+					echo CJSON::encode(array('success' => false, 'errors' => Html::errorSummary($model)));
+					exit;
+				}
+			}
 		}
 		$this->render('update',array('model'=>$model));
 	}
