@@ -74,6 +74,9 @@
 			App.data.image_change_url = '<?=Yii::app()->createUrl('image/image/changeImage')?>'
 			App.data.image_csv_url = '<?=Yii::app()->createUrl('/image/image/csvForm')?>'
 			App.data.logout_url = '<?=Yii::app()->createUrl('/base/user/logout')?>'
+			
+			App.data.apps_create_url = '<?=Yii::app()->createUrl('/apps/application/create')?>'
+			App.data.apps_update_url = '<?=Yii::app()->createUrl('/apps/application/update')?>'
 		</script>
 		
 		<?=CHtml::scriptFile(ROOT_URL . '/js/application.js');?>

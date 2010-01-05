@@ -175,6 +175,7 @@ function Application(){
                                         xtype: 'picapplicationform',
                                         data: {
                                             record: new Pictomobile.Record.Application({
+												id: 0,
                                                 int_nbanwsers: 1,
                                                 int_tokens: 0,
                                                 int_size: 50000,

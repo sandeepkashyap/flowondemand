@@ -2,11 +2,9 @@ Ext.ns('Pictomobile');
 
 Pictomobile.ApplicationForm = Ext.extend(Ext.form.FormPanel, {
     // defaults - can be changed from outside
-    fileUpload: true,
     border: false,
     frame: true,
     labelWidth: 80,
-    url: App.data.image_quick_add_url,
     
     constructor: function(config){
         config = config ||
@@ -56,22 +54,17 @@ Pictomobile.ApplicationForm = Ext.extend(Ext.form.FormPanel, {
             }, {
                 name: 'application[int_size]',
 				dataIndex: 'int_size',
-                fieldLabel: 'Image size',
+                fieldLabel: '* Image size',
                 allowBlank: false
             }, {
                 name: 'application[int_nbanwsers]',
-				dataIndex: 'int_size',
+				dataIndex: 'int_nbanwsers',
                 fieldLabel: '* Anwsers',
                 allowBlank: false
             }, {
                 name: 'application[float_scoremin]',
 				dataIndex: 'float_scoremin',
                 fieldLabel: '* Score min',
-                allowBlank: false
-            }, {
-                name: 'application[int_size]',
-				dataIndex: 'int_size',
-                fieldLabel: 'Image pixels',
                 allowBlank: false
             }, {
                 name: 'application[int_tokens]',
@@ -90,10 +83,12 @@ Pictomobile.ApplicationForm = Ext.extend(Ext.form.FormPanel, {
                 allowBlank: true
             }],
             buttons: [{
+				type: 'reset',
                 text: 'Reset',
                 scope: this,
                 handler: this.onResetClick
             }, {
+				type: 'submit',
                 text: 'Submit',
                 formBind: true,
                 scope: this,
@@ -146,8 +141,15 @@ Pictomobile.ApplicationForm = Ext.extend(Ext.form.FormPanel, {
      */
     ,
     submit: function(){
+		var url = null;
+		if (this.data.record.get('id') > 0) {
+			url = App.extendUrl(App.data.apps_update_url, {id: this.data.record.get('id')});
+		} else {
+			url = App.data.apps_create_url;
+		}
+		
         this.getForm().submit({
-            url: this.url,
+            url: url,
             scope: this,
             success: this.onSuccess,
             failure: this.onFailure,
@@ -165,25 +167,15 @@ Pictomobile.ApplicationForm = Ext.extend(Ext.form.FormPanel, {
      */
     ,
     onSuccess: function(form, action){
-        form.reset();
         var model = action.result.model
-        var record = new Pictomobile.Record.Image({
-            id: model.id_image,
-            thumbnail: model.vc_image,
-            name: model.vc_name,
-            url: model.vc_url,
-            created: '',
-            indexed: ''
-        });
 		
-        Pictomobile.Store.ImagesGridStore.add(record);
-        //        Ext.Msg.show({
-        //            title: 'Success',
-        //            msg: 'Form submitted successfully',
-        //            modal: true,
-        //            icon: Ext.Msg.INFO,
-        //            buttons: Ext.Msg.OK
-        //        });
+		if (action.result.isNew) {
+	        this.publish('pictomobile.applicaiton.added', {model: model});
+		} else {
+	        this.publish('pictomobile.applicaiton.updated', {recordId: this.data.record.id, model: model});
+		}
+        Ext.getCmp('wndEditApplication').close();
+        
     } // eo function onSuccess
     /**
      * Failure handler
