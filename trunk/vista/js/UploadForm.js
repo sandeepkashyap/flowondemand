@@ -166,8 +166,8 @@ Pictomobile.UploadForm = Ext.extend(Ext.form.FormPanel, {
             url: model.vc_url,
 			width: model.int_width,
 			height: model.int_height,
-            created: '',
-            indexed: ''
+            created: model.dt_created,
+            indexed: model.dt_indexed
         });
 		
         Pictomobile.Store.ImagesGridStore.insert(0, record);

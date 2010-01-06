@@ -108,6 +108,7 @@ function Application(){
                 minSize: 10,
                 maxSize: 260,
                 collapsible: true,
+				collapsed: true,
                 layout: "accordion",
                 // Applied to each contained panel.
                 defaults: {
@@ -125,6 +126,18 @@ function Application(){
                     id: "uploadCsv",
                     xtype: "picUploadCsvForm"
                 }]
+//				,listeners: {
+//					'beforeexpand': {
+//						fn: function() {
+//							console.log('asdfasdf')
+//						}
+//					}
+//					,'beforeshow': {
+//						fn: function() {
+//							console.log('12312asdfasdf')
+//						}
+//					}
+//				}
             }, {
                 id: "toolbarArea",
                 autoHeight: true,
@@ -275,11 +288,16 @@ function Application(){
 					'render': {
 						fn: function() {
 							this.subscribe("pictomobile.image.viewmode.change")
+							this.subscribe("pictomobile.appswitcher.change")
 						}
 					}
 				},
 				onMessage: function(message, subject) {
-					Ext.getCmp('mainArea').getLayout().setActiveItem(subject)
+					if (message == 'pictomobile.appswitcher.change') {
+						Ext.getCmp('categoriesArea').expand();
+					} else if (message = 'pictomobile.image.viewmode.change') {
+						Ext.getCmp('mainArea').getLayout().setActiveItem(subject)						
+					}
 				}
             }]
         });
