@@ -157,6 +157,9 @@ function Application(){
                         handler: function(){
                             //this.publish('pictomobile.application.edit', {p: 'khanh'})
                             var rec = Ext.getCmp('appSwitcher').getStore().getById(Ext.getCmp('appSwitcher').getValue())
+							if (rec == undefined) {
+								return;
+							}
                             new Ext.Window({
                                 id: "wndEditApplication",
                                 title: 'Edit application',
