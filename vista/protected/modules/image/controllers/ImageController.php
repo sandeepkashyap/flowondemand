@@ -401,8 +401,8 @@ class ImageController extends Controller {
 	    		'vc_image' => $model->vc_image,
 	    		'vc_name' => $model->vc_name,
 	    		'vc_url' => $model->vc_url,
-	    		'dt_created' => $model->dt_received,
-	    		'dt_indexed' => $model->dt_indexed,
+	    		'dt_created' => $model->dt_received ? $model->dt_received : '',
+	    		'dt_indexed' => $model->dt_indexed ? $model->dt_indexed : '',
 				'int_width' => $model->int_width,        		 
 				'int_height' => $model->int_height,        		 
 			);
@@ -635,7 +635,18 @@ class ImageController extends Controller {
 		$model = $this->loadImage();
 		$model->undoTrash();
 		if (isset($_GET['format']) && $_GET['format'] == 'json') {
-			
+			$retval = array(
+				'id_image' => $model->id_image,
+	    		'vc_image' => $model->vc_image,
+	    		'vc_name' => $model->vc_name,
+	    		'vc_url' => $model->vc_url,
+	    		'dt_created' => $model->dt_received ? $model->dt_received : '',
+	    		'dt_indexed' => $model->dt_indexed ? $model->dt_indexed : '',
+				'int_width' => $model->int_width,        		 
+				'int_height' => $model->int_height,        		 
+			); 
+			echo CJSON::encode(array('success' => true, 'model' => $retval));
+			exit;
 		} else {
 			$this->renderPartial('quickAdd', array(
 				'model' => $model

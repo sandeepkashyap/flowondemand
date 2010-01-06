@@ -105,6 +105,7 @@ Pictomobile.action = new Ext.ux.grid.RowActions({
 				url: App.data.image_delete_url,
 				data: ({image_id: record.get('id')}),
 				success: function(res) {
+					$(document.body).data('deleted-record', record.get('id'))
 					Ext.ux.Toast.msg('Delete', 'The image <b>{0}</b> has been moved to the Trash. Click undo button to restore the image', record.get('name'));
 					grid.getStore().remove(record)
 					sbar.clearStatus({useDefaults:true});
@@ -114,7 +115,6 @@ Pictomobile.action = new Ext.ux.grid.RowActions({
 					})
 					var btnUndo = Ext.getCmp('sbar-btn-undo');
 					btnUndo.setDisabled(false)					
-					$(document.body).data('deleted-record', record.json)
 				}
 			});
 		} 
@@ -257,7 +257,9 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
         return "<span id='vc_url:"+record.get('id')+"' title='Click to edit' class='editableInput'>" + record.get('url') + "</span><br/>" + "<span id='vc_name:"+record.get('id')+"' class='editableInput'>" + record.get('name') + "</span>";
     }
 	,renderReceived: function(val, cell, record){
-        return "<span>" + record.get('created') + "</span><br/>" + "<span>" + record.get('indexed') + "</span>";
+		var f = new Ext.fc.fuzzyDate();
+		var options = {dateFormats: 'Y-m-d'};
+        return "<span class='fuzzyDate' title='"+ record.get('created') +"'></span><br/>" + "<span class='fuzzyDate' title='"+record.get('indexed')+"'></span>";
     }
 	,onMessage: function(message, subject){
 		if (message == 'pictomobile.image.change') {
@@ -311,7 +313,9 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 			onerror: function(form, target, xhr) {
 			}
 
-		});	
+		});
+		
+		new Ext.fc.fuzzyDate().init();	
 	}
 	
 }); // eo extend
