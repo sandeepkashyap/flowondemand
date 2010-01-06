@@ -121,46 +121,45 @@ Pictomobile.UploadCsvForm = Ext.extend(Ext.form.FormPanel, {
      */
     ,
     submit: function(){
-		if (this.popup_window == null) {
-			this.popup_window = new Ext.Window({
-	            applyTo: "dialogCsvUpload",
-	            closable: true,
-	            modal: false,
-	            width: 600,
-	            height: 450,
-	            minimizable: false,
-	            resizable: true,
-	            draggable: true,
-	            shadowOffset: 8,
-	            id: "dialogCsvUpload"
-	        })
-			
-			this.popup_window.on('beforeclose', function(w) {
-				document.getElementById('upload_target').src = "";
-				w.hide();
-				return false;
-			}); 
+		if (App.data.application_id > 0) {
+			if (this.popup_window == null) {
+				this.popup_window = new Ext.Window({
+		            applyTo: "dialogCsvUpload",
+		            closable: true,
+		            modal: false,
+		            width: 600,
+		            height: 450,
+		            minimizable: false,
+		            resizable: true,
+		            draggable: true,
+		            shadowOffset: 8,
+		            id: "dialogCsvUpload"
+		        })
+				
+				this.popup_window.on('beforeclose', function(w) {
+					document.getElementById('upload_target').src = "";
+					w.hide();
+					return false;
+				}); 
+			}
+			this.popup_window.show();
+			var f = this.getForm().getEl()
+			var f_id = f.id
+			f = document.getElementById(f_id);
+			f.target = 'upload_target'
+			f.action = App.data.image_csv_url + '/application/' + App.data.application_id;
+			f.onsubmit = function() {
+				document.getElementById(f_id).target = "upload_target";
+			}
+			f.submit();	
+		} else {
+			Ext.Msg.show({
+			   title:'Error',
+			   msg: 'Please choose application to upload image',
+			   buttons: Ext.Msg.OK,			   
+			   icon: Ext.MessageBox.ERROR
+			});
 		}
-		this.popup_window.show();
-		var f = this.getForm().getEl()
-		var f_id = f.id
-		f = document.getElementById(f_id);
-		f.target = 'upload_target'
-		f.action = App.data.image_csv_url + '/application/' + App.data.application_id;
-		f.onsubmit = function() {
-			document.getElementById(f_id).target = "upload_target";
-		}
-		f.submit();
-//        this.getForm().submit({
-//            url: this.url,
-//            scope: this,
-//            success: this.onSuccess,
-//            failure: this.onFailure,
-//            params: {
-//                format: 'json'
-//            },
-//            waitMsg: 'Saving...'
-//        });
     } // eo function submit
     /**
      * Success handler
