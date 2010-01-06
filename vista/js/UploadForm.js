@@ -137,17 +137,26 @@ Pictomobile.UploadForm = Ext.extend(Ext.form.FormPanel, {
      */
     ,
     submit: function(){
-        this.getForm().submit({
-            url: this.url,
-            scope: this,
-            success: this.onSuccess,
-            failure: this.onFailure,
-            params: {
-                format: 'json',
-				application_id: App.data.application_id
-            },
-            waitMsg: 'Saving...'
-        });
+		if (App.data.application_id > 0) {
+	        this.getForm().submit({
+	            url: this.url,
+	            scope: this,
+	            success: this.onSuccess,
+	            failure: this.onFailure,
+	            params: {
+	                format: 'json',
+					application_id: App.data.application_id
+	            },
+	            waitMsg: 'Saving...'
+	        });
+		} else {
+			Ext.Msg.show({
+			   title:'Error',
+			   msg: 'Please choose application to upload image',
+			   buttons: Ext.Msg.OK,			   
+			   icon: Ext.MessageBox.ERROR
+			});
+		}
     } // eo function submit
     /**
      * Success handler
