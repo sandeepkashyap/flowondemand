@@ -28,6 +28,7 @@
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/SliderTip.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/FillSlider.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/StatusBar.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/FuzzyDate.js');?>
 		
 		<?=CHtml::cssFile(ROOT_URL . '/css/application.css');?>
 		

@@ -76,7 +76,7 @@ class Image extends CActiveRecord
 	protected function beforeValidate()
 	{
 		if($this->isNewRecord) {			
-			$this->dt_received = date('Y:m:d H:i:s');
+			$this->dt_received = date('Y-m-d H:i:s');
 		}
 		return true;
 	}

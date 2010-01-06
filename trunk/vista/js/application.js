@@ -238,23 +238,23 @@ function Application(){
 						disabled: true,
 	                    handler: function (){
 							this.setDisabled(true)
-							var json = $(document.body).data('deleted-record')
-							var undo_url = App.extendUrl(App.data.image_undo_trash_url, {id: json.id_image, format: 'json'});
+							var record_id = $(document.body).data('deleted-record')
+							var undo_url = App.extendUrl(App.data.image_undo_trash_url, {id: record_id, format: 'json'});
 							$.ajax({
 							url: undo_url,
 							success: function(responseText) {
-								
+								eval('var result = ' + responseText)
+								var model = result.model
 								var record = new Pictomobile.Record.Image({
-									id: json.id_image,
-									name: json.vc_name,
-									url: json.vc_url,
-									thumbnail: json.vc_image,
-									created: json.dt_created,
-									indexed: json.dt_indexed,
-									height: json.int_height,
-									width: json.int_width,
-									rand: true
-								});
+						            id: model.id_image,
+						            thumbnail: model.vc_image,
+						            name: model.vc_name,
+						            url: model.vc_url,
+									width: model.int_width,
+									height: model.int_height,
+						            created: model.dt_created,
+						            indexed: model.dt_indexed
+						        });
 								Ext.getCmp('imagesGrid').getStore().insert(0, record);
 								Ext.getCmp('imagesGrid').getView().scrollToTop();
 								
