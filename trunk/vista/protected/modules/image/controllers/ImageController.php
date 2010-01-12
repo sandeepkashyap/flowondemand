@@ -810,7 +810,6 @@ class ImageController extends Controller {
 	}
 	
 	private function _imageIndex($model, $verbose = false) {
-		if (true) return false;
 		$app_size = $model->application->int_size;
 		$s = "";
 		if ($app_size < ($model->int_width * $model->int_height)) {
@@ -851,7 +850,7 @@ class ImageController extends Controller {
 		echo CJSON::encode(array(
 			'indicator' => $indicator,
 			'message' => $message ? $message : '',
-			'dt_indexed' => $model->dt_indexed ? Yii::app()->dateFormatter->format('MMM. dd yyyy', $model->dt_indexed) : ''
+			'dt_indexed' => $model->dt_indexed ? $model->dt_indexed : ''
 		));
 		die();
 	}
