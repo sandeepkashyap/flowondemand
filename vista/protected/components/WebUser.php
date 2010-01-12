@@ -16,7 +16,7 @@ class WebUser extends CWebUser {
 		*/
 		$this->user_id = $this->getState('user_id');
 		$this->email = $this->getState('email');
-		$this->email = $this->getState('email');
+		$this->rank = $this->getState('rank');
 		$this->last_application = $this->getState('last_application');
 		if ($rank != null)
 			$this->rank = $rank;
