@@ -32,7 +32,7 @@ Pictomobile.Record.Image = Ext.data.Record.create([{
     mapping: "dt_created"
 }, {
     name: "indexed",
-    mapping: "date_indexed"
+    mapping: "dt_indexed"
 }]);
 
 Pictomobile.Store.ImagesGridStore = new Ext.data.JsonStore({
@@ -84,6 +84,8 @@ Pictomobile.action = new Ext.ux.grid.RowActions({
 					} else {
 			            Ext.ux.Toast.msg('Index image', 'The image <b>{0}</b> successful indexed', record.get('name'));
 					}
+					record.set('indexed', data.dt_indexed);
+					
 					sbar.clearStatus({useDefaults:true});						
 				},
 				error: function(req, textStatus, error) {
@@ -256,10 +258,8 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 	,renderUrlAndName: function(val, cell, record){
         return "<span id='vc_url:"+record.get('id')+"' title='Click to edit' class='editableInput'>" + record.get('url') + "</span><br/>" + "<span id='vc_name:"+record.get('id')+"' class='editableInput'>" + record.get('name') + "</span>";
     }
-	,renderReceived: function(val, cell, record){
-		var f = new Ext.fc.fuzzyDate();
-		var options = {dateFormats: 'Y-m-d'};
-        return "<span class='fuzzyDate' title='"+ record.get('created') +"'></span><br/>" + "<span class='fuzzyDate' title='"+record.get('indexed')+"'></span>";
+	,renderReceived: function(val, cell, record){		
+        return "<span class='fuzzyDate' title='"+ record.get('created') +"'>"+record.get('created')+"</span><br/>" + "<span class='fuzzyDate' title='"+record.get('indexed')+"'>"+record.get('indexed')+"</span>";
     }
 	,onMessage: function(message, subject){
 		if (message == 'pictomobile.image.change') {
@@ -315,7 +315,7 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 
 		});
 		
-		new Ext.fc.fuzzyDate().init();	
+		//new Ext.fc.fuzzyDate().init();	
 	}
 	
 }); // eo extend
