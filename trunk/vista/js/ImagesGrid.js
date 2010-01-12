@@ -215,7 +215,7 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 					cls: 'x-btn-text-icon',
 					iconCls: 'icon-view-tile',
 					handler: function(){
-						Ext.ux.Toast.msg('Show preview', 'You have clicked row: <b>{0}</b>, action: <b>{0}</b>', 1, 2);
+						//Ext.ux.Toast.msg('Show preview', 'You have clicked row: <b>{0}</b>, action: <b>{0}</b>', 1, 2);
 						this.publish('pictomobile.image.viewmode.change', 1);
 					}
 				}, '-']
@@ -326,7 +326,7 @@ Pictomobile.ImagesDataView = Ext.extend(Ext.DataView, {
 	initComponent: function(){
 		var config = {
 			store: Pictomobile.Store.ImagesGridStore,
-			tpl: new Ext.XTemplate('<tpl for=".">', '<div class="tile-image">', '<table cellspacing="0" cellpadding="0"><tbody><tr><td class="td-thumb" >', '<a title="{title}" class="fancy-group" href="' + App.data.image_full_url + '/id/{id}.jpg" int_width="{width}" int_height="{height}" title="{name}"><img alt="{name}" title="" src="' + App.data.thumnail_url + "/" + '{thumbnail}"/></a></td></tr></tbody></table>', '</div>', '</tpl>', '<div class="x-clear"></div>'),
+			tpl: new Ext.XTemplate('<tpl for=".">', '<div class="tile-image">', '<table cellspacing="0" cellpadding="0"><tbody><tr><td class="td-thumb" >', '<a rel=\"lightbox\" class="fancy-group" href="' + App.data.image_full_url + '/id/{id}.jpg" int_width="{width}" int_height="{height}" title="{name}"><img alt="{name}" title="{name}" src="' + App.data.thumnail_url + "/" + '{thumbnail}"/></a></td></tr></tbody></table>', '</div>', '</tpl>', '<div class="x-clear"></div>'),
 			autoHeight: true,
 			multiSelect: false,
 			overClass: 'x-view-over',
@@ -355,11 +355,21 @@ Pictomobile.ImagesDataView = Ext.extend(Ext.DataView, {
 			if (self.data('isLoaded')) {
 				return;
 			}
+			var old_height = this.height,
+				old_width = this.width;
+			self.attr('ori_width', old_width)
+			self.attr('ori_height', old_height)
 			img.onload = function() {
-				var slideValue = Ext.getCmp('imageSlider').getValue();
+				var slideValue = Ext.getCmp('imageSlider').getValue() / 100;
 				self.data('isLoaded', true)
+				var new_width = parseInt(old_width * slideValue),
+					new_height = parseInt(old_height * slideValue)
+				
 				self
-				.attr('src', this.src).css('width', slideValue - 10)
+				.attr('src', this.src)
+				.css('width', new_width)
+				.css('height', new_height)
+				
 			}
 			img.src = self.parent().attr('href');
 		});
@@ -414,14 +424,14 @@ Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
 					iconCls: 'icon-grid',
 					scope: this,
                     handler: function(){
-                        Ext.ux.Toast.msg('Show preview', 'You have clicked row: <b>{0}</b>, action: <b>{0}</b>', 1, 2);
+                        //Ext.ux.Toast.msg('Show preview', 'You have clicked row: <b>{0}</b>, action: <b>{0}</b>', 1, 2);
 						this.publish('pictomobile.image.viewmode.change', 0);
                     }
                 }, {xtype: 'tbseparator'}, 'Resize images: ', new Ext.Slider({
 					id: 'imageSlider',
 					width: 300,
-					minValue: 110,
-					maxValue: 440,
+					minValue: 100,
+					maxValue: 400,
 					plugins: [new Ext.ux.SliderTip({
 		                getText : function(s){
 		                    return String.format('{0}px', s.value);
@@ -430,17 +440,21 @@ Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
 					listeners: {
 						change: function(slider, value){
 							if(Ext.get('imagesTile')){
-								var rw = 1.6
-								var rh = 2.3
+								var ratio = value / 100;
 								
-								var items = Ext.get('imagesTile').select("div.tile-image");
-								items.setWidth(value).setHeight((value + 5))
+								var items = Ext.get('imagesTile').select("div.tile-image");								 
+								items.setWidth(110 * ratio).setHeight((115 * ratio))
 								
 								var tds = Ext.get('imagesTile').select("td.td-thumb");
-								tds.setWidth(value).setHeight(value + 5)
+								tds.setWidth(110 * ratio).setHeight((115 * ratio))
 								
 								var imgs = Ext.get('imagesTile').select("img");
-								imgs.setWidth(value - 10)
+								imgs.each(function(el, c, idx) {
+									var new_width = parseInt(el.getAttribute('ori_width')) * ratio,									
+										new_height = parseInt(el.getAttribute('ori_height')) * ratio									
+									el.setWidth(new_width);
+									el.setHeight(new_height);
+								})
 							}
 						}
 					}
