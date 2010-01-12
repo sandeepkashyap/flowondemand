@@ -11,11 +11,12 @@
     		'vc_name' => $model->vc_name,        		 
     		'vc_repository' => $model->vc_repository,        		 
     		'vc_description' => $model->vc_description,        		 
-    		'nm_sens' => $model->nm_sens,        		 
+    		'nm_sens' => $model->nm_sens,
+			'is_default' => Yii::app()->user->last_application == $model->id ? true : false         		 
 		);
 	} 
 ?>
 {
-	totalCount: <?= $pages->getItemCount() ?>,
+	totalCount: <?= count($models) ?>,
     apps: <?= CJSON :: encode($retval)?>
 }

@@ -54,6 +54,8 @@ class User extends ActiveRecord
 			array('username, password, password_repeat, email', 'required', 'on' => 'register'),
 
 			array('email', 'required', 'on' => 'recover'),
+			
+			array('last_application', 'required', 'on' => 'changeLastApplication'),
 
 			array('email, email_visible, notify_comments, notify_messages', 'required', 'on' => 'update, updateAdmin'),
 			array('email_visible, notify_comments, notify_messages', 'in', 'range' => array('0','1')),
@@ -107,8 +109,8 @@ class User extends ActiveRecord
 	public function relations() {
 		return array(
 //			'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
-			'post' => array(self::HAS_MANY, 'Post', 'user_id'),
-			'num_posts' => array(self::STAT, 'Post', 'user_id'),
+//			'post' => array(self::HAS_MANY, 'Post', 'user_id'),
+//			'num_posts' => array(self::STAT, 'Post', 'user_id'),
 		);
 	}
 

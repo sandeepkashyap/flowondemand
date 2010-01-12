@@ -29,6 +29,7 @@
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/FillSlider.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/StatusBar.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/FuzzyDate.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/PagingStore.js');?>
 		
 		<?=CHtml::cssFile(ROOT_URL . '/css/application.css');?>
 		
@@ -78,6 +79,7 @@
 			
 			App.data.apps_create_url = '<?=Yii::app()->createUrl('/apps/application/create')?>'
 			App.data.apps_update_url = '<?=Yii::app()->createUrl('/apps/application/update')?>'
+			App.data.apps_change_last_application_url = '<?=Yii::app()->createUrl('/apps/application/changeLastApplication')?>'
 		</script>
 		
 		<?=CHtml::scriptFile(ROOT_URL . '/js/application.js');?>

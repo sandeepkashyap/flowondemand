@@ -36,7 +36,9 @@ class UserIdentity extends CUserIdentity
 	}
 
 	private function setStates($user) {
+		$this->setState('user_id', $user->id);
 		$this->setState('rank', $user->group_id);
 		$this->setState('email',$user->email);
+		$this->setState('last_application', $user->last_application);
 	}
 }

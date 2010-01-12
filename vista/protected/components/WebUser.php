@@ -1,7 +1,9 @@
 <?php
 class WebUser extends CWebUser {
+	public $user_id;
 	public $email;
 	public $rank = 1;
+	public $last_application = 0;
 	
 	public function init() {
 		parent::init();
@@ -12,8 +14,10 @@ class WebUser extends CWebUser {
 		* and so that the user rank defaults to 1 (meaning not logged on)
 		* See the group model for information on the ranks
 		*/
+		$this->user_id = $this->getState('user_id');
 		$this->email = $this->getState('email');
-		$rank = $this->getState('rank');
+		$this->email = $this->getState('email');
+		$this->last_application = $this->getState('last_application');
 		if ($rank != null)
 			$this->rank = $rank;
 	}
