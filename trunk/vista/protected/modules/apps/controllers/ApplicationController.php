@@ -50,7 +50,7 @@ class ApplicationController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update', 'index', 'admin'),
+				'actions'=>array('create','update', 'index', 'admin', 'changeLastApplication'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -197,10 +197,13 @@ class ApplicationController extends Controller
 		if (isset($_REQUEST['start']) && intval($_REQUEST['start']) > 0) {
 			$_GET['page'] = $_REQUEST['start']  / $pageSize + 1;
 		}
+		//to use Ext local paging Ext.ux.PagingStore we need unset $_GET[page'
+		unset($_GET['page']); 
+		unset($_GET['start']);
 
-		$pages=new CPagination(application::model()->count($criteria));
-		$pages->pageSize=$pageSize;
-		$pages->applyLimit($criteria);
+		//$pages=new CPagination(application::model()->count($criteria));
+		//$pages->pageSize=$pageSize;
+		//$pages->applyLimit($criteria);
 
 		$models=application::model()->findAll($criteria);
 
@@ -301,6 +304,15 @@ class ApplicationController extends Controller
 			$models = application::model()->findAll($criteria);
 			$this->render('index', array('models' => $models));
 		}		
+	}
+	
+	public function actionChangeLastApplication() {
+		$user = User::model()->findByPk(Yii::app()->user->user_id);
+		$user->setScenario('changeLastApplication');
+		$user->last_application = $_GET['application_id'];
+		$user->save();
+		Yii::app()->user->last_application = $user->last_application;
+		Yii::app()->user->setState('last_application', $user->last_application);
 	}
 
 }

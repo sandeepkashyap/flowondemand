@@ -29,9 +29,12 @@ Pictomobile.Record.Application = Ext.data.Record.create([{
 }, {
     name: "nm_sens",
 	defaultValue: 0
+}, {
+    name: "is_default"
 }]);
 
-var appsStore = new Ext.data.JsonStore({
+var appsStore = new Ext.ux.data.PagingJsonStore({
+	//autoLoad: {params: {start: 0, limit: 10}},
 	autoLoad: false,
     url: App.data.apps_store,
 	totalProperty: 'totalCount',
@@ -39,7 +42,7 @@ var appsStore = new Ext.data.JsonStore({
     baseParams: {
         format: 'json',
         skip_layout: '1',
-        items_per_page: 10
+		start: 0
     },
     fields: Pictomobile.Record.Application
 });
@@ -54,7 +57,7 @@ Pictomobile.AppSwitcher = {
     displayField: 'vc_name',
     valueField: 'id',
     editable: false,
-	pageSize: 10,
+	//pageSize: 10,
 	width: 200,
     mode: 'local',
     forceSelection: true,
@@ -65,6 +68,10 @@ Pictomobile.AppSwitcher = {
         'select': function(cmb, rec, idx){
 			App.data.application_id = rec.get('id');
             cmb.publish('pictomobile.appswitcher.change', {record: rec, idx: idx});
+			$.ajax({
+				url: App.data.apps_change_last_application_url,
+				data: ({application_id: App.data.application_id})
+			});
         }
 		,'render': function() {
 			this.subscribe("pictomobile.applicaiton.added")
@@ -72,9 +79,19 @@ Pictomobile.AppSwitcher = {
 			
 			this.getStore().load()
 			this.getStore().on('load', function(store) {
-				var count = store.getTotalCount()
-				if (count == 1) {
-					var rec = store.getAt(0)
+				var records = store.queryBy(function(r, id) {
+					if (r.get('is_default')) return r
+				})
+				var rec = null
+				if (records.length > 0) {					
+					rec = records.first()
+				} else {
+					var count = store.getTotalCount()
+					if (count == 1) {
+						rec = store.getAt(0)
+					}
+				} 
+				if (rec) {
 					var cmb = Ext.getCmp('appSwitcher')
 					cmb.setValue(rec.get('id'));
 					cmb.fireEvent('select', cmb, rec, 0)
