@@ -504,6 +504,7 @@ class ImageController extends Controller {
 					'src' => Yii::app()->createUrl("/site/thumbnail/image/$model->vc_image", array('rand'=>time())),
 					'width' => $model->int_width, 
 					'height' => $model->int_height, 
+					'dt_indexed' => $model->dt_indexed && $model->dt_indexed != '0000-00-00 00:00:00' ? $model->dt_indexed : '', 
 					'full_url' => Yii::app()->createUrl('image/image/viewFull', array('id'=>$model->id_image, 'rand'=>time().'.jpg'))
 				));					
 				exit;

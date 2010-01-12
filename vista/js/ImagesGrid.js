@@ -268,6 +268,7 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 			record.set('thumbnail', subject.model.thumbnail);
 			record.set('width', subject.model.width);
 			record.set('height', subject.model.height);
+			record.set('indexed', subject.model.dt_indexed);
 			record.set('rand', true);
 			store.commitChanges();
 			Ext.ux.Toast.msg('Image changed', 'Image change successful');
