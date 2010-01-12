@@ -788,7 +788,7 @@ class ImageController extends Controller {
 		$id = Yii :: app()->getRequest()->getQuery('id', 0);
 		$model = $this->loadImage($id);
 		if ($model) {
-			$model->dt_indexed = time();
+			$model->dt_indexed = date('Y-m-d H:i:s');
 			if ($model->save()) {
 				echo 'Done';
 			} else {
@@ -838,7 +838,7 @@ class ImageController extends Controller {
 		$model->int_keypoint = $iResult > 0 ? $iResult : -1;
 		//only update dt_indexed if keypoint > 0
 		if ($model->int_keypoint > 0) {
-			$model->dt_indexed = time();			
+			$model->dt_indexed = date('Y-m-d H:i:s');			
 		}
 		$model->save();
 	}
