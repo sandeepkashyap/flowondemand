@@ -148,6 +148,7 @@ Pictomobile.EditPictureForm = Ext.extend(Ext.form.FormPanel, {
     ,
     onSuccess: function(form, action){
 		this.publish('pictomobile.image.change', {old: this.data.record, model: action.result})
+		this.publish('pictomobile.image.index', {data: action.result})
 		Ext.getCmp('wndEditPicture').destroy();        
     } // eo function onSuccess
     /**
