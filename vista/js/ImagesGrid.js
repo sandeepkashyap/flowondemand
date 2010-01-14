@@ -35,6 +35,8 @@ Pictomobile.Record.Image = Ext.data.Record.create([{
     mapping: "dt_indexed"
 }]);
 
+Pictomobile.WindowCropImage = null; 
+
 Pictomobile.Store.ImagesGridStore = new Ext.data.JsonStore({
     id: 'imagesStore',
     root: 'images',
@@ -67,7 +69,13 @@ Pictomobile.action = new Ext.ux.grid.RowActions({
         qtipIndex: 'Manual index picture',
         iconCls: 'icon-manual-index',
         tooltip: 'Manual index pictureUser'
-    }],
+    }
+//	, {
+//        qtipIndex: 'Crop image',
+//        iconCls: 'icon-crop-image',
+//        tooltip: 'Crop image'
+//    }
+	],
     callbacks: {
         'icon-manual-index': function(grid, record, action, row, col){
 			var sbar = Ext.getCmp('statusbar')
@@ -140,6 +148,42 @@ Pictomobile.action = new Ext.ux.grid.RowActions({
                     }
                 }]
             }).show();
+        }
+        
+		,'icon-crop-image': function(grid, record, action, row, col){
+			
+			if (Pictomobile.WindowCropImage == null) {
+				
+				Pictomobile.WindowCropImage = new Ext.Window({
+				    applyTo: "dialogCropImage",
+				    closable: true,
+				    modal: false,
+				    minimizable: false,
+				    maximizable: true,
+				    resizable: true,
+				    draggable: true,
+				    shadowOffset: 8,
+				    id: "wndCropImage"
+					,fbar: {
+						items: [{
+							text: 'Crop image',
+							handler: function() {
+								window.frames['if_crop_image'].document.forms['form_crop_image'].submit()
+							}
+						}]
+					}
+				})
+				Pictomobile.WindowCropImage.on('beforeclose', function(w) {
+					document.getElementById('if_crop_image').src = "";
+					w.hide();
+					return false;
+				});
+			}
+			
+            Pictomobile.WindowCropImage.show();
+			
+			document.getElementById('if_crop_image').src = App.data.image_crop_url + '/id/' + record.get('id')
+			
         }
 		
     }

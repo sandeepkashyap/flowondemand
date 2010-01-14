@@ -155,7 +155,7 @@
 	background-image:url(../images/silk/icons/stat_list_16.png) ! important;
 }
 .icon-cancel {
-	background-image:url(../images/silk/icons/cancel16.png) ! important;
+	background-image:url(../images/silk/icons/cancel.png) ! important;
 }
 .icon-cross {
 	background-image:url(../images/silk/icons/cross.png) ! important;
@@ -314,6 +314,9 @@
 	background-image:url(../images/silk/icons/tree_16.png) ! important;
 }
 .icon-image-edit {
+	background-image:url(../images/silk/icons/image_edit.png) ! important;
+}
+.icon-crop-image {
 	background-image:url(../images/silk/icons/image_edit.png) ! important;
 }
 .icon-form-edit {

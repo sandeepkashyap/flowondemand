@@ -10,8 +10,6 @@
 		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ux/FillSlider.css');?>
 		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ux/statusbar.css');?>
 		
-		<?=CHtml::cssFile(ROOT_URL . '/assets/stylesheets/overlay-basic.css');?>
-		<?=CHtml::cssFile(ROOT_URL . '/assets/stylesheets/overlay-gallery.css');?>
 		<?=CHtml::cssFile(ROOT_URL . '/assets/stylesheets/fancybox.css');?>
 		
 		<?=CHtml::scriptFile(ROOT_URL . '/assets/javascript/jquery.js');?>
@@ -77,6 +75,7 @@
 			App.data.image_manual_index_url = '<?=Yii::app()->createUrl('image/image/manualIndex')?>'
 			App.data.image_change_url = '<?=Yii::app()->createUrl('image/image/changeImage')?>'
 			App.data.image_csv_url = '<?=Yii::app()->createUrl('/image/image/csvForm')?>'
+			App.data.image_crop_url = '<?=Yii::app()->createUrl('/image/image/crop')?>'
 			
 			App.data.logout_url = '<?=Yii::app()->createUrl('/base/user/logout')?>'
 			
@@ -123,6 +122,23 @@
                     <tr>
                         <td align="center" valign="middle">
                             <iframe id="upload_target" name="upload_target" width="100%" height="100%" style="border: none;">
+                            	
+                            </iframe>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+		
+		<div id="dialogCropImage" class="x-hidden">
+            <div class="x-window-header">
+                Please Wait
+            </div>
+            <div class="x-window-body">
+                <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0" class="cssPleaseWait">
+                    <tr>
+                        <td align="center" valign="middle">
+                            <iframe id="if_crop_image" name="if_crop_image" src="http://localhost/vista/index.php/image/image/crop/id/1060" width="100%" height="100%" style="border: none;">
                             	
                             </iframe>
                         </td>

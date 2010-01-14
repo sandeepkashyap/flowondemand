@@ -315,7 +315,7 @@ function Application(){
                         }
                         else 
                             if (message = 'pictomobile.image.viewmode.change') {
-                                Ext.getCmp('mainArea').getLayout().setActiveItem(subject)
+                                Ext.getCmp('tabPictures').getLayout().setActiveItem(subject)
                             }
                     }
                 }, {
