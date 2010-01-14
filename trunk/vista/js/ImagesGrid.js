@@ -85,6 +85,7 @@ Pictomobile.action = new Ext.ux.grid.RowActions({
 			            Ext.ux.Toast.msg('Index image', 'The image <b>{0}</b> successful indexed', record.get('name'));
 					}
 					record.set('indexed', data.dt_indexed);
+					Ext.getCmp('mainViewport').publish('pictomobile.image.index', {data: data});
 					
 					sbar.clearStatus({useDefaults:true});						
 				},
@@ -237,9 +238,6 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
     
         // call parent
         Pictomobile.ImagesGrid.superclass.onRender.apply(this, arguments);
-        
-        // load store
-        this.store.load();
         
         this.subscribe("pictomobile.appswitcher.change")
         this.subscribe("pictomobile.image.change")

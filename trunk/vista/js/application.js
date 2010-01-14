@@ -97,6 +97,8 @@ function Application(){
     }//eo createRecordDescriptors
     var buildUI = function(){
         var vp = new Ext.Viewport({
+			id: 'mainViewport',
+			plugins: 'msgbus',
             layout: 'border',
             items: [{
                 // Categories accordion on left side of screen.
@@ -108,7 +110,7 @@ function Application(){
                 minSize: 10,
                 maxSize: 260,
                 collapsible: true,
-				collapsed: true,
+                collapsed: true,
                 layout: "accordion",
                 // Applied to each contained panel.
                 defaults: {
@@ -126,18 +128,18 @@ function Application(){
                     id: "uploadCsv",
                     xtype: "picUploadCsvForm"
                 }]
-//				,listeners: {
-//					'beforeexpand': {
-//						fn: function() {
-//							console.log('asdfasdf')
-//						}
-//					}
-//					,'beforeshow': {
-//						fn: function() {
-//							console.log('12312asdfasdf')
-//						}
-//					}
-//				}
+                //				,listeners: {
+                //					'beforeexpand': {
+                //						fn: function() {
+                //							console.log('asdfasdf')
+                //						}
+                //					}
+                //					,'beforeshow': {
+                //						fn: function() {
+                //							console.log('12312asdfasdf')
+                //						}
+                //					}
+                //				}
             }, {
                 id: "toolbarArea",
                 autoHeight: true,
@@ -157,9 +159,9 @@ function Application(){
                         handler: function(){
                             //this.publish('pictomobile.application.edit', {p: 'khanh'})
                             var rec = Ext.getCmp('appSwitcher').getStore().getById(Ext.getCmp('appSwitcher').getValue())
-							if (rec == undefined) {
-								return;
-							}
+                            if (rec == undefined) {
+                                return;
+                            }
                             new Ext.Window({
                                 id: "wndEditApplication",
                                 title: 'Edit application',
@@ -191,7 +193,7 @@ function Application(){
                                         xtype: 'picapplicationform',
                                         data: {
                                             record: new Pictomobile.Record.Application({
-												id: 0,
+                                                id: 0,
                                                 int_nbanwsers: 1,
                                                 int_tokens: 0,
                                                 int_size: 50000,
@@ -204,104 +206,122 @@ function Application(){
                                 }).show();
                             }
                         }]
-                    }, {xtype: 'tbfill'}, {
-						xtype: 'button',
-						text: 'Logout',
-						iconCls: 'icon-cancel',
-						handler: function() {
-							window.location = App.data.logout_url
-						}
-					}]
+                    }, {
+                        xtype: 'tbfill'
+                    }, {
+                        xtype: 'button',
+                        text: 'Logout',
+                        iconCls: 'icon-cancel',
+                        handler: function(){
+                            window.location = App.data.logout_url
+                        }
+                    }]
                 
                 }]
             }, {
                 region: "center",
                 id: "mainArea",
-                title: "Pictures",
-                layout: 'card',
-                layoutConfig: {
-                    deferredRender: true
-                },
-                border: false,
-                closable: false,
-                activeItem: 0,
-                plain: true,
-				plugins : ['msgbus'],               
+				xtype: 'tabpanel',
+				activeTab: 0,
                 items: [{
-                    // Contacts icon view.
-                    xtype: "imagesgrid",
-                    id: "imagesGrid"
+                    title: "Pictures",
+					id: 'tabPictures',
+                    layout: 'card',
+                    layoutConfig: {
+                        deferredRender: true
+                    },
+                    border: false,
+                    closable: false,
+                    activeItem: 0,
+                    plain: true,
+                    plugins: ['msgbus'],
+                    items: [{
+                        // Contacts icon view.
+                        xtype: "imagesgrid",
+                        id: "imagesGrid"
+                    }, {
+                        xtype: 'ImagesTile',
+                        id: 'imagesTile'
+                    }],
+                    bbar: new Ext.ux.StatusBar({
+                        id: 'statusbar',
+                        plugins: ['msgbus']                        // defaults to use when the status is cleared:
+                        ,
+                        defaultText: 'Ready',
+                        defaultIconCls: 'x-status-valid',
+                        
+                        // values to set initially:
+                        text: 'Ready',
+                        iconCls: 'x-status-valid',
+                        
+                        // any standard Toolbar items:
+                        items: [{
+                            id: 'sbar-btn-undo',
+                            text: 'Undo delete',
+                            iconCls: 'icon-undo',
+                            disabled: true,
+                            handler: function(){
+                                this.setDisabled(true)
+                                var record_id = $(document.body).data('deleted-record')
+                                var undo_url = App.extendUrl(App.data.image_undo_trash_url, {
+                                    id: record_id,
+                                    format: 'json'
+                                });
+                                $.ajax({
+                                    url: undo_url,
+                                    success: function(responseText){
+                                        eval('var result = ' + responseText)
+                                        var model = result.model
+                                        var record = new Pictomobile.Record.Image({
+                                            id: model.id_image,
+                                            thumbnail: model.vc_image,
+                                            name: model.vc_name,
+                                            url: model.vc_url,
+                                            width: model.int_width,
+                                            height: model.int_height,
+                                            created: model.dt_created,
+                                            indexed: model.dt_indexed
+                                        });
+                                        Ext.getCmp('imagesGrid').getStore().insert(0, record);
+                                        Ext.getCmp('imagesGrid').getView().scrollToTop();
+                                        
+                                        Ext.getCmp('statusbar').clearStatus({
+                                            useDefaults: true
+                                        });
+                                        Ext.ux.Toast.msg('Undo', 'The image <b>{0}</b> has been restore from Trash', record.get('name'));
+                                    },
+                                    error: function(res){
+                                    
+                                    },
+                                    complete: function(res){
+                                    
+                                    }
+                                });
+                            }
+                        }] //oe item status bar
+                    })//eo bbar 
+                    ,
+                    listeners: {
+                        'render': {
+                            fn: function(){
+                                this.subscribe("pictomobile.image.viewmode.change")
+                                this.subscribe("pictomobile.appswitcher.change")
+                            }
+                        }
+                    },
+                    onMessage: function(message, subject){
+                        if (message == 'pictomobile.appswitcher.change') {
+                            Ext.getCmp('categoriesArea').expand();
+                        }
+                        else 
+                            if (message = 'pictomobile.image.viewmode.change') {
+                                Ext.getCmp('mainArea').getLayout().setActiveItem(subject)
+                            }
+                    }
                 }, {
-                    xtype: 'ImagesTile',
-					id: 'imagesTile'
-                }],
-				bbar: new Ext.ux.StatusBar({
-					id: 'statusbar',
-					plugins: ['msgbus']
-					// defaults to use when the status is cleared:
-		            ,defaultText: 'Ready'
-		            ,defaultIconCls: 'x-status-valid',
-		        
-		            // values to set initially:
-		            text: 'Ready',
-		            iconCls: 'x-status-valid',
-		
-		            // any standard Toolbar items:
-		            items: [{
-						id: 'sbar-btn-undo',
-	                    text: 'Undo delete',
-						iconCls: 'icon-undo',						
-						disabled: true,
-	                    handler: function (){
-							this.setDisabled(true)
-							var record_id = $(document.body).data('deleted-record')
-							var undo_url = App.extendUrl(App.data.image_undo_trash_url, {id: record_id, format: 'json'});
-							$.ajax({
-							url: undo_url,
-							success: function(responseText) {
-								eval('var result = ' + responseText)
-								var model = result.model
-								var record = new Pictomobile.Record.Image({
-						            id: model.id_image,
-						            thumbnail: model.vc_image,
-						            name: model.vc_name,
-						            url: model.vc_url,
-									width: model.int_width,
-									height: model.int_height,
-						            created: model.dt_created,
-						            indexed: model.dt_indexed
-						        });
-								Ext.getCmp('imagesGrid').getStore().insert(0, record);
-								Ext.getCmp('imagesGrid').getView().scrollToTop();
-								
-								Ext.getCmp('statusbar').clearStatus({useDefaults:true});
-								Ext.ux.Toast.msg('Undo', 'The image <b>{0}</b> has been restore from Trash', record.get('name'));
-							},
-							error: function(res) {
-
-							},
-							complete: function(res) {
-
-							}
-						});
-	                    }
-					}] //oe item status bar
-				})//eo bbar 
-				,listeners: {
-					'render': {
-						fn: function() {
-							this.subscribe("pictomobile.image.viewmode.change")
-							this.subscribe("pictomobile.appswitcher.change")
-						}
-					}
-				},
-				onMessage: function(message, subject) {
-					if (message == 'pictomobile.appswitcher.change') {
-						Ext.getCmp('categoriesArea').expand();
-					} else if (message = 'pictomobile.image.viewmode.change') {
-						Ext.getCmp('mainArea').getLayout().setActiveItem(subject)						
-					}
-				}
+					title: 'Logging',
+					xtype: 'LogsGrid'
+				}]
             }]
         });
         
@@ -318,8 +338,8 @@ Ext.onReady(function(){
     
     application.init();
     
-//	Ext.ux.Lightbox.register('a[rel^=lightbox]');
-//	Ext.ux.Lightbox.register('a.lb-flower', true); // true to show them as a set
+    //	Ext.ux.Lightbox.register('a[rel^=lightbox]');
+    //	Ext.ux.Lightbox.register('a.lb-flower', true); // true to show them as a set
 
     // code here
 

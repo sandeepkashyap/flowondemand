@@ -63,10 +63,12 @@
 			
 			App.data.homepage_url = '<?=ROOT_URL?>';
 			App.data.assets_url = '<?=ASSETS_URL?>';
-			
 			App.data.thumnail_url = '<?=Yii::app()->createUrl('site/thumbnail/image/')?>';
+			
 			App.data.apps_store = '<?=Yii::app()->createUrl('apps/application/list/')?>';
 			App.data.images_store = '<?=$this->createUrl('image/getPage/application/'. $this->application_id)?>';
+			App.data.logs_store = '<?=$this->createUrl('image/log/')?>';
+			
 			App.data.image_quick_add_url = '<?=$this->createUrl('image/quickAdd/application/'. $this->application_id, array('skip_layout'=>1))?>';
 			App.data.image_full_url = '<?=Yii::app()->createUrl('image/image/viewFull')?>'
 			App.data.image_quick_update_url = '<?=Yii::app()->createUrl('image/image/quickUpdate')?>'
@@ -75,6 +77,7 @@
 			App.data.image_manual_index_url = '<?=Yii::app()->createUrl('image/image/manualIndex')?>'
 			App.data.image_change_url = '<?=Yii::app()->createUrl('image/image/changeImage')?>'
 			App.data.image_csv_url = '<?=Yii::app()->createUrl('/image/image/csvForm')?>'
+			
 			App.data.logout_url = '<?=Yii::app()->createUrl('/base/user/logout')?>'
 			
 			App.data.apps_create_url = '<?=Yii::app()->createUrl('/apps/application/create')?>'
@@ -89,6 +92,7 @@
 		<?=CHtml::scriptFile(ROOT_URL . '/js/UploadCsvForm.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/js/EditPictureForm.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/js/ImagesGrid.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/js/LogsGrid.js');?>
 		
 		
 		

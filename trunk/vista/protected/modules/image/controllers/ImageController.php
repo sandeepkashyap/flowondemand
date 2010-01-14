@@ -497,7 +497,7 @@ class ImageController extends Controller {
 //			fb("isImage: $isImage");
 //			fb("isSave: $isSave");
 			if ($isImage && $isSave) {
-				$this->_imageIndex($model);
+				$log = $this->_imageIndex($model);
 				echo CJSON::encode(array(
 					'success' => 'true',
 					'thumbnail' => $model->vc_image . '?rand=' . time(),
@@ -505,8 +505,15 @@ class ImageController extends Controller {
 					'width' => $model->int_width, 
 					'height' => $model->int_height, 
 					'dt_indexed' => $model->dt_indexed && $model->dt_indexed != '0000-00-00 00:00:00' ? $model->dt_indexed : '', 
-					'full_url' => Yii::app()->createUrl('image/image/viewFull', array('id'=>$model->id_image, 'rand'=>time().'.jpg'))
-				));					
+					'full_url' => Yii::app()->createUrl('image/image/viewFull', array('id'=>$model->id_image, 'rand'=>time().'.jpg')),
+					'log' => array(
+						'id' => $log->id, 
+						'thumbnail' => $model->vc_image,
+						'point' => $log->int_keypoint,
+						'result' => strip_tags($log->vc_result),
+						'dt_created' => $log->dt_created
+					)
+				));
 				exit;
 			} else {
 				throw new CHttpException(500, "May be url uploaded file is invalid image or url is invalid. Please try again!");
@@ -538,11 +545,16 @@ class ImageController extends Controller {
 	}
 
 	public function actionLog() {
-		
 		$criteria = new CDbCriteria;
 		$criteria->join = "inner join `index` on index.id_image = index_log.id_image";
 		$criteria->condition = "index.id_application = $this->application_id";
 		$criteria->order = " index_log.id DESC";
+		
+		$pageSize = isset($_REQUEST['items_per_page']) && $_REQUEST['items_per_page'] ? $_REQUEST['items_per_page'] : self :: PAGE_SIZE;
+		
+		if (isset($_REQUEST['start']) && intval($_REQUEST['start']) > 0) {
+			$_GET['page'] = $_REQUEST['start']  / $pageSize + 1;
+		}
 
 		$pages = new CPagination(IndexLog::model()->count($criteria));
 		$pages->pageSize = isset($_GET['items_per_page']) && $_GET['items_per_page'] ? $_GET['items_per_page'] : self :: PAGE_SIZE;
@@ -555,14 +567,19 @@ class ImageController extends Controller {
 
 		$this->page_tab = 'Log';
 		
-		$skip_layout = isset($_GET['ajax']) && $_GET['ajax'];
-		
-		if ($skip_layout) {
-			$this->renderPartial('log', array (
-				'models' => $models,
-				'pages' => $pages,
-				'skip_layout' => true
-			));
+		if (Yii::app()->request->getIsAjaxRequest()) {
+			$results = array();
+			foreach($models as $model) {
+				$image = Image::model()->findByPk($model->id_image);
+				$results []= array(
+					'id' => $model->id, 
+					'thumbnail' => $image->vc_image,
+					'point' => $model->int_keypoint,
+					'result' => strip_tags($model->vc_result),
+					'dt_created' => $model->dt_created
+				);				
+			}
+			echo CJSON::encode(array('totalCount' => $pages->getItemCount(), 'logs' => $results));
 			die();
 		} else {
 			$this->render('log', array (
@@ -842,16 +859,25 @@ class ImageController extends Controller {
 			$model->dt_indexed = date('Y-m-d H:i:s');			
 		}
 		$model->save();
+		
+		return $log;
 	}
 	
 	public function actionManualIndex() {
 		$model = $this->loadImage();
-		$this->_imageIndex($model);
+		$log = $this->_imageIndex($model);
 		list($indicator, $message) = $model->getIndicator();
 		echo CJSON::encode(array(
 			'indicator' => $indicator,
 			'message' => $message ? $message : '',
-			'dt_indexed' => $model->dt_indexed ? $model->dt_indexed : ''
+			'dt_indexed' => $model->dt_indexed ? $model->dt_indexed : '',
+			'log' => array(
+				'id' => $log->id, 
+				'thumbnail' => $model->vc_image,
+				'point' => $log->int_keypoint,
+				'result' => strip_tags($log->vc_result),
+				'dt_created' => $log->dt_created
+			)
 		));
 		die();
 	}
