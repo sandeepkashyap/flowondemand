@@ -57,8 +57,6 @@ class ImageController extends Controller {
 			Yii :: app()->wireframe->addBreadCrumb($app->vc_name, Yii::app()->createUrl('apps/application/show', array('id' => $this->application_id)));
 		}
 		Yii :: app()->wireframe->addBreadCrumb('Images', $this->createUrl('image/admin', array('application' => $this->application_id)));
-
-		Yii :: app()->clientScript->registerScript('App.data.image_delete_url', 'App.data.image_delete_url=' . CJSON :: encode($this->createUrl('image/delete')), 4);
 	}
 
 	/**
@@ -109,6 +107,7 @@ class ImageController extends Controller {
 					'manualIndex',
 					'getPage',
 					'print',
+					'crop',
 					'log'
 				),
 				'users' => array (
@@ -135,6 +134,7 @@ class ImageController extends Controller {
 					'manualIndex',
 					'getPage',
 					'print',
+					'crop',
 					'log'
 				),
 				'users' => array (
@@ -931,5 +931,62 @@ class ImageController extends Controller {
 		$content = curl_exec($ch);
 		curl_close($ch);
 		return $content;
+	}
+	
+	public function actionCrop() {
+		$this->layout = 'application.views.layouts.jcrop';
+		
+		$model = $this->loadImage();
+		
+		if (Yii::app()->request->getIsPostRequest()) {
+			$images_folder = Yii :: app()->getModule('image')->images_folder;
+			
+			$file_name = rand(1000, 9999) . '-' . rand(1000, 9999) . '-' . rand(1000, 9999) . '-' . rand(1000, 9999) . '-' . rand(1000, 9999);
+			$full_path = $images_folder . $file_name;
+			
+			$src_image = $images_folder . $model->vc_image;
+			
+			if (SThumbnail::crop_image($src_image, $full_path, $_POST['x'], $_POST['y'], $_POST['w'], $_POST['h'])){
+				$arr = SThumbnail::getImageSize($full_path);
+				$isImage = is_array($arr);
+				
+				if ($isImage) {
+					$thumbnail_folder = Yii::app()->getModule('image')->thumbnails_folder;
+					$thumbail_file = $thumbnail_folder . $file_name . ".jpg";
+					if (SThumbnail::scale_image($full_path, $thumbail_file, 100, 100)) {
+					} else {
+					}
+				}
+	
+				$new_image = new Image;
+				$new_image->vc_image = $file_name;
+				$new_image->int_width = $_POST['w'];
+				$new_image->int_height = $_POST['h'];
+				$new_image->vc_name = $model->vc_name;
+				$new_image->vc_url = $model->vc_url;
+				$new_image->id_application = $model->id_application;
+							
+				if (!$isImage || !$new_image->save()) {
+					throw new CHttpException(500, "May be url uploaded file is invalid image or url is invalid. Please try again!");
+				}
+				$this->_imageIndex($new_image, false);
+				
+				$retval = array(
+					'id_image' => $new_image->id_image,
+		    		'vc_image' => $new_image->vc_image,
+		    		'vc_name' => $new_image->vc_name,
+		    		'vc_url' => $new_image->vc_url,
+		    		'dt_created' => $new_image->dt_received ? $model->dt_received : '',
+		    		'dt_indexed' => $new_image->dt_indexed ? $model->dt_indexed : '',
+					'int_width' => $new_image->int_width,        		 
+					'int_height' => $new_image->int_height,        		 
+				);
+				echo "{success: true, model: ". CJSON::encode($retval) ."}";
+				exit;	
+			}
+			
+		}
+		
+		$this->render('crop', array('model' => $model));
 	}
 }

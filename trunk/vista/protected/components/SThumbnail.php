@@ -198,6 +198,36 @@ class SThumbnail extends CComponent {
     }
 
     
+	/**
+     * Resize input image
+     *
+     * @param string $input_file
+     * @param string $dest_file
+     * @param integer $max_width
+     * @param integer $max_height
+     * @return boolean
+     */
+    function crop_image($input_file, $dest_file, $x, $y, $width, $height, $quality = 100) {
+    	
+		$open_image = SThumbnail::open_image($input_file);
+        
+        if (!is_array($open_image)) {
+        	return false;
+        }
+		
+		$image = $open_image['resource'];
+		
+		$tmp_img = imagecreatetruecolor($width, $height);
+		$white_color = imagecolorallocate($tmp_img, 255, 255, 255);
+        imagefill($tmp_img, 0, 0, $white_color);
+		
+		imagecopyresampled($tmp_img, $image, 0, 0, $x, $y, $width, $height, $width, $height);
+		imagedestroy($image);
+		$image = $tmp_img;
+		
+		return imagejpeg($image, $dest_file, $quality);
+	}
+	
     /**
      * Resize input image
      *
