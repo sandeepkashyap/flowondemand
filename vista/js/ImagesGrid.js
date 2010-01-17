@@ -70,11 +70,11 @@ Pictomobile.action = new Ext.ux.grid.RowActions({
         iconCls: 'icon-manual-index',
         tooltip: 'Manual index pictureUser'
     }
-//	, {
-//        qtipIndex: 'Crop image',
-//        iconCls: 'icon-crop-image',
-//        tooltip: 'Crop image'
-//    }
+	, {
+        qtipIndex: 'Crop image',
+        iconCls: 'icon-crop-image',
+        tooltip: 'Crop image'
+    }
 	],
     callbacks: {
         'icon-manual-index': function(grid, record, action, row, col){
@@ -179,15 +179,41 @@ Pictomobile.action = new Ext.ux.grid.RowActions({
 					return false;
 				});
 			}
-			
-            Pictomobile.WindowCropImage.show();
-			
 			document.getElementById('if_crop_image').src = App.data.image_crop_url + '/id/' + record.get('id')
+			var viewportSize = Ext.getCmp('mainViewport').getSize();
 			
+			var windowSize = {
+				width: Math.min(viewportSize.width, parseInt(record.get('width')) + 50),
+				height: Math.min(viewportSize.height, parseInt(record.get('height')) + 100)
+			}
+			Pictomobile.WindowCropImage.setWidth(windowSize.width);
+			Pictomobile.WindowCropImage.setHeight(windowSize.height)
+			
+			var left = viewportSize.width /2 - windowSize.width /2, 
+				top = viewportSize.height /2 - windowSize.height /2; 
+			Pictomobile.WindowCropImage.restore()
+			Pictomobile.WindowCropImage.setPosition(left, top)
+            Pictomobile.WindowCropImage.show();
         }
 		
     }
 });
+
+Pictomobile.addCropImageToStore = function(data) {
+	var model = data.model
+    var record = new Pictomobile.Record.Image({
+        id: model.id_image,
+        thumbnail: model.vc_image,
+        name: model.vc_name,
+        url: model.vc_url,
+		width: model.int_width,
+		height: model.int_height,
+        created: model.dt_created,
+        indexed: model.dt_indexed
+    });
+    Pictomobile.Store.ImagesGridStore.insert(0, record);
+	Ext.getCmp('mainViewport').publish('pictomobile.image.index', {'data': {log: data.log}});
+}
 
 // dummy action event handler - just outputs some arguments to console
 Pictomobile.action.on({
