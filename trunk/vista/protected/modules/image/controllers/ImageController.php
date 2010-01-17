@@ -969,7 +969,7 @@ class ImageController extends Controller {
 				if (!$isImage || !$new_image->save()) {
 					throw new CHttpException(500, "May be url uploaded file is invalid image or url is invalid. Please try again!");
 				}
-				$this->_imageIndex($new_image, false);
+				$log = $this->_imageIndex($new_image, false);
 				
 				$retval = array(
 					'id_image' => $new_image->id_image,
@@ -979,9 +979,20 @@ class ImageController extends Controller {
 		    		'dt_created' => $new_image->dt_received ? $model->dt_received : '',
 		    		'dt_indexed' => $new_image->dt_indexed ? $model->dt_indexed : '',
 					'int_width' => $new_image->int_width,        		 
-					'int_height' => $new_image->int_height,        		 
+					'int_height' => $new_image->int_height,					        		 
 				);
-				echo "{success: true, model: ". CJSON::encode($retval) ."}";
+				
+				$retlog = array(
+					'id' => $log->id, 
+					'thumbnail' => $new_image->vc_image,
+					'point' => $log->int_keypoint,
+					'result' => strip_tags($log->vc_result),
+					'dt_created' => $log->dt_created
+				);
+				echo '<script>';
+				echo "window.parent.Pictomobile.addCropImageToStore({success: true, model: ". CJSON::encode($retval) .", log: ".CJSON::encode($retlog)."})";
+				echo '</script>';
+				echo '<img src="' . Yii::app()->createUrl('image/image/viewFull', array('id' => $new_image->id_image)) . '" alt="'.$new_image->vc_name.'"/>';				
 				exit;	
 			}
 			
