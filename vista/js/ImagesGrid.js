@@ -167,6 +167,7 @@ Pictomobile.action = new Ext.ux.grid.RowActions({
 					,fbar: {
 						items: [{
 							text: 'Crop image',
+							iconCls: 'icon-crop-image',
 							handler: function() {
 								window.frames['if_crop_image'].document.forms['form_crop_image'].submit()
 							}
