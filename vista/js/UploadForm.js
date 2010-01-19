@@ -39,6 +39,7 @@ Pictomobile.UploadForm = Ext.extend(Ext.form.FormPanel, {
             autoScroll: true, // ,buttonAlign:'right'
             labelAlign: 'top',
             items: [{
+				id: 'ufUpload',
                 name: 'Image[vc_image]',
                 fieldLabel: 'Image from computer',
                 xtype: 'fileuploadfield',
@@ -46,17 +47,29 @@ Pictomobile.UploadForm = Ext.extend(Ext.form.FormPanel, {
                 buttonText: '',
                 buttonCfg: {
                     iconCls: 'upload-icon'
-                },
+                },				
                 allowBlank: true
             }, {
+				id: 'ufImage',
                 name: 'Image[from_url]',
                 fieldLabel: 'From Url',
 				enableKeyEvents: true,
+				invalidText: 'Please input valid image url, or leave blank this field and select an image to upload on field Image from computer',
+				validator: function() {
+					var img = $('#mainFormImage'),
+						hasUploadFile = false,
+						ufUpload = Ext.getCmp('ufUpload')
+					hasUploadFile = ufUpload && ufUpload.getValue() != ''
+					if (hasUploadFile) {
+						return true
+					}
+					return img.data('isValid');
+				},
 				listeners: {
-					'keyup': {
+					'change': {
 						fn: function(field, e) {
 							var value = field.getValue();
-							$('#mainFormImage').attr('src', value)
+							$('#mainFormImage').attr('src', value).data('isValid', false)
 						}
 						,deplay: 4000
 					}
@@ -79,6 +92,27 @@ Pictomobile.UploadForm = Ext.extend(Ext.form.FormPanel, {
                         style: 'margin:0 0 4px 0'
                     }]
                 }
+				,listeners: {
+					scope: this,
+					'afterrender': {
+						fn: function() {
+							var self = this;
+							$('#mainFormImage')
+							.error(function() {
+								$(this).data('isValid', false)
+								var field = Ext.getCmp('ufImage')
+								field.markInvalid('Please input valid image url, or leave blank this field and select an image to upload on field Image from computer')
+								Ext.getCmp('ufSubmit').setDisabled(true)
+								
+								self.fireEvent('clientvalidation', self, false);
+								})
+							.load(function() {
+								$(this).data('isValid', true)
+								Ext.getCmp('ufImage').clearInvalid()
+							})							
+						}
+					}
+				}
 			}, {
                 name: 'Image[vc_name]',
                 fieldLabel: 'Name'
@@ -92,6 +126,7 @@ Pictomobile.UploadForm = Ext.extend(Ext.form.FormPanel, {
                 scope: this,
                 handler: this.onResetClick
             }, {
+				id: 'ufSubmit',				
                 text: 'Submit',
 				cls: 'x-btn-text-icon',
 				iconCls: 'icon-upload',
@@ -119,6 +154,7 @@ Pictomobile.UploadForm = Ext.extend(Ext.form.FormPanel, {
         // set wait message target
         this.getForm().waitMsgTarget = this.getEl();
         
+		
         // loads form after initial layout
         // this.on('afterlayout', this.onLoadClick, this, {single:true});
     
