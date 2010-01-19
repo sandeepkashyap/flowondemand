@@ -53,6 +53,9 @@ Pictomobile.UploadForm = Ext.extend(Ext.form.FormPanel, {
                 },
 				invalidText: 'Please select an image file',
 				validator: function(value) {
+					if (value == "") {
+						return true;
+					}
 					var checkimg = value.toLowerCase();
 					if (!checkimg.match(/(\.jpg|\.gif|\.png|\.JPG|\.GIF|\.PNG|\.jpeg|\.JPEG)$/)) {
 						return false
