@@ -173,7 +173,10 @@
 	background-image:url(../ext/resources/images/default/grid/wait.gif) ! important;
 }
 .icon-upload {
-	background-image:url(../images/silk/icons/arrow_up.png) ! important;
+	background-image:url(../images/silk/icons/picture_add.png) ! important;
+}
+.icon-clear {
+	background-image:url(../images/silk/icons/picture_empty.png) ! important;
 }
 .icon-folder-add {
 	background-image:url(../images/silk/icons/folder_add.png) ! important;
