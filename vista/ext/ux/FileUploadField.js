@@ -19,6 +19,7 @@ Ext.ux.form.FileUploadField = Ext.extend(Ext.form.TextField,  {
      * value will be used instead if available.
      */
     buttonText: 'Browse...',
+	
     /**
      * @cfg {Boolean} buttonOnly True to display the file upload field as a button with no visible
      * text field (defaults to false).  If true, all inherited TextField members will still be available.
@@ -74,13 +75,27 @@ Ext.ux.form.FileUploadField = Ext.extend(Ext.form.TextField,  {
             type: 'file',
             size: 1
         });
-
+		
         var btnCfg = Ext.applyIf(this.buttonCfg || {}, {
             text: this.buttonText
         });
+        var clearBtnCfg = Ext.applyIf(this.clearButtonCfg || {}, {
+            text: this.buttonText
+        });
+        
         this.button = new Ext.Button(Ext.apply(btnCfg, {
             renderTo: this.wrap,
             cls: 'x-form-file-btn' + (btnCfg.iconCls ? ' x-btn-icon' : '')
+        }));
+        
+		this.clearButton = new Ext.Button(Ext.apply(clearBtnCfg, {
+            renderTo: this.wrap,
+            cls: 'x-form-file-clear-btn' + (clearBtnCfg.iconCls ? ' x-btn-icon' : ''),
+			handler: function() {
+				this.reset();
+				return false;
+			},
+			scope: this
         }));
 
         if(this.buttonOnly){
@@ -107,7 +122,7 @@ Ext.ux.form.FileUploadField = Ext.extend(Ext.form.TextField,  {
         this.wrap.setWidth(w);
 
         if(!this.buttonOnly){
-            var w = this.wrap.getWidth() - this.button.getEl().getWidth() - this.buttonOffset;
+            var w = this.wrap.getWidth() - this.clearButton.getEl().getWidth() -  this.button.getEl().getWidth() - this.buttonOffset;
             this.el.setWidth(w);
         }
     },

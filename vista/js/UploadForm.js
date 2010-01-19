@@ -44,10 +44,21 @@ Pictomobile.UploadForm = Ext.extend(Ext.form.FormPanel, {
                 fieldLabel: 'Image from computer',
                 xtype: 'fileuploadfield',
                 emptyText: 'Select an image',
-                buttonText: '',
+				buttonText: '',
                 buttonCfg: {
-                    iconCls: 'upload-icon'
-                },				
+                    iconCls: 'icon-upload',
+                },
+                clearButtonCfg: {
+                    iconCls: 'icon-cancel'
+                },
+				invalidText: 'Please select an image file',
+				validator: function(value) {
+					var checkimg = value.toLowerCase();
+					if (!checkimg.match(/(\.jpg|\.gif|\.png|\.JPG|\.GIF|\.PNG|\.jpeg|\.JPEG)$/)) {
+						return false
+					}
+					return true;
+				},
                 allowBlank: true
             }, {
 				id: 'ufImage',
