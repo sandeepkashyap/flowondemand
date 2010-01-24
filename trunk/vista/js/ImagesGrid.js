@@ -388,7 +388,6 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 			}
 
 		});
-		console.log('scroll to top')
 		this.getView().scrollToTop();
 		//new Ext.fc.fuzzyDate().init();	
 	}
