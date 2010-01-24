@@ -1569,7 +1569,7 @@ if (!$w && !$h) {
 }
 
 $file_name = rand(1000, 9999) . '-' . rand(1000, 9999) . '-' . rand(1000, 9999) . '-' . rand(1000, 9999) . '-' . rand(1000, 9999);
-$full_path = ini_get('upload_tmp_dir') . "/$file_name";
+$full_path = dirname(__FILE__). DIRECTORY_SEPARATOR. 'tmp' . DIRECTORY_SEPARATOR. $file_name;
 $contents = _wgetImage($url);
 $fp = fopen($full_path, "w");
 fwrite($fp, $contents); //write contents of feed to cache file
@@ -1587,15 +1587,14 @@ $config = array(
 );
 $image_lib = new CI_Image_lib($config);
 $image_lib->resize();
-
-header('Content-Type: image/jpg');		
-$handle = fopen($resize_image, 'r');
-while (!feof($handle))
-{
-	$data = fgets($handle, 256);
-	print $data;
-	flush();
+chmod($resize_image, 0644);
+header('Content-Type: image/jpg');
+readfile($resize_image);
+flush();
+if (file_exists($full_path)) {
+	unlink($full_path);
 }
-fclose($handle);
-
+if (file_exists($resize_image)) {
+	unlink($resize_image);
+}
 ?>
