@@ -200,6 +200,8 @@ Pictomobile.action = new Ext.ux.grid.RowActions({
     }
 });
 
+
+//this function is called on server response script, see method actionCrop on ImagesController 
 Pictomobile.addCropImageToStore = function(data) {
 	var model = data.model
     var record = new Pictomobile.Record.Image({
@@ -214,6 +216,8 @@ Pictomobile.addCropImageToStore = function(data) {
     });
     Pictomobile.Store.ImagesGridStore.insert(0, record);
 	Ext.getCmp('mainViewport').publish('pictomobile.image.index', {'data': {log: data.log}});
+	Pictomobile.WindowCropImage.close();
+	Ext.ux.Toast.msg('Image crop', 'Image has been crop and save as new image');
 }
 
 // dummy action event handler - just outputs some arguments to console
@@ -384,7 +388,8 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 			}
 
 		});
-		
+		console.log('scroll to top')
+		this.getView().scrollToTop();
 		//new Ext.fc.fuzzyDate().init();	
 	}
 	
