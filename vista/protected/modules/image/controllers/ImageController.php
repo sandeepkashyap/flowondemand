@@ -8,6 +8,7 @@ function helloError($errNo, $errStr, $errFile, $errLine, $errContext) {
 	Yii::log("errLine: $errLine");
 	Yii::log("errContext: $errContext");
 	Yii::log("===================================");
+	//echo '<pre>===========$errStr<br/>'; print_r(array($errStr, $errLine, $errFile)); echo '------------</pre>';
 	//throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
 }
 
@@ -100,7 +101,7 @@ class ImageController extends Controller {
 					'changeImage',
 					'viewFull',
 					'undoTrash',
-					'csvForm',
+					'batchUpload',
 					'iframe',
 					'updateImageSize',
 					'updateIndexed',
@@ -127,7 +128,7 @@ class ImageController extends Controller {
 					'changeImage',
 					'viewFull',
 					'undoTrash',
-					'csvForm',
+					'batchUpload',
 					'iframe',
 					'updateImageSize',
 					'updateIndexed',
@@ -281,7 +282,7 @@ class ImageController extends Controller {
 		$models = Image :: model()->findAll($criteria);
 
 		Yii :: app()->clientScript->registerScript('App.data.image_undo_trash_url', 'App.data.image_undo_trash_url=' . CJSON :: encode($this->createUrl('image/undoTrash')), 4);
-		Yii :: app()->clientScript->registerScript('App.data.image_csv_url', 'App.data.image_csv_url=' . CJSON :: encode($this->createUrl('image/csvForm', array('application'=>$this->application_id))), 4);
+		Yii :: app()->clientScript->registerScript('App.data.image_csv_url', 'App.data.image_csv_url=' . CJSON :: encode($this->createUrl('image/batchUpload', array('application'=>$this->application_id))), 4);
 		Yii :: app()->clientScript->registerScript('App.data.image_change_url', 'App.data.image_change_url=' . CJSON :: encode($this->createUrl('image/changeImage')), 4);
 		Yii :: app()->clientScript->registerScript('App.data.image_slide_show', 'App.data.image_full_url=' . CJSON :: encode($this->createUrl('image/viewFull')), 4);
 		Yii :: app()->clientScript->registerScript('App.data.image_full_url', 'App.data.image_full_url=' . CJSON :: encode($this->createUrl('image/viewFull')), 4);
@@ -532,14 +533,13 @@ class ImageController extends Controller {
 			}
 		} else {
 			$errMsg = '';
-			
-				foreach($model->getErrors() as $errors)
+			foreach($model->getErrors() as $errors)
+			{
+				foreach($errors as $error)
 				{
-					foreach($errors as $error)
-					{
-						$errMsg .= "$error ";
-					}
+					$errMsg .= "$error ";
 				}
+			}
 			throw new CHttpException(500, $errMsg);
 		}
 	}
@@ -681,16 +681,15 @@ class ImageController extends Controller {
 		die();
 	}
 	
-	public function actionCsvForm() {
-//		$application = application::model()->findByPk($this->application_id);
-//		if (intval($application->int_size) < 100) {
-//			throw new CHttpException(400, "The application's max picture size (int_size) is too small!");
-//		}
+	private function _readFile($path, &$handler) {
+		
+	}
+	
+	public function actionBatchUpload() {
 		$this->layout = 'application.views.layouts.application';
 		if (Yii :: app()->request->isPostRequest) {
 			$images_folder = Yii :: app()->getModule('image')->images_folder;
 			
-			$handle = fopen($_FILES['csv_file']['tmp_name'], "r");
 			$delimiter = $_POST['delimiter'];
 			if ($delimiter == 'custom') {
 				$delimiter = $_POST['delimiter_text'];
@@ -702,7 +701,35 @@ class ImageController extends Controller {
 			ini_set('memory_limit', '256M');
 			$success = 0;
 			$count = 1;
-			while (($data = fgetcsv($handle, 1000, $delimiter)) !== FALSE) {				
+			
+			$handle = null;
+			$isCsv = false;
+			if (preg_match('/\\.csv$/', $_FILES['csv_file']['name'])) {
+				$handle = fopen($_FILES['csv_file']['tmp_name'], "r");
+				$isCsv = true;
+			} else {
+				$handle = zip_open($_FILES['csv_file']['tmp_name']);
+				$isCsv = false;				
+			}
+			while (true) {
+				$zip_entry = null;
+				$data = null;
+				if ($isCsv) {
+					$data = fgetcsv($handle, 1000, $delimiter);
+				} else {
+					$zip_entry = zip_read($handle);
+					if ($zip_entry) {
+						$zip_name = zip_entry_name($zip_entry);
+						$data = array(
+							$zip_name, //data[0] name
+							$zip_name, //data[1] url to get
+							$zip_name //image url
+						);
+					}
+				}
+				if (!$data) {
+					break;
+				}
 				echo "{$count}. Processing: " . $data[0] . " ...";
 				$count++;
 				flush();
@@ -711,14 +738,27 @@ class ImageController extends Controller {
 				$file_name = rand(1000, 9999) . '-' . rand(1000, 9999) . '-' . rand(1000, 9999) . '-' . rand(1000, 9999) . '-' . rand(1000, 9999);
 				$full_path = $images_folder . $file_name;
 
-				$from_url = $data[0];
 				set_error_handler(helloError);
 				try {
-					$contents = $this->wgetImage($from_url); 
-	
-					$fp=fopen($full_path, "w");
-					fwrite($fp, $contents); 
-					fclose($fp);					
+					if ($isCsv) {
+						$from_url = $data[0];
+						$contents = $this->wgetImage($from_url); 
+		
+						$fp=fopen($full_path, "w");
+						fwrite($fp, $contents); 
+						fclose($fp);					
+					} else {
+						$fp = fopen($full_path, "w");
+					    if (zip_entry_open($handle, $zip_entry, "r")) {
+					      $buf = zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
+					      fwrite($fp,"$buf");
+					      zip_entry_close($zip_entry);
+					      fclose($fp);
+					    } else {
+					    	echo '<span style="color: red">Failed: Zip entry is invalid</span><br/>';
+					    	continue;
+					    }
+					}
 				} catch(Exception $err) {
 					echo '<span style="color: red">Failed</span><br/>';
 					continue;
@@ -741,11 +781,18 @@ class ImageController extends Controller {
 						$success++;
 						flush();
 					} else {
-						echo '<span style="color: red">Failed</span><br/>';
+						$errMsg = '';
+						foreach($model->getErrors() as $errors)
+						{
+							foreach($errors as $error)
+							{
+								$errMsg .= "$error ";
+							}
+						}
+						echo "<span style='color: red'>Can not save: $errMsg</span><br/>";
 					}
-					
 				} else {
-					echo '<span style="color: red">Failed</span><br/>';
+					echo '<span style="color: red">Failed: Image is invalid</span><br/>';
 				}
 	
 			}
@@ -999,5 +1046,95 @@ class ImageController extends Controller {
 		}
 		
 		$this->render('crop', array('model' => $model));
+	}
+	
+	public function actionZipUpload() {
+		$this->layout = 'application.views.layouts.application';
+		if (Yii :: app()->request->isPostRequest) {
+			$images_folder = Yii :: app()->getModule('image')->images_folder;
+			
+			$handle = fopen($_FILES['csv_file']['tmp_name'], "r");
+			$zip = zip_open($_FILES['csv_file']['tmp_name']);
+			$delimiter = $_POST['delimiter'];
+			if ($delimiter == 'custom') {
+				$delimiter = $_POST['delimiter_text'];
+			} else if ($delimiter == 'tab') {
+				$delimiter = "\t";
+			}
+			$arr = array();
+			ini_set('max_execution_time', 0);
+			ini_set('memory_limit', '256M');
+			$success = 0;
+			$count = 1;
+			$zip = zip_open($_FILES['csv_file']['tmp_name']);
+			if (!$zip) {
+				return;
+			}
+			while ($zip_entry = zip_read($zip)) {
+				$data = array(
+					zip_entry_name($zip_entry), //data[0]
+					zip_entry_name($zip_entry), //data[1]
+					''
+				);
+				echo "{$count}. Processing: " . $data[0] . " ...";
+				$count++;
+				flush();
+				$model = new Image;
+	
+				$file_name = rand(1000, 9999) . '-' . rand(1000, 9999) . '-' . rand(1000, 9999) . '-' . rand(1000, 9999) . '-' . rand(1000, 9999);
+				$full_path = $images_folder . $file_name;
+
+				set_error_handler(helloError);
+				try {
+					$fp = fopen($full_path, "w");
+				    if (zip_entry_open($zip, $zip_entry, "r")) {
+				      $buf = zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
+				      fwrite($fp,"$buf");
+				      zip_entry_close($zip_entry);
+				      fclose($fp);
+				    } else {
+				    	echo 'hok doc';
+				    }
+					
+				} catch(Exception $err) {
+					echo '<pre>===========$err<br/>'; print_r($err); echo '------------</pre>';
+					echo '<span style="color: red">Failed</span><br/>';
+					continue;
+				}
+
+				$arr = SThumbnail::getImageSize($full_path);
+				$isImage = is_array($arr);
+
+				if ($isImage && SThumbnail::open_image($full_path)) {
+					$model->vc_name = $data[1];
+					$model->vc_image = $file_name;
+					$model->vc_url = $data[2];
+					$model->id_application = $this->application_id;
+					if ($isImage) {
+						$model->int_width = $arr[0]; 
+						$model->int_height = $arr[1]; 				
+					}
+					if ($model->save()) {
+						echo '<span style="color: green">Done</span><br/>';
+						$success++;
+						flush();
+					} else {
+						echo '<span style="color: red">Failed</span><br/>';
+					}
+					
+				} else {
+					echo '<span style="color: red">Failed</span><br/>';
+				}
+	
+			}
+			zip_close($zip);
+			echo 'Finished!<br/>';
+			if ($success > 0) {
+				echo "<script>parent.image_csv_upload_success=$success; window.parent.Ext.getCmp('imagesGrid').getStore().load()</script>";
+			}
+			return;
+		}
+		$this->layout = 'application.views.layouts.application';
+		$this->render('csvForm');	
 	}
 }

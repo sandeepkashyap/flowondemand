@@ -74,7 +74,7 @@
 			App.data.image_undo_trash_url = '<?=Yii::app()->createUrl('image/image/undoTrash')?>'
 			App.data.image_manual_index_url = '<?=Yii::app()->createUrl('image/image/manualIndex')?>'
 			App.data.image_change_url = '<?=Yii::app()->createUrl('image/image/changeImage')?>'
-			App.data.image_csv_url = '<?=Yii::app()->createUrl('/image/image/csvForm')?>'
+			App.data.image_csv_url = '<?=Yii::app()->createUrl('/image/image/batchUpload')?>'
 			App.data.image_crop_url = '<?=Yii::app()->createUrl('/image/image/crop')?>'
 			
 			App.data.logout_url = '<?=Yii::app()->createUrl('/base/user/logout')?>'
