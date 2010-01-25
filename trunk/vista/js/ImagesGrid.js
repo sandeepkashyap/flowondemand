@@ -401,7 +401,7 @@ Pictomobile.ImagesDataView = Ext.extend(Ext.DataView, {
 		var config = {
 			store: Pictomobile.Store.ImagesGridStore,
 			tpl: new Ext.XTemplate('<tpl for=".">', 
-				'<div class="tile-image">', 
+				'<div class="tile-image" id="tile_item_{id}">', 
 					'<table cellspacing="0" cellpadding="0"><tbody><tr><td class="td-thumb" >', 
 						'<a rel=\"lightbox\" class="fancy-group" href="' + App.data.image_full_url + '/id/{id}.jpg" int_width="{width}" int_height="{height}" title="{name}">',
 							'<img alt="{name}" title="{name}" src="' + App.data.thumnail_url + "/" + '{thumbnail}"/>', 
@@ -447,6 +447,7 @@ Pictomobile.ImagesDataView = Ext.extend(Ext.DataView, {
 				var new_width = parseInt(old_width * slideValue),
 					new_height = parseInt(old_height * slideValue)
 				
+				
 				self
 				.attr('src', this.src)
 				.css('width', new_width)
@@ -473,6 +474,47 @@ Pictomobile.ImagesDataView = Ext.extend(Ext.DataView, {
 				self.attr('title', title);
 				return true;
 			}
+		});
+	}
+	,onAdd: function(ds, records, index) {
+		Pictomobile.ImagesDataView.superclass.onAdd.apply(this, arguments);
+		
+		var imageSlider = Ext.getCmp('imageSlider');
+		var slideValue = imageSlider.getValue() / 100;
+		if (records.length == 0) {
+			return;
+		}
+		var id = records[0].get('id')
+		
+		var self = $('#tile_item_' + id + ' img').eq(0)
+		$('#tile_item_' + id + ' img').load(function() {
+			var self = $(this);
+			var img = new Image();
+			if (self.data('isLoaded')) {
+				return;
+			}
+			var old_height = this.height,
+				old_width = this.width;
+			self.attr('ori_width', old_width)
+			self.attr('ori_height', old_height)
+			img.onload = function() {
+				self.data('isLoaded', true)
+				var new_width = parseInt(old_width * slideValue),
+					new_height = parseInt(old_height * slideValue)
+				
+				
+				self
+				.attr('src', this.src)
+				.css('width', new_width)
+				.css('height', new_height)
+				
+			}
+			img.src = self.parent().attr('href');
+			
+			var ratio = slideValue / 100;
+								
+			$('#tile_item_' + id).css('width', 110 * ratio).css('height', 115 * ratio)							 
+			.find('td.td-thumb').css('width', 110 * ratio).css('height', 115 * ratio)
 		});
 	}
 });
