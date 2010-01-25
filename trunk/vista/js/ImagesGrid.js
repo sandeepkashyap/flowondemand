@@ -479,6 +479,25 @@ Pictomobile.ImagesDataView = Ext.extend(Ext.DataView, {
 	,onAdd: function(ds, records, index) {
 		Pictomobile.ImagesDataView.superclass.onAdd.apply(this, arguments);
 		
+		$('a.fancy-group').fancybox({
+			'zoomSpeedIn': 300,
+			'zoomSpeedOut': 300,
+			'hideOnContentClick': true,
+			'overlayShow': false,
+			'ignorePreload': true,
+			'width': 1024,
+			'height': 768,
+			callbackOnStart: function(elem, $opts){
+				//find title
+				var self = $(elem)
+				$opts.width = self.attr('int_width');
+				$opts.height = self.attr('int_height');
+				var title = self.attr('title')
+				self.attr('title', title);
+				return true;
+			}
+		});
+		
 		var imageSlider = Ext.getCmp('imageSlider');
 		var slideValue = imageSlider.getValue() / 100;
 		if (records.length == 0) {
@@ -511,7 +530,7 @@ Pictomobile.ImagesDataView = Ext.extend(Ext.DataView, {
 			}
 			img.src = self.parent().attr('href');
 			
-			var ratio = slideValue / 100;
+			var ratio = slideValue ;
 								
 			$('#tile_item_' + id).css('width', 110 * ratio).css('height', 115 * ratio)							 
 			.find('td.td-thumb').css('width', 110 * ratio).css('height', 115 * ratio)
