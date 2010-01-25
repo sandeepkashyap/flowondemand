@@ -12,9 +12,7 @@
 }
 
 #mainArea .x-view-over {
-  border :1px solid #dddddd;
-  background : #efefef;
-  padding: 4px;
+  background : #deecfd;
 }
 
 #mainArea .x-view-selected {

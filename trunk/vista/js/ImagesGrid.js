@@ -400,11 +400,19 @@ Pictomobile.ImagesDataView = Ext.extend(Ext.DataView, {
 	initComponent: function(){
 		var config = {
 			store: Pictomobile.Store.ImagesGridStore,
-			tpl: new Ext.XTemplate('<tpl for=".">', '<div class="tile-image">', '<table cellspacing="0" cellpadding="0"><tbody><tr><td class="td-thumb" >', '<a rel=\"lightbox\" class="fancy-group" href="' + App.data.image_full_url + '/id/{id}.jpg" int_width="{width}" int_height="{height}" title="{name}"><img alt="{name}" title="{name}" src="' + App.data.thumnail_url + "/" + '{thumbnail}"/></a></td></tr></tbody></table>', '</div>', '</tpl>', '<div class="x-clear"></div>'),
+			tpl: new Ext.XTemplate('<tpl for=".">', 
+				'<div class="tile-image">', 
+					'<table cellspacing="0" cellpadding="0"><tbody><tr><td class="td-thumb" >', 
+						'<a rel=\"lightbox\" class="fancy-group" href="' + App.data.image_full_url + '/id/{id}.jpg" int_width="{width}" int_height="{height}" title="{name}">',
+							'<img alt="{name}" title="{name}" src="' + App.data.thumnail_url + "/" + '{thumbnail}"/>', 
+						'</a></td></tr></tbody></table>', 
+				'</div>', 
+			'</tpl>', 
+			'<div class="x-clear"></div>'),
 			autoHeight: true,
 			multiSelect: false,
 			overClass: 'x-view-over',
-			itemSelector: 'td.td-thumb',
+			itemSelector: 'div.tile-image',
 			emptyText: 'No images to display',
 			
 			listeners: {
