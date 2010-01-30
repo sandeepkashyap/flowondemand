@@ -1,7 +1,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        
+      	<meta http-equiv="X-UA-Compatible" content="IE=7">
+      	
 		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ext-all.css');?>
 		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ux/RowEditor.css');?>
 		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ux/RowActions.css');?>
