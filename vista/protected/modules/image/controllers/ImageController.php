@@ -8,6 +8,7 @@ function helloError($errNo, $errStr, $errFile, $errLine, $errContext) {
 	Yii::log("errLine: $errLine");
 	Yii::log("errContext: $errContext");
 	Yii::log("===================================");
+	echo 'co loi rui, tim ra ra roi';
 	//echo '<pre>===========$errStr<br/>'; print_r(array($errStr, $errLine, $errFile)); echo '------------</pre>';
 	//throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
 }
@@ -245,7 +246,13 @@ class ImageController extends Controller {
 			$model->moveTrash();
 			echo '<p id="success" class="flash"><span class="flash_inner">The image ['. $model->vc_name .'] has been moved to the Trash. <a class=" x-btn-text undo_link" rel="'.$model->id_image.'">Undo</a></span></p>';
 		} else {
-			throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
+//			throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
+			echo CJSON::encode(array(
+					'success' => false,
+					'error' => "Invalid request. Please do not repeat this request again." 
+				
+				));
+			die();
 		}
 	}
 
@@ -391,7 +398,12 @@ class ImageController extends Controller {
 				$model->int_height = $arr[1]; 				
 			}			
 			if (!$isImage || !$model->save()) {
-				throw new CHttpException(500, "May be url uploaded file is invalid image or url is invalid. Please try again!");
+				echo CJSON::encode(array(
+						'success' => false,
+						'error' => "May be url uploaded file is invalid image or url is invalid. Please try again!" 
+					
+					));
+				die();
 			}
 			$this->_imageIndex($model, false);
 		} else {
@@ -517,7 +529,12 @@ class ImageController extends Controller {
 				));
 				exit;
 			} else {
-				throw new CHttpException(500, "May be url uploaded file is invalid image or url is invalid. Please try again!");
+				echo CJSON::encode(array(
+						'success' => false,
+						'error' => "May be url uploaded file is invalid image or url is invalid. Please try again!" 
+					
+					));
+				die();
 			}
 		} else {
 			$model->$key = $_POST['value'];
@@ -540,7 +557,13 @@ class ImageController extends Controller {
 					$errMsg .= "$error ";
 				}
 			}
-			throw new CHttpException(500, $errMsg);
+			//throw new CHttpException(500, $errMsg);
+			echo CJSON::encode(array(
+					'success' => false,
+					'error' => $errMsg 
+				
+				));
+			die();
 		}
 	}
 
@@ -1014,7 +1037,12 @@ class ImageController extends Controller {
 				$new_image->id_application = $model->id_application;
 							
 				if (!$isImage || !$new_image->save()) {
-					throw new CHttpException(500, "May be url uploaded file is invalid image or url is invalid. Please try again!");
+					echo CJSON::encode(array(
+						'success' => false,
+						'error' => "May be url uploaded file is invalid image or url is invalid. Please try again!" 
+					
+					));
+				die();
 				}
 				$log = $this->_imageIndex($new_image, false);
 				
