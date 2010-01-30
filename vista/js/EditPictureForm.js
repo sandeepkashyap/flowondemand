@@ -51,19 +51,24 @@ Pictomobile.EditPictureForm = Ext.extend(Ext.form.FormPanel, {
                 allowBlank: true
             }, {
                 xtype: 'box',
-                anchor: '',
                 isFormField: true,
                 fieldLabel: 'Image',
                 autoEl: {
                     tag: 'div',
                     children: [{
-						id: 'formImage',
+						id: 'formUrlImage',
                         tag: 'img',
                         width: '80px',
                         src:  App.data.thumnail_url + "/" + this.data.record.data.thumbnail  + '?rand=' + new Date().format('U')
                     }, {
-                        tag: 'div',
-                        style: 'margin:0 0 4px 0'
+                        tag: 'img',
+                        width: '20px',
+                        src:  Ext.BLANK_IMAGE_URL
+                    }, {
+						id: 'formImage',
+                        tag: 'img',
+                        width: '80px',
+						src: Ext.BLANK_IMAGE_URL
                     }]
                 }
             }, {
