@@ -430,7 +430,6 @@ Pictomobile.ImagesDataView = Ext.extend(Ext.DataView, {
 	}
 	,refresh: function() {
 		Pictomobile.ImagesDataView.superclass.refresh.apply(this, arguments);
-		
 		$('td.td-thumb img').load(function() {
 			var self = $(this);
 			var img = new Image();
@@ -453,6 +452,10 @@ Pictomobile.ImagesDataView = Ext.extend(Ext.DataView, {
 				.css('width', new_width)
 				.css('height', new_height)
 				
+				var ratio = slideValue;
+								
+				self.parent().parent().css('width', 110 * ratio).css('height', 115 * ratio)
+				.parent().parent().parent().parent().css('width', 110 * ratio).css('height', 115 * ratio)
 			}
 			img.src = self.parent().attr('href');
 		});
