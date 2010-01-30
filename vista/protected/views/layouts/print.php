@@ -8,6 +8,8 @@
 	echo 'Pictomobile::' . Yii::app()->wireframe->getPageTitle();
 ?>
 </title>
+<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ext-all.css');?>
+<?=CHtml::cssFile(ROOT_URL . '/css/application.css');?>
 </head>
 
 <body style="text-align: left;">
