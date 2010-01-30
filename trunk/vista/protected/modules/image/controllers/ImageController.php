@@ -980,13 +980,25 @@ class ImageController extends Controller {
 		$sort->applyOrder($criteria);
 
 		$models = Image :: model()->findAll($criteria);
-
+		$ratio = floatval(Yii :: app()->getRequest()->getQuery('ratio', '0'));
+		$results = array();
+		foreach($models as $model) {
+			$scale = min(100 / $model->int_width, 100 / $model->int_height);
+			//echo floor($scale * $model->int_height * $ratio) ;exit;
+            if ($scale < 1) {
+                $new_width = floor($scale * $model->int_width) * $ratio;
+                $new_height = floor($scale * $model->int_height) * $ratio;
+            }
+			$results[] = array(
+				'id_image' => $model->id_image,
+				'width' => $new_width,
+				'height' => $new_height,
+			);
+		}
 		$this->layout = 'application.views.layouts.print';
-		$width = Yii :: app()->getRequest()->getQuery('width', '100px');
-		
 		$this->render('print', array (
-			'models' => $models,
-			'width' => $width
+			'models' => $results,
+			'ratio' => $ratio
 		));
 	}
 	

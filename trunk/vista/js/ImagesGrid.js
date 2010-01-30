@@ -601,7 +601,22 @@ Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
 							}
 						}
 					}
-				})]
+				}), {
+                	text: 'Print',
+                	iconCls: 'x-btn-text icon-print',
+                	handler: function() {
+                		var pager = Ext.getCmp('tilePaging');
+                		var slider = Ext.getCmp('imageSlider');
+                		
+	                	var url = App.extendUrl(App.data.image_print_url, {
+	    					ratio: slider.getValue() / 100,
+	    					page: Math.ceil((pager.cursor + pager.pageSize) / pager.pageSize), 
+	    					items_per_page: pager.pageSize,
+	    					application: App.data.application_id
+	    				}) 
+	    				window.open(url)
+                	}
+				}]
             })//eo bbar
         
         }; // eo config object

@@ -76,6 +76,7 @@
 			App.data.image_change_url = '<?=Yii::app()->createUrl('image/image/changeImage')?>'
 			App.data.image_csv_url = '<?=Yii::app()->createUrl('/image/image/batchUpload')?>'
 			App.data.image_crop_url = '<?=Yii::app()->createUrl('/image/image/crop')?>'
+			App.data.image_print_url = '<?=Yii::app()->createUrl('/image/image/print')?>'
 			
 			App.data.logout_url = '<?=Yii::app()->createUrl('/base/user/logout')?>'
 			
