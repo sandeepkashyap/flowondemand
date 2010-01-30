@@ -46,7 +46,7 @@ Pictomobile.UploadForm = Ext.extend(Ext.form.FormPanel, {
                 emptyText: 'Select an image',
 				buttonText: '',
                 buttonCfg: {
-                    iconCls: 'icon-upload',
+                    iconCls: 'icon-upload'
                 },
                 clearButtonCfg: {
                     iconCls: 'icon-clear'

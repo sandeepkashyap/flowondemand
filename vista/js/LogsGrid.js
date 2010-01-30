@@ -45,10 +45,10 @@ Pictomobile.LogsGrid = Ext.extend(Ext.grid.GridPanel, {
             columns: [{
                 dataIndex: 'thumbnail',
                 header: 'Thumbnail',
-                renderer: this.renderThumbnail.createDelegate(this),
+                renderer: this.renderThumbnail.createDelegate(this)
             }, {
                 dataIndex: 'point',
-                header: 'Key point',
+                header: 'Key point'
             }, {
                 header: 'Index on',
                 dataIndex: 'dt_created'
@@ -112,7 +112,7 @@ Pictomobile.LogsGrid = Ext.extend(Ext.grid.GridPanel, {
                     thumbnail: model.thumbnail,
                     point: model.point,
                     result: model.result,
-                    dt_created: model.dt_created,
+                    dt_created: model.dt_created
                 });
                 this.getStore().insert(0, record)
             }
