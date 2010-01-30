@@ -100,7 +100,7 @@ Pictomobile.UploadForm = Ext.extend(Ext.form.FormPanel, {
                         tag: 'img',
                         qtip: '',
 						width: '80px',
-                        src:  '' 
+                        src:  Ext.BLANK_IMAGE_URL 
                     }, {
                         tag: 'div',
                         style: 'margin:0 0 4px 0'
