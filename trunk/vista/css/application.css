@@ -72,3 +72,16 @@
 	text-align: center;
 	padding: 0px;
 }
+
+.x-table-layout {
+	height:100%;
+	width:100%;
+	padding: 10px;
+}
+.x-table-layout td {
+	padding: 10px;
+}
+
+.edit_placeholder {
+	color: #dddddd;
+}

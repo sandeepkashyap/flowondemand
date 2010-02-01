@@ -320,6 +320,68 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 		this.getView().on('refresh', this.onViewRefresh, this)
 		this.getView().on('rowsinserted', this.onRowAdded, this)
 		this.getView().on('rowupdated', this.onRowUpdated, this)
+		
+	 	var cfg = {
+                shadow: false,
+                completeOnEnter: true,
+                cancelOnEsc: true,
+                updateEl: true,
+                ignoreNoChange: true
+            };
+
+        var labelEditor = new Ext.Editor(Ext.apply({
+            alignment: 'l-l',
+            listeners: {
+                complete: function(ed, value, oldValue){
+					$.ajax({
+						type: "POST",
+						url: App.data.image_quick_update_url,
+						data: ({id: ed.targetId, value: value}),
+						success: function(res){
+							if (res == value) {
+								if (value.trim() == '') {
+									$('span[id=' + ed.targetId + ']').addClass('edit_placeholder').html('Click to edit')
+								} else {
+									$('span[id=' + ed.targetId + ']').removeClass('edit_placeholder')
+								}
+					            Ext.ux.Toast.msg('Successful', 'Update is completed');
+							} else {
+								eval('var result = ' + res);
+								Ext.Msg.show({
+								   title:'Error',
+								   msg: result.error,
+								   buttons: Ext.Msg.OK,			   
+								   icon: Ext.MessageBox.ERROR
+								});
+								$('span[id=' + ed.targetId + ']').html(oldValue)
+							}
+						},
+						error: function(req, textStatus, error) {
+				            Ext.Msg.show({
+								   title:'Error',
+								   msg: error,
+								   buttons: Ext.Msg.OK,			   
+								   icon: Ext.MessageBox.ERROR
+								});
+						}
+					});
+                }
+            },
+            field: {
+                allowBlank: true,
+                xtype: 'textfield',
+                width: 190,
+                selectOnFocus: true
+            }
+        }, cfg));
+		this.on('click', function(e) {
+			var target = $(e.getTarget());
+			if (target.hasClass('editableInput')) {
+				e.stopPropagation();
+				labelEditor.targetId = target.attr('id')
+				labelEditor.startEdit(e.getTarget())
+			}
+		})
     } // eo function onRender
     ,renderThumbnail: function(val, cell, record){
 		if (record.get('rand')) {
@@ -329,7 +391,20 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
         return "<a rel=\"lightbox\" class=\"fancy-group\" href=\"" + App.data.image_full_url + "/id/" + record.get('id') + ".jpg\" int_width='"+record.get('width')+"' int_height='"+record.get('height')+"' title='" +record.get('name') +  "'><img src=\"" + App.data.thumnail_url + "/" + val + "\" alt=\"" + val + "\" title=\"\"/></a>";
     }
 	,renderUrlAndName: function(val, cell, record){
-        return "<span id='vc_url:"+record.get('id')+"' title='Click to edit' class='editableInput'>" + record.get('url') + "</span><br/>" + "<span id='vc_name:"+record.get('id')+"' class='editableInput'>" + record.get('name') + "</span>";
+		var name = record.get('name'),
+			name_editHolder = '';
+		
+		if (name.trim() == '') {
+			name = 'Click to edit'
+			name_editHolder = 'edit_placeholder'
+		}
+		var url = record.get('url'),
+			url_editHolder = '';
+		if (url.trim() == '') {
+			url = 'Click to edit';
+			url_editHolder = 'edit_placeholder'
+		}
+        return "<span id='vc_url:"+record.get('id')+"' title='Click to edit' class='editableInput "+ url_editHolder +"'>" + url + "</span><br/>" + "<span id='vc_name:"+record.get('id')+"' class='editableInput " + name_editHolder + "'>" + name + "</span>";
     }
 	,renderReceived: function(val, cell, record){		
         return "<span class='fuzzyDate' title='"+ record.get('created') +"'>"+record.get('created')+"</span><br/>" + "<span class='fuzzyDate' title='"+record.get('indexed')+"'>"+record.get('indexed')+"</span>";
@@ -376,7 +451,7 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 			} 
 		});
 		
-		$('span.editableInput').editable(App.data.image_quick_update_url, {
+		/*$('span.editableInput').editable(App.data.image_quick_update_url, {
 			placeholder: '<span class="edit_placeholder">Click to edit...</span>',
 			tooltip   : "Click to edit. Press <Ente>r to save or <Escapse> to cancel",
 			event : 'click',
@@ -387,7 +462,7 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 			onerror: function(form, target, xhr) {
 			}
 
-		});
+		});*/
 		this.getView().scrollToTop();
 		//new Ext.fc.fuzzyDate().init();	
 	}

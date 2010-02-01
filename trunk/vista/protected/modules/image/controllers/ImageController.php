@@ -8,7 +8,7 @@ function helloError($errNo, $errStr, $errFile, $errLine, $errContext) {
 	Yii::log("errLine: $errLine");
 	Yii::log("errContext: $errContext");
 	Yii::log("===================================");
-	echo 'co loi rui, tim ra ra roi';
+//	echo 'co loi rui, tim ra ra roi';
 	//echo '<pre>===========$errStr<br/>'; print_r(array($errStr, $errLine, $errFile)); echo '------------</pre>';
 	//throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
 }
