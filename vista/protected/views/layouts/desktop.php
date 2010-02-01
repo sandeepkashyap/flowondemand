@@ -4,10 +4,8 @@
       	<meta http-equiv="X-UA-Compatible" content="IE=7">
       	
 		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ext-all.css');?>
-		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ux/RowEditor.css');?>
 		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ux/RowActions.css');?>
 		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ux/icons.css');?>
-		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ux/Lightbox.css');?>
 		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ux/FillSlider.css');?>
 		<?=CHtml::cssFile(ROOT_URL . '/ext/resources/css/ux/statusbar.css');?>
 		
@@ -16,7 +14,6 @@
 		<?=CHtml::scriptFile(ROOT_URL . '/assets/javascript/jquery.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/adapter/jquery/ext-jquery-adapter.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/assets/javascript/jquery.fancybox.js');?>
-		<?=CHtml::scriptFile(ROOT_URL . '/assets/javascript/jquery.jeditable.js');?>
 		
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ext-all.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/FileUploadField.js');?>
@@ -29,6 +26,7 @@
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/StatusBar.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/FuzzyDate.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/PagingStore.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/FormTableLayout.js');?>
 		
 		<?=CHtml::cssFile(ROOT_URL . '/css/application.css');?>
 		
