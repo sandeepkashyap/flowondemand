@@ -1028,7 +1028,14 @@ class ImageController extends Controller {
 			
 			$src_image = $images_folder . $model->vc_image;
 			
-			if (SThumbnail::crop_image($src_image, $full_path, $_POST['x'], $_POST['y'], $_POST['w'], $_POST['h'])){
+			$r = $_POST['ratio'];
+			$width = floor($_POST['w'] / $r);
+			$height = floor($_POST['h'] / $r);
+			$x = floor($_POST['x'] / $r);
+			$y = floor($_POST['y'] / $r);
+			
+			
+			if (SThumbnail::crop_image($src_image, $full_path, $x, $y, $width, $height)){
 				$arr = SThumbnail::getImageSize($full_path);
 				$isImage = is_array($arr);
 				
@@ -1042,8 +1049,8 @@ class ImageController extends Controller {
 	
 				$new_image = new Image;
 				$new_image->vc_image = $file_name;
-				$new_image->int_width = $_POST['w'];
-				$new_image->int_height = $_POST['h'];
+				$new_image->int_width = $width;
+				$new_image->int_height = $height;
 				$new_image->vc_name = $model->vc_name;
 				$new_image->vc_url = $model->vc_url;
 				$new_image->id_application = $model->id_application;
@@ -1085,6 +1092,6 @@ class ImageController extends Controller {
 			
 		}
 		
-		$this->render('crop', array('model' => $model));
+		$this->render('crop', array('model' => $model, 'width' => $_GET['width'], 'height' => $_GET['height'], 'ratio' => $_GET['ratio']));
 	}	
 }
