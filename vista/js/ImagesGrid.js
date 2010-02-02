@@ -155,12 +155,14 @@ Pictomobile.action = new Ext.ux.grid.RowActions({
 			if (Pictomobile.WindowCropImage == null) {
 				
 				Pictomobile.WindowCropImage = new Ext.Window({
+					header: false,
+					title: '',
 				    applyTo: "dialogCropImage",
 				    closable: true,
 				    modal: false,
 				    minimizable: false,
-				    maximizable: true,
-				    resizable: true,
+				    maximizable: false,
+				    resizable: false,
 				    draggable: true,
 				    shadowOffset: 8,
 				    id: "wndCropImage"
@@ -180,18 +182,27 @@ Pictomobile.action = new Ext.ux.grid.RowActions({
 					return false;
 				});
 			}
-			document.getElementById('if_crop_image').src = App.data.image_crop_url + '/id/' + record.get('id')
-			var viewportSize = Ext.getCmp('mainViewport').getSize();
 			
-			var windowSize = {
-				width: Math.min(viewportSize.width, parseInt(record.get('width')) + 50),
-				height: Math.min(viewportSize.height, parseInt(record.get('height')) + 100)
-			}
-			Pictomobile.WindowCropImage.setWidth(windowSize.width);
-			Pictomobile.WindowCropImage.setHeight(windowSize.height)
+			var w = $.fn.fancybox.getViewport();
+	
+			var r = Math.min(
+							Math.min(w[0] - 36, record.get('width')) / record.get('width'), 
+							Math.min(w[1] - 150, record.get('height')) / record.get('height'));
+
+			var width = Math.round(r * record.get('width'));
+			var height = Math.round(r * record.get('height'));
 			
-			var left = viewportSize.width /2 - windowSize.width /2, 
-				top = viewportSize.height /2 - windowSize.height /2; 
+			var left	= (width + 36)	> w[0] ? w[2] : (w[2] + Math.round((w[0] - width - 36) / 2));
+			var top		= (height + 100)	> w[1] ? w[3] : (w[3] + Math.round((w[1] - height - 100) / 2));
+			
+			Pictomobile.WindowCropImage.setWidth(width + 50);
+			Pictomobile.WindowCropImage.setHeight(height + 100)
+			
+			document.getElementById('if_crop_image').src = App.data.image_crop_url + '/id/' + record.get('id') 
+			+ '/width/' + width 
+			+ '/height/' + height
+			+ '/ratio/' + r
+			
 			Pictomobile.WindowCropImage.restore()
 			Pictomobile.WindowCropImage.setPosition(left, top)
             Pictomobile.WindowCropImage.show();
