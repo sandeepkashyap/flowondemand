@@ -512,6 +512,7 @@ class ImageController extends Controller {
 			if ($isImage && $isSave) {
 				$log = $this->_imageIndex($model);
 				echo CJSON::encode(array(
+					'id' => $model->id_image,
 					'success' => 'true',
 					'thumbnail' => $model->vc_image . '?rand=' . time(),
 					'src' => Yii::app()->createUrl("/site/thumbnail/image/$model->vc_image", array('rand'=>time())),

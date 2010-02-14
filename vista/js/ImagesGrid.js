@@ -431,6 +431,7 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 			record.set('rand', true);
 			store.commitChanges();
 			Ext.ux.Toast.msg('Image changed', 'Image change successful');
+			this.publish('pictomobile.image.commitchange', subject);
 		} else if (message == 'pictomobile.appswitcher.change') {
 	        this.store.setBaseParam('application_id', subject.record.get('id'));
 	        this.store.load();			
@@ -728,11 +729,68 @@ Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
 //        this.store.load();
         
         this.subscribe("pictomobile.appswitcher.change")
+        this.subscribe("pictomobile.image.commitchange")
     } // eo function onRender
     ,
     onMessage: function(message, subject){
 		if (message == 'pictomobile.appswitcher.change') {
 			Ext.getCmp('imageSlider').setValue(110)
+		}
+		else if (message == 'pictomobile.image.commitchange') {
+			var id = subject.model.id;
+			var self = $('#tile_item_' + id + ' img').eq(0)
+			self.data('isLoaded', false)
+			self.parent().attr('href', subject.model.full_url);
+			
+			$('a.fancy-group').fancybox({
+				'zoomSpeedIn': 300,
+				'zoomSpeedOut': 300,
+				'hideOnContentClick': true,
+				'overlayShow': false,
+				'ignorePreload': true,
+				'width': 1024,
+				'height': 768,
+				callbackOnStart: function(elem, $opts){
+					//find title
+					var self = $(elem)
+					$opts.width = self.attr('int_width');
+					$opts.height = self.attr('int_height');
+					var title = self.attr('title')
+					self.attr('title', title);
+					return true;
+				}
+			});
+			
+			$('#tile_item_' + id + ' img').load(function() {
+				var slideValue = Ext.getCmp('imageSlider').getValue() / 100;
+				var self = $(this);
+				var img = new Image();
+				if (self.data('isLoaded')) {
+					return;
+				}
+				var old_height = this.height,
+					old_width = this.width;
+				self.attr('ori_width', old_width)
+				self.attr('ori_height', old_height)
+				img.onload = function() {
+					self.data('isLoaded', true)
+					var new_width = parseInt(old_width * slideValue),
+						new_height = parseInt(old_height * slideValue)
+					
+					
+					self
+					.attr('src', subject.model.full_url)
+					.css('width', new_width)
+					.css('height', new_height)
+					
+				}
+				img.src = subject.model.src;
+				
+				var ratio = slideValue ;
+									
+				$('#tile_item_' + id).css('width', 110 * ratio).css('height', 115 * ratio)							 
+				.find('td.td-thumb').css('width', 110 * ratio).css('height', 115 * ratio)
+			});
 		}
 //        this.store.setBaseParam('application_id', subject.record.get('id'));
 //        this.store.load();
