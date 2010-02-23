@@ -83,5 +83,15 @@
 }
 
 .edit_placeholder {
-	color: #dddddd;
+	color: #000;
+}
+
+.x-editor .x-form-text {
+	font-size: 11px !important;
+	padding-top: 0px !important;
+}
+
+.editableInput {
+	padding-top: 4px;
+	padding-bottom: 4px; 
 }

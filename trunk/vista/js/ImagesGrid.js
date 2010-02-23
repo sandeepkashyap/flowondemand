@@ -381,7 +381,7 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
             field: {
                 allowBlank: true,
                 xtype: 'textfield',
-                width: 190,
+                width: 400,
                 selectOnFocus: true
             }
         }, cfg));
@@ -415,10 +415,10 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 			url = 'Click to edit';
 			url_editHolder = 'edit_placeholder'
 		}
-        return "<span id='vc_url:"+record.get('id')+"' title='Click to edit' class='editableInput "+ url_editHolder +"'>" + url + "</span><br/>" + "<span id='vc_name:"+record.get('id')+"' class='editableInput " + name_editHolder + "'>" + name + "</span>";
+        return "<span id='vc_url:"+record.get('id')+"' title='Click to edit' class='editableInput "+ url_editHolder +"'>" + url + "</span><br/><br/>" + "<span id='vc_name:"+record.get('id')+"' class='editableInput " + name_editHolder + "'>" + name + "</span>";
     }
 	,renderReceived: function(val, cell, record){		
-        return "<span class='fuzzyDate' title='"+ record.get('created') +"'>"+record.get('created')+"</span><br/>" + "<span class='fuzzyDate' title='"+record.get('indexed')+"'>"+record.get('indexed')+"</span>";
+        return "<span class='fuzzyDate' title='"+ record.get('created') +"'>"+record.get('created')+"</span><br/><br/>" + "<span class='fuzzyDate' title='"+record.get('indexed')+"'>"+record.get('indexed')+"</span>";
     }
 	,onMessage: function(message, subject){
 		if (message == 'pictomobile.image.change') {
