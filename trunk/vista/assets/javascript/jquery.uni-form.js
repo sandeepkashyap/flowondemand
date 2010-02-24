@@ -500,13 +500,16 @@ UniForm = function() {
       if(form.attr('class').indexOf('askOnLeave') != -1) {
         ask_on_leave(form);
       } // if
-      
       // Walk through defined validators and maku sure that they do their trick
       for(validator in validators) {
         form.find('.' + validator).each(function() {
           var field = $(this);
           var field_name = field.attr('name');
           
+		  if (field_name == undefined) {
+		  	return;
+		  }
+		  
           if(typeof forms[form_id]['validation'][field_name] != 'object') {
             forms[form_id]['validation'][field_name] = {
               'field'      : field,
