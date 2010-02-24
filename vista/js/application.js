@@ -127,6 +127,10 @@ function Application(){
                     title: "Batch upload",
                     id: "uploadCsv",
                     xtype: "picUploadCsvForm"
+                }, {
+                    title: "Upload zip file",
+                    id: "uploadZip",
+                    xtype: "picUploadZipForm"
                 }]
                 //				,listeners: {
                 //					'beforeexpand': {

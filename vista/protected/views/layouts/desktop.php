@@ -89,6 +89,7 @@
 		<?=CHtml::scriptFile(ROOT_URL . '/js/AppSwitcher.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/js/UploadForm.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/js/UploadCsvForm.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/js/UploadZipForm.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/js/EditPictureForm.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/js/ImagesGrid.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/js/LogsGrid.js');?>
