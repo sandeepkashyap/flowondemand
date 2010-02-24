@@ -1,12 +1,6 @@
 <?php echo Html::form('', 'post', array('id' => 'form_1', 'class' => 'uniForm showErrors'));?>
 <div class="blockLabels">
 <?php echo Html::errorSummary($model); ?>
-<!--
-<div class="ctrlHolder">
-<?php echo Html::activeLabelEx($model,'id_client'); ?>
-<?php echo Html::activeTextField($model,'id_client'); ?>
-</div>
--->
 <div class="ctrlHolder">
 <?php echo Html::activeLabelEx($model,'vc_name'); ?>
 <?php echo Html::activeTextField($model,'vc_name',array('size'=>60,'maxlength'=>128, 'class' => 'required')); ?>
