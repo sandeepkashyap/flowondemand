@@ -142,7 +142,7 @@ Pictomobile.UploadCsvForm = Ext.extend(Ext.form.FormPanel, {
 					return false;
 				}); 
 			}
-			this.popup_window.show();
+			this.popup_window.show().toFront();
 			var f = this.getForm().getEl()
 			var f_id = f.id
 			f = document.getElementById(f_id);

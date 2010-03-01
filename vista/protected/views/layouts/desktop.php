@@ -116,13 +116,30 @@
         
 		<div id="dialogCsvUpload" class="x-hidden">
             <div class="x-window-header">
-                Please Wait
+                Upload csv file
             </div>
             <div class="x-window-body">
                 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0" class="cssPleaseWait">
                     <tr>
                         <td align="center" valign="middle">
                             <iframe id="upload_target" name="upload_target" width="100%" height="100%" style="border: none;">
+                            	
+                            </iframe>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+		
+		<div id="dialogZipUpload" class="x-hidden">
+            <div class="x-window-header">
+                Upload image zip file
+            </div>
+            <div class="x-window-body">
+                <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0" class="cssPleaseWait">
+                    <tr>
+                        <td align="center" valign="middle">
+                            <iframe id="upload_zip_target" name="upload_zip_target" width="100%" height="100%" style="border: none;">
                             	
                             </iframe>
                         </td>
