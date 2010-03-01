@@ -825,7 +825,7 @@ class ImageController extends Controller {
 			if ($success > 0) {
 				echo "<script>parent.image_csv_upload_success=$success; window.parent.Ext.getCmp('imagesGrid').getStore().load()</script>";
 			}
-			return;
+			exit;
 		}
 		$this->layout = 'application.views.layouts.application';
 		$this->render('csvForm');

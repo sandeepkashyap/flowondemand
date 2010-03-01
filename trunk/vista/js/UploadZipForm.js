@@ -103,7 +103,7 @@ Pictomobile.UploadZipForm = Ext.extend(Ext.form.FormPanel, {
 		if (App.data.application_id > 0) {
 			if (this.popup_window == null) {
 				this.popup_window = new Ext.Window({
-		            applyTo: "dialogCsvUpload",
+		            applyTo: "dialogZipUpload",
 		            closable: true,
 		            modal: false,
 		            width: 600,
@@ -112,20 +112,22 @@ Pictomobile.UploadZipForm = Ext.extend(Ext.form.FormPanel, {
 		            resizable: true,
 		            draggable: true,
 		            shadowOffset: 8,
-		            id: "dialogCsvUpload"
+		            id: "dialogZipUpload"
 		        })
 				
 				this.popup_window.on('beforeclose', function(w) {
-					document.getElementById('upload_target').src = "";
+					document.getElementById('upload_zip_target').src = "";
 					w.hide();
 					return false;
 				}); 
 			}
-			this.popup_window.show();
+			console.log(this.popup_window.getId())
+			this.popup_window.show().toFront();
 			var f = this.getForm().getEl()
+			console.log(f.id)
 			var f_id = f.id
 			f = document.getElementById(f_id);
-			f.target = 'upload_target'
+			f.target = 'upload_zip_target'
 			f.action = App.data.image_csv_url + '/application/' + App.data.application_id;
 			f.onsubmit = function() {
 				document.getElementById(f_id).target = "upload_target";
