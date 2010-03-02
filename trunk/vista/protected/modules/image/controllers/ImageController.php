@@ -738,16 +738,23 @@ class ImageController extends Controller {
 			while (true) {
 				$zip_entry = null;
 				$data = null;
+				
+				
 				if ($isCsv) {
 					$data = fgetcsv($handle, 1000, $delimiter);
 				} else {
 					$zip_entry = zip_read($handle);
 					if ($zip_entry) {
 						$zip_name = zip_entry_name($zip_entry);
+						$tmp_arr = explode('.', $zip_name);
+						if (count($tmp_arr) > 1) {
+							unset($tmp_arr[count($tmp_arr) - 1]);
+							$zip_name = implode('', $tmp_arr);
+						}
 						$data = array(
 							$zip_name, //data[0] name
-							$zip_name, //data[1] url to get
-							$zip_name //image url
+							$zip_name, 
+							'url'
 						);
 					}
 				}
@@ -794,7 +801,7 @@ class ImageController extends Controller {
 				if ($isImage && SThumbnail::open_image($full_path)) {
 					$model->vc_name = $data[1];
 					$model->vc_image = $file_name;
-					$model->vc_url = $data[2];
+					$model->vc_url = URL_BASE . "/site/thumbnail/image/$file_name";
 					$model->id_application = $this->application_id;
 					if ($isImage) {
 						$model->int_width = $arr[0]; 
