@@ -9,6 +9,7 @@
 		
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ext-all.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/Toast.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/DefaultButton.js');?>
 		
 		<?=CHtml::cssFile(ROOT_URL . '/css/application.css');?>
 		
