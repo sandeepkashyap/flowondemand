@@ -121,10 +121,8 @@ Pictomobile.UploadZipForm = Ext.extend(Ext.form.FormPanel, {
 					return false;
 				}); 
 			}
-			console.log(this.popup_window.getId())
 			this.popup_window.show().toFront();
 			var f = this.getForm().getEl()
-			console.log(f.id)
 			var f_id = f.id
 			f = document.getElementById(f_id);
 			f.target = 'upload_zip_target'
