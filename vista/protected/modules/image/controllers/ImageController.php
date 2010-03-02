@@ -1078,8 +1078,8 @@ class ImageController extends Controller {
 		    		'vc_image' => $new_image->vc_image,
 		    		'vc_name' => $new_image->vc_name,
 		    		'vc_url' => $new_image->vc_url,
-		    		'dt_created' => $new_image->dt_received ? $model->dt_received : '',
-		    		'dt_indexed' => $new_image->dt_indexed ? $model->dt_indexed : '',
+		    		'dt_created' => $new_image->dt_received ? $new_image->dt_received : '',
+		    		'dt_indexed' => $new_image->dt_indexed ? $new_image->dt_indexed : '',
 					'int_width' => $new_image->int_width,        		 
 					'int_height' => $new_image->int_height,					        		 
 				);
