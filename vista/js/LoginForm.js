@@ -62,7 +62,8 @@ Pictomobile.LoginForm = Ext.extend(Ext.form.FormPanel, {
 				iconCls: 'icon-key',
                 formBind: true,
                 scope: this,
-                handler: this.submit
+                handler: this.submit,
+				plugins: 'defaultButton'
             }]
         }; // eo config object
         // apply config
@@ -169,7 +170,8 @@ Pictomobile.ForgotPassword = Ext.extend(Ext.form.FormPanel, {
 				iconCls: 'icon-key',
                 formBind: true,
                 scope: this,
-                handler: this.submit
+                handler: this.submit,
+				plugins: 'defaultButton'
             }]
         }; // eo config object
         // apply config
