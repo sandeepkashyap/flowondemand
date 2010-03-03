@@ -121,7 +121,14 @@ Ext.ux.form.FileUploadField = Ext.extend(Ext.form.TextField,  {
 		var fileInput = $('#' + this.getFileInputId());
 		var p = fileInput.parent();
 		fileInput.remove();
-		$('<input type="file" size="1" class="x-form-file" name="'+ this.name +'" id="' + this.getFileInputId() + '"/>').insertAfter($('#' + this.id));
+		var self = this;
+		$('<input type="file" size="1" class="x-form-file" name="'+ this.name +'" id="' + this.getFileInputId() + '"/>')
+		.insertAfter($('#' + this.id))
+		.change(function(){
+            var v = $(this).val();
+            self.setValue(v);
+            self.fireEvent('fileselected', self, v);
+        })
 	},
 	
     // private
