@@ -54,6 +54,17 @@
     z-index: 3;
     color: #777;
 }
+.x-form-file-wrap .x-form-file-clear-btn {
+	position: absolute;
+	right: 24;
+	z-index: 1;
+}
+.x-form-file-wrap .x-form-file-clear-text {
+    position: absolute;
+    left: 0;
+    z-index: 3;
+    color: #777;
+}
 
 .tile-image {
 	float: left;
