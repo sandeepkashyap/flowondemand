@@ -179,6 +179,7 @@ Pictomobile.UploadForm = Ext.extend(Ext.form.FormPanel, {
     ,
     onResetClick: function(){
         this.form.reset();
+		$('#mainFormImage').attr('src', Ext.BLANK_IMAGE_URL)
         // any additional load click processing here
     } // eo function onLoadClick
     /**
@@ -217,6 +218,7 @@ Pictomobile.UploadForm = Ext.extend(Ext.form.FormPanel, {
     ,
     onSuccess: function(form, action){
         form.reset();
+		$('#mainFormImage').attr('src', Ext.BLANK_IMAGE_URL)
         var model = action.result.model
         var record = new Pictomobile.Record.Image({
             id: model.id_image,
