@@ -125,6 +125,7 @@ Pictomobile.EditPictureForm = Ext.extend(Ext.form.FormPanel, {
     ,
     onResetClick: function(){
         this.form.reset();
+		$('#formImage').attr('src', Ext.BLANK_IMAGE_URL)
         // any additional load click processing here
     } // eo function onLoadClick
     /**
