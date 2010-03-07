@@ -900,7 +900,7 @@ class ImageController extends Controller {
 		$models = Image::model()->getUnIndexed();		
 		foreach($models as $m) {
 //			echo $m->is_trash . '  ' . $m->id_image . '<br/>';continue;
-			$this->_imageIndex($m);
+			$this->_imageIndex($m, true);
 			flush();
 		}
 	}
