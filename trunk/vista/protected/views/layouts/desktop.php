@@ -104,6 +104,7 @@
         <title>Pictomobile</title>
     </head>
     <body>
+    	<noscript>You should enable Javascript to run this application</noscript>
         <div id="dialogPleaseWait" class="x-hidden">
             <div class="x-window-header">
                 Please Wait
