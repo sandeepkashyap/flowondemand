@@ -213,6 +213,26 @@ function Application(){
                     }, {
                         xtype: 'tbfill'
                     }, {
+						xtype: 'tbtext',
+						text: 'Welcome ' + App.data.user_fullname
+                    }, {
+                        xtype: 'button',
+                        text: 'Settings',
+                        iconCls: 'icon-prefs',
+                        handler: function(){
+							new Ext.Window({
+				                id: "wndPreferencesForm",
+				                title: 'Preferences setting',
+				                modal: true,
+				                layout: 'fit',
+				                width: 500,
+				                height: 350,
+				                items: [{
+				                    xtype: 'preferencesform'
+				                }]
+				            }).show();
+                        }
+                    }, {
                         xtype: 'button',
                         text: 'Logout',
                         iconCls: 'icon-cancel',

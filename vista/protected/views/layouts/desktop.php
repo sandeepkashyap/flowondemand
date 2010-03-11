@@ -17,6 +17,7 @@
 		
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ext-all.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/FileUploadField.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/DefaultButton.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/RowEditor.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/RowActions.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/ext/ux/Toast.js');?>
@@ -78,10 +79,13 @@
 			App.data.image_print_url = '<?=Yii::app()->createUrl('/image/image/print')?>'
 			
 			App.data.logout_url = '<?=Yii::app()->createUrl('/base/user/logout')?>'
+			App.data.changepassword_url = '<?=Yii::app()->createUrl('/base/user/changePassword')?>'
 			
 			App.data.apps_create_url = '<?=Yii::app()->createUrl('/apps/application/create')?>'
 			App.data.apps_update_url = '<?=Yii::app()->createUrl('/apps/application/update')?>'
 			App.data.apps_change_last_application_url = '<?=Yii::app()->createUrl('/apps/application/changeLastApplication')?>'
+
+			App.data.user_fullname = '<?=Yii::app()->user->email?>';
 		</script>
 		
 		<?=CHtml::scriptFile(ROOT_URL . '/js/application.js');?>
@@ -93,6 +97,7 @@
 		<?=CHtml::scriptFile(ROOT_URL . '/js/EditPictureForm.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/js/ImagesGrid.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/js/LogsGrid.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/js/PreferencesForm.js');?>
 		
 		
 		
