@@ -52,6 +52,8 @@ class User extends ActiveRecord
 			array('email', 'email'),
 
 			array('username, password, password_repeat, email', 'required', 'on' => 'register'),
+			
+			array('password', 'required', 'on' => 'changePassword'),
 
 			array('email', 'required', 'on' => 'recover'),
 			
