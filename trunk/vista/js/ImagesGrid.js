@@ -252,7 +252,8 @@ Pictomobile.action.on({
 Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 
     // configurables
-    border: false // {{{
+	title: 'Images grid',
+    border: true // {{{
     ,initComponent: function(){
     
         // hard coded - cannot be changed from outside
@@ -327,6 +328,7 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
         
         this.subscribe("pictomobile.appswitcher.change")
         this.subscribe("pictomobile.image.change")
+        this.subscribe("pictomobile.image_filter")
 		
 		this.getView().on('refresh', this.onViewRefresh, this)
 		this.getView().on('rowsinserted', this.onRowAdded, this)
@@ -432,10 +434,16 @@ Pictomobile.ImagesGrid = Ext.extend(Ext.grid.GridPanel, {
 			store.commitChanges();
 			Ext.ux.Toast.msg('Image changed', 'Image change successful');
 			this.publish('pictomobile.image.commitchange', subject);
-		} else if (message == 'pictomobile.appswitcher.change') {
-	        this.store.setBaseParam('application_id', subject.record.get('id'));
-	        this.store.load();			
 		}
+		else 
+			if (message == 'pictomobile.appswitcher.change') {
+				this.store.setBaseParam('application_id', subject.record.get('id'));
+				this.store.load();
+			}
+			else 
+				if (message == 'pictomobile.image_filter') {
+					this.getStore().load({params: subject})
+				}
     }
 	,onRowAdded: function() {
 		this.onViewRefresh()
@@ -632,8 +640,9 @@ Ext.reg('imagesdataview', Pictomobile.ImagesDataView);
 
 Pictomobile.ImagesTile = Ext.extend(Ext.Panel, {
 	
-    // configurables    
-    border: false // {{{
+    // configurables
+	title: 'Tile of images',    
+    border: true // {{{
     ,initComponent: function(){
     
         // hard coded - cannot be changed from outside

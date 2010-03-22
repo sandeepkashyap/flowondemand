@@ -626,6 +626,12 @@ class ImageController extends Controller {
 				$criteria->condition .= ' AND dt_indexed IS NULL';
 				break;
 		}
+		if (isset($_POST['image_url'])) {
+			$criteria->addSearchCondition('vc_url',  urldecode($_POST['image_url']));
+		}
+		if (isset($_POST['image_name'])) {
+			$criteria->addSearchCondition('vc_name',  urldecode($_POST['image_name']));
+		}
 		
 		$criteria->order = " id_image DESC";
 		
