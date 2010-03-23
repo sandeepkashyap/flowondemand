@@ -37,7 +37,7 @@ Pictomobile.ImageFilterForm = Ext.extend(Ext.form.FormPanel, {
 	        reader: new Ext.data.JsonReader({
 	            root: 'images',
 	            totalProperty: 'totalCount',
-	            id: 'vc_url'
+	            id: 'id_image'
 	        }, [
 	            {name: 'dt_creted'},
 	            {name: 'vc_url'},
