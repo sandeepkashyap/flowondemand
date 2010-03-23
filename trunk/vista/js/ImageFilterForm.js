@@ -79,10 +79,12 @@ Pictomobile.ImageFilterForm = Ext.extend(Ext.form.FormPanel, {
 				listeners: {
 					'beforequery': function() {
 						this.store.setBaseParam('application_id', App.data.application_id);
+						this.store.setBaseParam('url_name', Ext.getCmp('url_name_combo').getValue());
 					}
 				},
 		        itemSelector: 'div.search-item'
             }, {
+				id: 'url_name_combo',
                 name: 'url_name',
                 xtype: 'combo',
 				displayField:'value',
