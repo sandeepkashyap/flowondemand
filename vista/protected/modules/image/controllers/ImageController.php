@@ -632,6 +632,10 @@ class ImageController extends Controller {
 		if (isset($_POST['image_name'])) {
 			$criteria->addSearchCondition('vc_name',  urldecode($_POST['image_name']));
 		}
+		if (isset($_POST['query'])) {
+			$criteria->condition .= " AND ( vc_name LIKE '%" . mysql_escape_string(urldecode($_POST['query'])) . "%' OR vc_url LIKE '%" . mysql_escape_string(urldecode($_POST['query'])) . "%' ) ";
+//			$criteria->condition .= " AND (vc_name LIKE '%" . mysql_escape_string(urldecode($_POST['query'])) . "%' OR vc_url LIKE '%" . mysql_escape_string(urldecode($_POST['query'])) . "%')";
+		}
 		
 		$criteria->order = " id_image DESC";
 		

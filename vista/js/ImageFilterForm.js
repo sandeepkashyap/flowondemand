@@ -28,21 +28,77 @@ Pictomobile.ImageFilterForm = Ext.extend(Ext.form.FormPanel, {
         Pictomobile.ImageFilterForm.superclass.constructor.call(this, config);
     },
     initComponent: function(){
-    
+		
+		var ds = new Ext.data.Store({
+	        url: App.data.images_store,
+			baseParams: {
+				format: 'json'
+			},
+	        reader: new Ext.data.JsonReader({
+	            root: 'images',
+	            totalProperty: 'totalCount',
+	            id: 'vc_url'
+	        }, [
+	            {name: 'dt_creted'},
+	            {name: 'vc_url'},
+	            {name: 'vc_name'},
+	            {name: 'vc_image'},
+	            {name: 'id_image'}
+	        ])
+	    });
+	
+	    // Custom rendering Template
+	    var resultTpl = new Ext.XTemplate(
+	        '<tpl for="."><div class="search-item">',
+	            '<div class="thumbnail"><img src="' + App.data.thumnail_url + '/{vc_image}" /></div>',
+				'<div class="detail"><span>{vc_url}</span><br/><span>{vc_name}</span></div>',
+				'<div style="clear: both"></div>',
+	        '</div></tpl>'
+	    );
+	    
         // hard coded - cannot be changed from outsid
         var config = {
             defaultType: 'textfield',
             labelAlign: 'left',
 			plugins: ['msgbus'],
-			labelWidth: 50,
+			labelWidth: 80,
             items: [{
-                name: 'image_url',
-                width: 250,
-                fieldLabel: 'Url'
+				name: 'query',
+                xtype: 'combo',
+                fieldLabel: 'Search',
+				store: ds,
+				pageSize:10,
+		        displayField:'vc_url',
+		        valueField:'vc_url',
+		        typeAhead: false,
+		        loadingText: 'Searching...',
+		        width: 300,
+		        hideTrigger: false,
+		        tpl: resultTpl,
+		        minChars: 3,
+				listeners: {
+					'beforequery': function() {
+						this.store.setBaseParam('application_id', App.data.application_id);
+					}
+				},
+		        itemSelector: 'div.search-item'
             }, {
-                name: 'image_name',
-                width: 250,
-                fieldLabel: 'Name'
+                name: 'url_name',
+                xtype: 'combo',
+				displayField:'value',
+				valueField: 'key',
+				value: 'all',
+		        typeAhead: true,
+		        mode: 'local',
+		        forceSelection: true,
+		        triggerAction: 'all',
+		        selectOnFocus:true,
+				store: new Ext.data.ArrayStore({
+			        fields: ['key', 'value'],
+			        data : [['all', 'All'],['url', 'Url'], ['name', 'Name']] 
+			    }),
+                width: 100,
+                fieldLabel: 'Url/Name'
             }],
 			buttonAlign: 'left',
             buttons: [{
@@ -58,10 +114,10 @@ Pictomobile.ImageFilterForm = Ext.extend(Ext.form.FormPanel, {
             }, {
 				name: 'reset',
                 text: 'Reset',
-				iconCls: 'icon-reset',
+				iconCls: 'icon-clear',
                 scope: this,
                 handler: function() {
-					
+					this.getForm().reset();
 				}
             }]
         }; // eo config object
