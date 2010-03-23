@@ -633,7 +633,14 @@ class ImageController extends Controller {
 			$criteria->addSearchCondition('vc_name',  urldecode($_POST['image_name']));
 		}
 		if (isset($_POST['query'])) {
-			$criteria->condition .= " AND ( vc_name LIKE '%" . mysql_escape_string(urldecode($_POST['query'])) . "%' OR vc_url LIKE '%" . mysql_escape_string(urldecode($_POST['query'])) . "%' ) ";
+			$url_name = strtolower(isset($_POST['url_name']) ? $_POST['url_name'] : 'all');
+			if ($url_name == 'all') {
+				$criteria->condition .= " AND ( vc_name LIKE '%" . mysql_escape_string(urldecode($_POST['query'])) . "%' OR vc_url LIKE '%" . mysql_escape_string(urldecode($_POST['query'])) . "%' ) ";
+			} else if ($url_name == 'name') {
+				$criteria->condition .= " AND vc_name LIKE '%" . mysql_escape_string(urldecode($_POST['query'])) . "%' ";
+			} else if ($url_name == 'url') {
+				$criteria->condition .= " AND vc_url LIKE '%" . mysql_escape_string(urldecode($_POST['query'])) . "%'  ";
+			}
 //			$criteria->condition .= " AND (vc_name LIKE '%" . mysql_escape_string(urldecode($_POST['query'])) . "%' OR vc_url LIKE '%" . mysql_escape_string(urldecode($_POST['query'])) . "%')";
 		}
 		
