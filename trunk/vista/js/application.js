@@ -248,101 +248,111 @@ function Application(){
 				xtype: 'tabpanel',
 				activeTab: 0,
                 items: [{
-                    title: "Pictures",
-					id: 'tabPictures',
-                    layout: 'card',
-                    layoutConfig: {
-                        deferredRender: true
-                    },
-                    border: false,
-                    closable: false,
-                    activeItem: 0,
-                    plain: true,
-                    plugins: ['msgbus'],
-                    items: [{
-                        // Contacts icon view.
-                        xtype: "imagesgrid",
-                        id: "imagesGrid"
-                    }, {
-                        xtype: 'ImagesTile',
-                        id: 'imagesTile'
-                    }],
-                    bbar: new Ext.ux.StatusBar({
-                        id: 'statusbar',
-                        plugins: ['msgbus']                        // defaults to use when the status is cleared:
-                        ,
-                        defaultText: 'Ready',
-                        defaultIconCls: 'x-status-valid',
-                        
-                        // values to set initially:
-                        text: 'Ready',
-                        iconCls: 'x-status-valid',
-                        
-                        // any standard Toolbar items:
-                        items: [{
-                            id: 'sbar-btn-undo',
-                            text: 'Undo delete',
-                            iconCls: 'icon-undo',
-                            disabled: true,
-                            handler: function(){
-                                this.setDisabled(true)
-                                var record_id = $(document.body).data('deleted-record')
-                                var undo_url = App.extendUrl(App.data.image_undo_trash_url, {
-                                    id: record_id,
-                                    format: 'json'
-                                });
-                                $.ajax({
-                                    url: undo_url,
-                                    success: function(responseText){
-                                        eval('var result = ' + responseText)
-                                        var model = result.model
-                                        var record = new Pictomobile.Record.Image({
-                                            id: model.id_image,
-                                            thumbnail: model.vc_image,
-                                            name: model.vc_name,
-                                            url: model.vc_url,
-                                            width: model.int_width,
-                                            height: model.int_height,
-                                            created: model.dt_created,
-                                            indexed: model.dt_indexed
-                                        });
-                                        Ext.getCmp('imagesGrid').getStore().insert(0, record);
-                                        Ext.getCmp('imagesGrid').getView().scrollToTop();
-                                        
-                                        Ext.getCmp('statusbar').clearStatus({
-                                            useDefaults: true
-                                        });
-                                        Ext.ux.Toast.msg('Undo', 'The image <b>{0}</b> has been restore from Trash', record.get('name'));
-                                    },
-                                    error: function(res){
-                                    
-                                    },
-                                    complete: function(res){
-                                    
-                                    }
-                                });
-                            }
-                        }] //oe item status bar
-                    })//eo bbar 
-                    ,
-                    listeners: {
-                        'render': {
-                            fn: function(){
-                                this.subscribe("pictomobile.image.viewmode.change")
-                                this.subscribe("pictomobile.appswitcher.change")
-                            }
-                        }
-                    },
-                    onMessage: function(message, subject){
-                        if (message == 'pictomobile.appswitcher.change') {
-                            Ext.getCmp('categoriesArea').expand();
-                        }
-                        else 
-                            if (message = 'pictomobile.image.viewmode.change') {
-                                Ext.getCmp('tabPictures').getLayout().setActiveItem(subject)
-                            }
-                    }
-                }, {
+					title: "Pictures",
+					layout: 'border',
+					items: [{
+						title: 'Filter',
+						region: 'north',
+						width: 300,
+						height: 120, 
+						xtype: 'picImageFilterForm'
+					}, {
+						id: 'tabPictures',
+						region: 'center',
+						layout: 'card',
+						layoutConfig: {
+							deferredRender: true
+						},
+						border: false,
+						closable: false,
+						activeItem: 0,
+						plain: true,
+						plugins: ['msgbus'],
+						items: [{
+							// Contacts icon view.
+							xtype: "imagesgrid",
+							id: "imagesGrid"
+						}, {
+							xtype: 'ImagesTile',
+							id: 'imagesTile'
+						}],
+						bbar: new Ext.ux.StatusBar({
+							id: 'statusbar',
+							plugins: ['msgbus'] // defaults to use when the status is cleared:
+							,
+							defaultText: 'Ready',
+							defaultIconCls: 'x-status-valid',
+							
+							// values to set initially:
+							text: 'Ready',
+							iconCls: 'x-status-valid',
+							
+							// any standard Toolbar items:
+							items: [{
+								id: 'sbar-btn-undo',
+								text: 'Undo delete',
+								iconCls: 'icon-undo',
+								disabled: true,
+								handler: function(){
+									this.setDisabled(true)
+									var record_id = $(document.body).data('deleted-record')
+									var undo_url = App.extendUrl(App.data.image_undo_trash_url, {
+										id: record_id,
+										format: 'json'
+									});
+									$.ajax({
+										url: undo_url,
+										success: function(responseText){
+											eval('var result = ' + responseText)
+											var model = result.model
+											var record = new Pictomobile.Record.Image({
+												id: model.id_image,
+												thumbnail: model.vc_image,
+												name: model.vc_name,
+												url: model.vc_url,
+												width: model.int_width,
+												height: model.int_height,
+												created: model.dt_created,
+												indexed: model.dt_indexed
+											});
+											Ext.getCmp('imagesGrid').getStore().insert(0, record);
+											Ext.getCmp('imagesGrid').getView().scrollToTop();
+											
+											Ext.getCmp('statusbar').clearStatus({
+												useDefaults: true
+											});
+											Ext.ux.Toast.msg('Undo', 'The image <b>{0}</b> has been restore from Trash', record.get('name'));
+										},
+										error: function(res){
+										
+										},
+										complete: function(res){
+										
+										}
+									});
+								}
+							}] //oe item status bar
+						})//eo bbar 
+						,
+						listeners: {
+							'render': {
+								fn: function(){
+									this.subscribe("pictomobile.image.viewmode.change")
+									this.subscribe("pictomobile.appswitcher.change")
+								}
+							}
+						},
+						onMessage: function(message, subject){
+							if (message == 'pictomobile.appswitcher.change') {
+								Ext.getCmp('categoriesArea').expand();
+							}
+							else 
+								if (message = 'pictomobile.image.viewmode.change') {
+									Ext.getCmp('tabPictures').getLayout().setActiveItem(subject)
+								}
+						}
+					}]
+				}, {
 					title: 'Logging',
 					xtype: 'LogsGrid'
 				}]
