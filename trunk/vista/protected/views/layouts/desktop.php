@@ -58,7 +58,8 @@
 			
 			  return extended_url + parameters.join('&');
 			};
-			
+
+			App.data.application_id = <?=$this->application_id?>;
 			App.data.homepage_url = '<?=ROOT_URL?>';
 			App.data.assets_url = '<?=ASSETS_URL?>';
 			App.data.thumnail_url = '<?=Yii::app()->createUrl('site/thumbnail/image/')?>';
@@ -96,6 +97,7 @@
 		<?=CHtml::scriptFile(ROOT_URL . '/js/UploadZipForm.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/js/EditPictureForm.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/js/ImagesGrid.js');?>
+		<?=CHtml::scriptFile(ROOT_URL . '/js/ImageFilterForm.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/js/LogsGrid.js');?>
 		<?=CHtml::scriptFile(ROOT_URL . '/js/PreferencesForm.js');?>
 		
