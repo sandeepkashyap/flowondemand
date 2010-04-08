@@ -93,6 +93,8 @@ Pictomobile.action = new Ext.ux.grid.RowActions({
 			            Ext.ux.Toast.msg('Index image', 'The image <b>{0}</b> successful indexed', record.get('name'));
 					}
 					record.set('indexed', data.dt_indexed);
+					record.set('name', data.vc_name);
+					record.set('url', data.vc_url);
 					Ext.getCmp('mainViewport').publish('pictomobile.image.index', {data: data});
 					
 					sbar.clearStatus({useDefaults:true});						
