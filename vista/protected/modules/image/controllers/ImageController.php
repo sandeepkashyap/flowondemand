@@ -966,6 +966,8 @@ class ImageController extends Controller {
 			'indicator' => $indicator,
 			'message' => $message ? $message : '',
 			'dt_indexed' => $model->dt_indexed ? $model->dt_indexed : '',
+			'vc_url' => $model->vc_url,
+			'vc_name' => $model->vc_name,
 			'log' => array(
 				'id' => $log->id, 
 				'thumbnail' => $model->vc_image,
